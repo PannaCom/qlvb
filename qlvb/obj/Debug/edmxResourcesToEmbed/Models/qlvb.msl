@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="qlvbModelStoreContainer" CdmEntityContainer="qlvbEntities">
+    <EntitySetMapping Name="cat1">
+      <EntityTypeMapping TypeName="qlvbModel.cat1">
+        <MappingFragment StoreEntitySet="cat1">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="no" ColumnName="no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cat2">
+      <EntityTypeMapping TypeName="qlvbModel.cat2">
+        <MappingFragment StoreEntitySet="cat2">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="no" ColumnName="no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cat3">
+      <EntityTypeMapping TypeName="qlvbModel.cat3">
+        <MappingFragment StoreEntitySet="cat3">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="no" ColumnName="no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cat4">
+      <EntityTypeMapping TypeName="qlvbModel.cat4">
+        <MappingFragment StoreEntitySet="cat4">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="no" ColumnName="no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="documents">
+      <EntityTypeMapping TypeName="qlvbModel.document">
+        <MappingFragment StoreEntitySet="documents">
+          <ScalarProperty Name="related_id" ColumnName="related_id" />
+          <ScalarProperty Name="date_time" ColumnName="date_time" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="cat4_id" ColumnName="cat4_id" />
+          <ScalarProperty Name="cat3_id" ColumnName="cat3_id" />
+          <ScalarProperty Name="cat2_id" ColumnName="cat2_id" />
+          <ScalarProperty Name="cat1_id" ColumnName="cat1_id" />
+          <ScalarProperty Name="auto_des" ColumnName="auto_des" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="qlvbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="qlvbModelStoreContainer">
+    <EntitySet Name="cat1" EntityType="qlvbModel.Store.cat1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="cat2" EntityType="qlvbModel.Store.cat2" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="cat3" EntityType="qlvbModel.Store.cat3" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="cat4" EntityType="qlvbModel.Store.cat4" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="documents" EntityType="qlvbModel.Store.documents" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="cat1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" />
+    <Property Name="no" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="cat2">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" />
+    <Property Name="no" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="cat3">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" />
+    <Property Name="no" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="cat4">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" />
+    <Property Name="no" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="documents">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" MaxLength="550" />
+    <Property Name="auto_des" Type="ntext" />
+    <Property Name="cat1_id" Type="int" />
+    <Property Name="cat2_id" Type="int" />
+    <Property Name="cat3_id" Type="int" />
+    <Property Name="cat4_id" Type="int" />
+    <Property Name="type" Type="tinyint" />
+    <Property Name="date_time" Type="datetime" />
+    <Property Name="related_id" Type="nvarchar" MaxLength="450" />
+  </EntityType>
+</Schema>

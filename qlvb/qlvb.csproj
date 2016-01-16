@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -182,15 +184,144 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Cat1Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\cat1.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cat2.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cat3.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cat4.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\document.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\qlvb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>qlvb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\qlvb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\qlvb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>qlvb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\blog-post.html" />
+    <Content Include="Content\blog.html" />
+    <Content Include="Content\contact.html" />
+    <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\nivo-lightbox.css" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\close%402x.png" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\close.png" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\default.css" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\loading%402x.gif" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\loading.gif" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\next%402x.png" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\next.png" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\prev%402x.png" />
+    <Content Include="Content\css\nivo_lightbox_themes\default\prev.png" />
+    <Content Include="Content\css\owl.carousel.css" />
+    <Content Include="Content\css\owl.theme.css" />
+    <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\about.jpg" />
+    <Content Include="Content\img\apple-touch-icon-114x114.png" />
+    <Content Include="Content\img\apple-touch-icon-72x72.png" />
+    <Content Include="Content\img\apple-touch-icon.png" />
+    <Content Include="Content\img\app\01.jpg" />
+    <Content Include="Content\img\app\02.jpg" />
+    <Content Include="Content\img\app\03.jpg" />
+    <Content Include="Content\img\bg\01.jpg" />
+    <Content Include="Content\img\bg\02.jpg" />
+    <Content Include="Content\img\bg\03.jpg" />
+    <Content Include="Content\img\bg\slider01.jpg" />
+    <Content Include="Content\img\bg\slider02.jpg" />
+    <Content Include="Content\img\bg\slider03.jpg" />
+    <Content Include="Content\img\blog\01.jpg" />
+    <Content Include="Content\img\blog\b01.jpg" />
+    <Content Include="Content\img\blog\b02.jpg" />
+    <Content Include="Content\img\blog\b03.jpg" />
+    <Content Include="Content\img\blog\b04.jpg" />
+    <Content Include="Content\img\blog\b05.jpg" />
+    <Content Include="Content\img\blog\b06.jpg" />
+    <Content Include="Content\img\blog\c01.jpg" />
+    <Content Include="Content\img\blog\c02.jpg" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\header2.png" />
+    <Content Include="Content\img\header4.png" />
+    <Content Include="Content\img\logo-w.png" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\marker.png" />
+    <Content Include="Content\img\portfolio\01%402x.jpg" />
+    <Content Include="Content\img\portfolio\01.jpg" />
+    <Content Include="Content\img\portfolio\02%402x.jpg" />
+    <Content Include="Content\img\portfolio\02.jpg" />
+    <Content Include="Content\img\portfolio\03%402x.jpg" />
+    <Content Include="Content\img\portfolio\03.jpg" />
+    <Content Include="Content\img\portfolio\04%402x.jpg" />
+    <Content Include="Content\img\portfolio\04.jpg" />
+    <Content Include="Content\img\portfolio\05%402x.jpg" />
+    <Content Include="Content\img\portfolio\05.jpg" />
+    <Content Include="Content\img\portfolio\06%402x.jpg" />
+    <Content Include="Content\img\portfolio\06.jpg" />
+    <Content Include="Content\img\portfolio\07%402x.jpg" />
+    <Content Include="Content\img\portfolio\07.jpg" />
+    <Content Include="Content\img\portfolio\08%402x.jpg" />
+    <Content Include="Content\img\portfolio\08.jpg" />
+    <Content Include="Content\img\tab01.png" />
+    <Content Include="Content\img\tab02.png" />
+    <Content Include="Content\img\tab03.png" />
+    <Content Include="Content\img\tab04.png" />
+    <Content Include="Content\img\tab05.png" />
+    <Content Include="Content\img\team\01.jpg" />
+    <Content Include="Content\img\team\02.jpg" />
+    <Content Include="Content\index-app.html" />
+    <Content Include="Content\index-parallax.html" />
+    <Content Include="Content\index-slider.html" />
+    <Content Include="Content\index-video.html" />
+    <Content Include="Content\index.html" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\contact.js" />
+    <Content Include="Content\js\imagesloaded.js" />
+    <Content Include="Content\js\jqBootstrapValidation.js" />
+    <Content Include="Content\js\jquery-1.11.2.min.js" />
+    <Content Include="Content\js\jquery.1.11.1.js" />
+    <Content Include="Content\js\jquery.isotope.js" />
+    <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\map.js" />
+    <Content Include="Content\js\modernizr.custom.js" />
+    <Content Include="Content\js\nivo-lightbox.min.js" />
+    <Content Include="Content\js\owl.carousel.js" />
+    <Content Include="Content\js\parallax.js" />
+    <Content Include="Content\js\skrollr.js" />
+    <Content Include="Content\js\SmoothScroll.js" />
+    <Content Include="Content\portfolio-detail.html" />
+    <Content Include="Content\portfolio.html" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -247,6 +378,65 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\.DS_Store" />
+    <Content Include="Content\css\.DS_Store" />
+    <Content Include="Content\fonts\.DS_Store" />
+    <Content Include="Content\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\font-awesome\less\animated.less" />
+    <Content Include="Content\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\fonts\font-awesome\less\core.less" />
+    <Content Include="Content\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\fonts\font-awesome\less\icons.less" />
+    <Content Include="Content\fonts\font-awesome\less\larger.less" />
+    <Content Include="Content\fonts\font-awesome\less\list.less" />
+    <Content Include="Content\fonts\font-awesome\less\mixins.less" />
+    <Content Include="Content\fonts\font-awesome\less\path.less" />
+    <Content Include="Content\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\fonts\font-awesome\less\stacked.less" />
+    <Content Include="Content\fonts\font-awesome\less\variables.less" />
+    <Content Include="Content\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\img\.DS_Store" />
+    <Content Include="Content\img\team\.DS_Store" />
+    <Content Include="Content\js\.DS_Store" />
+    <Content Include="Content\submit.php" />
+    <EntityDeploy Include="Models\qlvb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>qlvb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\qlvb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>qlvb.edmx</DependentUpon>
+      <LastGenOutput>qlvb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\qlvb.edmx.diagram">
+      <DependentUpon>qlvb.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\qlvb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>qlvb.edmx</DependentUpon>
+      <LastGenOutput>qlvb.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -301,12 +491,20 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Cat1\Index.cshtml" />
+    <Content Include="Views\Cat1\Details.cshtml" />
+    <Content Include="Views\Cat1\Create.cshtml" />
+    <Content Include="Views\Cat1\Edit.cshtml" />
+    <Content Include="Views\Cat1\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

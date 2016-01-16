@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="qlvbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="qlvbEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="cat1" EntityType="qlvbModel.cat1" />
+    <EntitySet Name="cat2" EntityType="qlvbModel.cat2" />
+    <EntitySet Name="cat3" EntityType="qlvbModel.cat3" />
+    <EntitySet Name="cat4" EntityType="qlvbModel.cat4" />
+    <EntitySet Name="documents" EntityType="qlvbModel.document" />
+  </EntityContainer>
+  <EntityType Name="cat1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="no" Type="Byte" />
+  </EntityType>
+  <EntityType Name="cat2">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="no" Type="Byte" />
+  </EntityType>
+  <EntityType Name="cat3">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="no" Type="Byte" />
+  </EntityType>
+  <EntityType Name="cat4">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="no" Type="Byte" />
+  </EntityType>
+  <EntityType Name="document">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="name" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="cat1_id" />
+    <Property Type="Int32" Name="cat2_id" />
+    <Property Type="Int32" Name="cat3_id" />
+    <Property Type="Int32" Name="cat4_id" />
+    <Property Type="Byte" Name="type" />
+    <Property Type="DateTime" Name="date_time" Precision="3" />
+    <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
