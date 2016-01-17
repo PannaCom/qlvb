@@ -12,9 +12,9 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             Id
-        </th>
+        </th>*@
         <th>
             Tên lĩnh vực
         </th>
@@ -23,10 +23,10 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
+        </td>*@
+        <td align="left">
             @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
@@ -36,9 +36,10 @@
     </tr>
 }
 </table>
- <div>
+ <div>Trang:
 @for (int i = 1; i <= Model.PageCount; i++){
-                                        <li ><a onclick="setpage(@i);" style="cursor:pointer;">@i</a></li>
+                                        <a href="/Cat2?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
                                     }
+</div>
 </div>
 </div>
