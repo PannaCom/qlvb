@@ -1,12 +1,13 @@
-﻿@model qlvb.Models.cat1
+﻿@model qlvb.Models.cat2
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div id="tf-services">
 <div class="container">
-<h2>Xóa Lĩnh vực này</h2>
-<h3>Bạn có chắc chắn xóa lĩnh vực này: @Model.name</h3>
+<h2>Xóa Loại văn bản này</h2>
+<h3>Bạn có chắc chắn xóa Loại văn bản này: @Model.name</h3>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()

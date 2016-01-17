@@ -6,36 +6,42 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using qlvb.Models;
-
+using PagedList;
+using Newtonsoft.Json;
 namespace qlvb.Controllers
 {
-    public class Cat1Controller : Controller
+    public class Cat2Controller : Controller
     {
         private qlvbEntities db = new qlvbEntities();
 
         //
-        // GET: /Cat1/
+        // GET: /Cat2/
 
-        public ActionResult Index()
+        public ActionResult Index(string word,int? page)
         {
-            return View(db.cat1.ToList());
+            if (word == null) word = "";
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            var p = (from q in db.cat2 where q.name.Contains(word) select q).OrderBy(o=>o.name).Take(1000);
+            return View(p.ToPagedList(pageNumber, pageSize));
+            //return View(db.cat2.ToList());
         }
 
         //
-        // GET: /Cat1/Details/5
+        // GET: /Cat2/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            cat1 cat1 = db.cat1.Find(id);
-            if (cat1 == null)
+            cat2 cat2 = db.cat2.Find(id);
+            if (cat2 == null)
             {
                 return HttpNotFound();
             }
-            return View(cat1);
+            return View(cat2);
         }
 
         //
-        // GET: /Cat1/Create
+        // GET: /Cat2/Create
 
         public ActionResult Create()
         {
@@ -43,75 +49,75 @@ namespace qlvb.Controllers
         }
 
         //
-        // POST: /Cat1/Create
+        // POST: /Cat2/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(cat1 cat1)
+        public ActionResult Create(cat2 cat2)
         {
             if (ModelState.IsValid)
             {
-                cat1.no = 0;
-                db.cat1.Add(cat1);
+                cat2.no = 0;
+                db.cat2.Add(cat2);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cat1);
+            return View(cat2);
         }
 
         //
-        // GET: /Cat1/Edit/5
+        // GET: /Cat2/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            cat1 cat1 = db.cat1.Find(id);
-            if (cat1 == null)
+            cat2 cat2 = db.cat2.Find(id);
+            if (cat2 == null)
             {
                 return HttpNotFound();
             }
-            return View(cat1);
+            return View(cat2);
         }
 
         //
-        // POST: /Cat1/Edit/5
+        // POST: /Cat2/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(cat1 cat1)
+        public ActionResult Edit(cat2 cat2)
         {
             if (ModelState.IsValid)
             {
-                cat1.no = 0;
-                db.Entry(cat1).State = EntityState.Modified;
+                cat2.no = 0;
+                db.Entry(cat2).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cat1);
+            return View(cat2);
         }
 
         //
-        // GET: /Cat1/Delete/5
+        // GET: /Cat2/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            cat1 cat1 = db.cat1.Find(id);
-            if (cat1 == null)
+            cat2 cat2 = db.cat2.Find(id);
+            if (cat2 == null)
             {
                 return HttpNotFound();
             }
-            return View(cat1);
+            return View(cat2);
         }
 
         //
-        // POST: /Cat1/Delete/5
+        // POST: /Cat2/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            cat1 cat1 = db.cat1.Find(id);
-            db.cat1.Remove(cat1);
+            cat2 cat2 = db.cat2.Find(id);
+            db.cat2.Remove(cat2);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

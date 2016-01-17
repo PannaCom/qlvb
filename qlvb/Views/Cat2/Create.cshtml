@@ -1,11 +1,12 @@
-﻿@model qlvb.Models.cat1
+﻿@model qlvb.Models.cat2
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div id="tf-services">
 <div class="container">
-<h2>Thêm mới lĩnh vực</h2>
+<h2>Thêm mới Loại văn bản</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -15,7 +16,7 @@
        
 
         <div class="editor-label">
-            Tên lĩnh vực
+            Tên Loại văn bản
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.name)
@@ -35,3 +36,4 @@
 </div>
 </div>
 </div>
+

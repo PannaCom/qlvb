@@ -1,11 +1,12 @@
-﻿@model IEnumerable<qlvb.Models.cat1>
-
+﻿@model PagedList.IPagedList<qlvb.Models.cat2>
+@using PagedList.Mvc; 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div id="tf-services">
 <div class="container">
-<h2>Lĩnh Vực Văn Bản</h2>
+<h2>Loại Văn Bản</h2>
 <p>
     <img src="/Images/create.png">@Html.ActionLink("Thêm Mới", "Create")
 </p>
@@ -34,7 +35,10 @@
         </td>
     </tr>
 }
-
 </table>
+ <div>
+@for (int i = 1; i <= Model.PageCount; i++){
+                                        <li ><a onclick="setpage(@i);" style="cursor:pointer;">@i</a></li>
+                                    }
 </div>
 </div>
