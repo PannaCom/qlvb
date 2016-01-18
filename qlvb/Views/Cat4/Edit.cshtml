@@ -1,12 +1,12 @@
-﻿@model qlvb.Models.cat1
+﻿@model qlvb.Models.cat4
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div id="tf-services">
 <div class="container">
-<h2>Thêm mới lĩnh vực</h2>
+<h2>Sửa tên cơ quan ban hành</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -16,17 +16,16 @@
        
 
         <div class="editor-label">
-            Tên lĩnh vực
+            Tên Cơ quan ban hành
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
+            <input type="text" name="name" id="name" value="@Model.name" style="width:300px;">
         </div>
 
         
 
         <p>
-            <input type="submit" value="Thêm" />
+            <input type="submit" value="Sửa" />
         </p>
     </fieldset>
 }

@@ -29,6 +29,9 @@ namespace qlvb.Models
         public DbSet<cat2> cat2 { get; set; }
         public DbSet<cat3> cat3 { get; set; }
         public DbSet<cat4> cat4 { get; set; }
+        public DbSet<dic_ignore> dic_ignore { get; set; }
+        public DbSet<dic_normal> dic_normal { get; set; }
+        public DbSet<dic_pro> dic_pro { get; set; }
         public DbSet<document> documents { get; set; }
     }
 }

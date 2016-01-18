@@ -195,6 +195,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Cat1Controller.cs" />
     <Compile Include="Controllers\Cat2Controller.cs" />
+    <Compile Include="Controllers\Cat3Controller.cs" />
+    <Compile Include="Controllers\Cat4Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -211,6 +213,15 @@
       <DependentUpon>qlvb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\cat4.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dic_ignore.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dic_normal.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dic_pro.cs">
       <DependentUpon>qlvb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\document.cs">
@@ -314,11 +325,13 @@
     <Content Include="Content\index-slider.html" />
     <Content Include="Content\index-video.html" />
     <Content Include="Content\index.html" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\contact.js" />
     <Content Include="Content\js\imagesloaded.js" />
     <Content Include="Content\js\jqBootstrapValidation.js" />
+    <Content Include="Content\js\jquery-1.11.0.min.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
     <Content Include="Content\js\jquery.1.11.1.js" />
     <Content Include="Content\js\jquery.isotope.js" />
@@ -454,6 +467,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -513,6 +528,16 @@
     <Content Include="Views\Cat2\Create.cshtml" />
     <Content Include="Views\Cat2\Edit.cshtml" />
     <Content Include="Views\Cat2\Delete.cshtml" />
+    <Content Include="Views\Cat3\Index.cshtml" />
+    <Content Include="Views\Cat3\Details.cshtml" />
+    <Content Include="Views\Cat3\Create.cshtml" />
+    <Content Include="Views\Cat3\Edit.cshtml" />
+    <Content Include="Views\Cat3\Delete.cshtml" />
+    <Content Include="Views\Cat4\Index.cshtml" />
+    <Content Include="Views\Cat4\Details.cshtml" />
+    <Content Include="Views\Cat4\Create.cshtml" />
+    <Content Include="Views\Cat4\Edit.cshtml" />
+    <Content Include="Views\Cat4\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

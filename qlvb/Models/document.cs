@@ -17,6 +17,9 @@ namespace qlvb.Models
         public int id { get; set; }
         public string name { get; set; }
         public string auto_des { get; set; }
+        public string keyword1 { get; set; }
+        public string keyword2 { get; set; }
+        public string keyword3 { get; set; }
         public Nullable<int> cat1_id { get; set; }
         public Nullable<int> cat2_id { get; set; }
         public Nullable<int> cat3_id { get; set; }

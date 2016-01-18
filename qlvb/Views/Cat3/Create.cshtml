@@ -1,4 +1,4 @@
-﻿@model qlvb.Models.cat1
+﻿@model qlvb.Models.cat3
 
 @{
     ViewBag.Title = "Create";
@@ -6,7 +6,7 @@
 }
 <div id="tf-services">
 <div class="container">
-<h2>Thêm mới lĩnh vực</h2>
+<h2>Thêm mới Tên người ký</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -16,11 +16,10 @@
        
 
         <div class="editor-label">
-            Tên lĩnh vực
+            Tên người ký
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
+            <input type="text" name="name" id="name" style="width:300px;">
         </div>
 
         
@@ -36,3 +35,4 @@
 </div>
 </div>
 </div>
+

@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<qlvb.Models.cat2>
+﻿@model PagedList.IPagedList<qlvb.Models.cat3>
 @using PagedList.Mvc; 
 @{
     ViewBag.Title = "Index";
@@ -11,7 +11,7 @@
     <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
 </div>
 <div style="width:100%;padding-top:30px;">
-    <h2>Loại Văn Bản</h2>
+    <h2>Danh mục Người ký</h2>
     <p>
         <img src="/Images/create.png">@Html.ActionLink("Thêm Mới", "Create")
     </p>
@@ -22,7 +22,7 @@
             Id
         </th>*@
         <th>
-            Tên lĩnh vực
+            Tên người ký
         </th>
         <th></th>
     </tr>
@@ -44,7 +44,7 @@
 </table>
  <div>Trang:
 @for (int i = 1; i <= Model.PageCount; i++){
-                                        <a href="/Cat2?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
+                                        <a href="/Cat3?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
                                     }
 </div>
 </div>
@@ -52,11 +52,11 @@
 <script>
     function search() {
         var word = document.getElementById("word").value;
-        window.location.href = "/Cat2/Index?page=1&word=" + word;
+        window.location.href = "/Cat3/Index?page=1&word=" + word;
     }
     function autosearch() {
         var keyword = document.getElementById("word").value;
-        urlSearch = '/Home/getCat2?keyword=';
+        urlSearch = '/Home/getCat3?keyword=';
         $('#word').autocomplete({
             source: urlSearch + keyword,
             select: function (event, ui) {
