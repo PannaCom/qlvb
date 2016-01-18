@@ -5,6 +5,9 @@
     <EntitySet Name="cat2" EntityType="qlvbModel.cat2" />
     <EntitySet Name="cat3" EntityType="qlvbModel.cat3" />
     <EntitySet Name="cat4" EntityType="qlvbModel.cat4" />
+    <EntitySet Name="dic_ignore" EntityType="qlvbModel.dic_ignore" />
+    <EntitySet Name="dic_normal" EntityType="qlvbModel.dic_normal" />
+    <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
     <EntitySet Name="documents" EntityType="qlvbModel.document" />
   </EntityContainer>
   <EntityType Name="cat1">
@@ -39,6 +42,27 @@
     <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
     <Property Name="no" Type="Byte" />
   </EntityType>
+  <EntityType Name="dic_ignore">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="word" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="dic_normal">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="word" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="dic_pro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="word" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="document">
     <Key>
       <PropertyRef Name="id" />
@@ -46,6 +70,11 @@
     <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="name" MaxLength="550" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="des" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="code" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="keyword2" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="keyword3" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="cat1_id" />
     <Property Type="Int32" Name="cat2_id" />
     <Property Type="Int32" Name="cat3_id" />
@@ -53,5 +82,6 @@
     <Property Type="Byte" Name="type" />
     <Property Type="DateTime" Name="date_time" Precision="3" />
     <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="year" />
   </EntityType>
 </Schema>

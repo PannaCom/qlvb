@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="qlvbModel.dic_ignore" Width="1.5" PointX="7.5788644699281384" PointY="4.7830545030455358" />
         <EntityTypeShape EntityType="qlvbModel.dic_normal" Width="1.5" PointX="0.56423845168400488" PointY="15.610596395847665" />
         <EntityTypeShape EntityType="qlvbModel.dic_pro" Width="1.5" PointX="0.28381256027324708" PointY="4.4062104692711541" />
-        <EntityTypeShape EntityType="qlvbModel.document" Width="1.5" PointX="0.36770088801519057" PointY="17.68789111901442" />
+        <EntityTypeShape EntityType="qlvbModel.document" Width="1.5" PointX="8.6572785622707009" PointY="4.0794049520415276" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

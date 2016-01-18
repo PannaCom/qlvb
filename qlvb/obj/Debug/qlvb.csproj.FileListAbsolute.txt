@@ -14,6 +14,8 @@ D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\Microsoft.Web.Infrastructure.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\Microsoft.Web.WebPages.OAuth.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\Newtonsoft.Json.dll
+D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\PagedList.dll
+D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\PagedList.Mvc.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Spatial.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.Helpers.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.Http.OData.dll
@@ -26,8 +28,10 @@ D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.WebPages.Razor.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\WebGrease.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\WebMatrix.Data.dll
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\WebMatrix.WebData.dll
-D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\EntityFramework.xml
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\Newtonsoft.Json.xml
+D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\PagedList.xml
+D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\PagedList.Mvc.xml
+D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\EntityFramework.xml
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.Helpers.xml
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.Mvc.xml
 D:\Project\GitHub\QLVB\branches\svn\qlvb\bin\System.Web.Razor.xml

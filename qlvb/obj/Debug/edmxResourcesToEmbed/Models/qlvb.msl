@@ -37,9 +37,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="dic_ignore">
+      <EntityTypeMapping TypeName="qlvbModel.dic_ignore">
+        <MappingFragment StoreEntitySet="dic_ignore">
+          <ScalarProperty Name="word" ColumnName="word" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dic_normal">
+      <EntityTypeMapping TypeName="qlvbModel.dic_normal">
+        <MappingFragment StoreEntitySet="dic_normal">
+          <ScalarProperty Name="word" ColumnName="word" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dic_pro">
+      <EntityTypeMapping TypeName="qlvbModel.dic_pro">
+        <MappingFragment StoreEntitySet="dic_pro">
+          <ScalarProperty Name="word" ColumnName="word" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="documents">
       <EntityTypeMapping TypeName="qlvbModel.document">
         <MappingFragment StoreEntitySet="documents">
+          <ScalarProperty Name="year" ColumnName="year" />
           <ScalarProperty Name="related_id" ColumnName="related_id" />
           <ScalarProperty Name="date_time" ColumnName="date_time" />
           <ScalarProperty Name="type" ColumnName="type" />
@@ -47,6 +72,11 @@
           <ScalarProperty Name="cat3_id" ColumnName="cat3_id" />
           <ScalarProperty Name="cat2_id" ColumnName="cat2_id" />
           <ScalarProperty Name="cat1_id" ColumnName="cat1_id" />
+          <ScalarProperty Name="keyword3" ColumnName="keyword3" />
+          <ScalarProperty Name="keyword2" ColumnName="keyword2" />
+          <ScalarProperty Name="keyword1" ColumnName="keyword1" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="des" ColumnName="des" />
           <ScalarProperty Name="auto_des" ColumnName="auto_des" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
