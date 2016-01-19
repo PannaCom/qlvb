@@ -1117,3 +1117,8 @@ ul.meta-tags li:last-child:after { content: ' ' }
 .comment form { margin-top: -30px }
 .comment input,
 .comment textarea { margin-bottom: 15px }
+.label {
+    display:block;float:left;position:relative;
+    color:#6f6f6f;
+    font-weight:bold;
+}

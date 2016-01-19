@@ -1,0 +1,38 @@
+﻿@model qlvb.Models.dic_normal
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div id="tf-services">
+<div class="container">
+<h2>Thêm mới từ</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+       
+
+        <div class="editor-label">
+            Nội dung
+        </div>
+        <div class="editor-field">
+            <input type="text" name="word" id="word" style="width:300px;">
+        </div>
+
+        
+
+        <p>
+            <input type="submit" value="Thêm" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+</div>
+</div>
+

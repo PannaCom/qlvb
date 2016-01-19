@@ -197,6 +197,10 @@
     <Compile Include="Controllers\Cat2Controller.cs" />
     <Compile Include="Controllers\Cat3Controller.cs" />
     <Compile Include="Controllers\Cat4Controller.cs" />
+    <Compile Include="Controllers\DicController.cs" />
+    <Compile Include="Controllers\DicIgnController.cs" />
+    <Compile Include="Controllers\DicProController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -538,6 +542,26 @@
     <Content Include="Views\Cat4\Create.cshtml" />
     <Content Include="Views\Cat4\Edit.cshtml" />
     <Content Include="Views\Cat4\Delete.cshtml" />
+    <Content Include="Views\DicPro\Index.cshtml" />
+    <Content Include="Views\DicPro\Details.cshtml" />
+    <Content Include="Views\DicPro\Create.cshtml" />
+    <Content Include="Views\DicPro\Edit.cshtml" />
+    <Content Include="Views\DicPro\Delete.cshtml" />
+    <Content Include="Views\DicIgn\Index.cshtml" />
+    <Content Include="Views\DicIgn\Details.cshtml" />
+    <Content Include="Views\DicIgn\Create.cshtml" />
+    <Content Include="Views\DicIgn\Edit.cshtml" />
+    <Content Include="Views\DicIgn\Delete.cshtml" />
+    <Content Include="Views\Dic\Index.cshtml" />
+    <Content Include="Views\Dic\Details.cshtml" />
+    <Content Include="Views\Dic\Create.cshtml" />
+    <Content Include="Views\Dic\Edit.cshtml" />
+    <Content Include="Views\Dic\Delete.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
+    <Content Include="Views\Document\Details.cshtml" />
+    <Content Include="Views\Document\Create.cshtml" />
+    <Content Include="Views\Document\Edit.cshtml" />
+    <Content Include="Views\Document\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

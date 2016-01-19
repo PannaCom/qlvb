@@ -1,0 +1,151 @@
+﻿@model qlvb.Models.document
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>document</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.auto_des)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.auto_des)
+            @Html.ValidationMessageFor(model => model.auto_des)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.des)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.des)
+            @Html.ValidationMessageFor(model => model.des)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.code)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.code)
+            @Html.ValidationMessageFor(model => model.code)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.keyword1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.keyword1)
+            @Html.ValidationMessageFor(model => model.keyword1)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.keyword2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.keyword2)
+            @Html.ValidationMessageFor(model => model.keyword2)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.keyword3)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.keyword3)
+            @Html.ValidationMessageFor(model => model.keyword3)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cat1_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cat1_id)
+            @Html.ValidationMessageFor(model => model.cat1_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cat2_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cat2_id)
+            @Html.ValidationMessageFor(model => model.cat2_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cat3_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cat3_id)
+            @Html.ValidationMessageFor(model => model.cat3_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cat4_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cat4_id)
+            @Html.ValidationMessageFor(model => model.cat4_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.type)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.type)
+            @Html.ValidationMessageFor(model => model.type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.date_time)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.date_time)
+            @Html.ValidationMessageFor(model => model.date_time)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.related_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.related_id)
+            @Html.ValidationMessageFor(model => model.related_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.year)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.year)
+            @Html.ValidationMessageFor(model => model.year)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
