@@ -10,6 +10,8 @@ using PagedList;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections;
+using Microsoft.Office.Interop.Word;
+using System.Text;
 namespace qlvb.Controllers
 {
     public class DocumentController : Controller
@@ -90,7 +92,46 @@ namespace qlvb.Controllers
             }
             return View(document);
         }
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public string UploadDocProcess(HttpPostedFileBase file)
+        {
+            string physicalPath = HttpContext.Server.MapPath("../Files/");
+            string nameFile = String.Format("{0}.doc", Guid.NewGuid().ToString());
+            int countFile = Request.Files.Count;
+            string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < countFile; i++)
+            {
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+                Request.Files[i].SaveAs(fullPath);
+                Application application = new Application();
+                Document document = application.Documents.Open(fullPath);
 
+                // Loop through all words in the document.
+                int count = document.Words.Count;
+                for (int j = 1; j <= count; j++)
+                {
+                    // Write the word.
+                    try
+                    {
+                        string text = document.Words[j].Text;
+                        sb.Append(text);
+                    }
+                    catch (Exception ex) { 
+
+                    }
+                   
+                }
+                // Close word.
+                application.Quit();
+                break;
+            }
+            return sb.ToString();// "/Files/" + nameFile;
+        }
         //
         // GET: /Document/Delete/5
 

@@ -10,6 +10,10 @@
 <div id="tf-services">
     <div class="container">
         <div style="width:100%;padding-top:30px;">
+        <label class="label">Chọn file *:</label><input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+        <div id="progressbar" class="progressbar">
+             <div id="progresslabel" class="progressbarlabel"></div>
+        </div>  
         <label class="label">Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" >
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" style="width:100%;display:block;float:left;position:relative;" onkeyup="autocheck();">
         <label class="label">Trích yếu(người dùng có thể chú thích thêm):</label><textarea class="form-control" placeholder="Nhập mô tả văn bản" id="des" name="des" style="width:100%;display:block;float:left;position:relative;" ></textarea>
@@ -19,3 +23,37 @@
         </div>
     </div>
 </div>
+<script>
+    function uploadProcess() {
+     
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        //formdata.append("filename", title);
+        //showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/Document/UploadDocProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //$('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                //$('#image').val(xhr.responseText);
+                //$('#dvimagefile').show();
+                //hideLoadingImage();
+                alert(xhr.responseText);
+            }
+        }
+        return false;
+    }
+</script>
