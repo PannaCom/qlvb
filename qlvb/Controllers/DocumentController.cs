@@ -110,22 +110,23 @@ namespace qlvb.Controllers
                 Request.Files[i].SaveAs(fullPath);
                 Application application = new Application();
                 Document document = application.Documents.Open(fullPath);
-
+                //Số: .*/.*/.*\S-*([A-Z])\w+ Lấy ra ký hiệu văn bản
                 // Loop through all words in the document.
-                int count = document.Words.Count;
-                for (int j = 1; j <= count; j++)
-                {
-                    // Write the word.
-                    try
-                    {
-                        string text = document.Words[j].Text;
-                        sb.Append(text);
-                    }
-                    catch (Exception ex) { 
+                //int count = document.Words.Count;
+                //for (int j = 1; j <= count; j++)
+                //{
+                //    // Write the word.
+                //    try
+                //    {
+                //        string text = document.Words[j].Text;
+                //        sb.Append(text);
+                //    }
+                //    catch (Exception ex) { 
 
-                    }
+                //    }
                    
-                }
+                //}
+                
                 // Close word.
                 application.Quit();
                 break;
