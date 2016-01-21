@@ -16,8 +16,8 @@
         </div>  
         <label class="label">Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" >
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" style="width:100%;display:block;float:left;position:relative;" onkeyup="autocheck();">
-        <textarea class="form-control" placeholder="Nhập mô tả văn bản" id="des" name="des" style="width:100%;display:block;float:left;position:relative;" ></textarea>
-        <label class="label">Tập từ khóa quan trọng 1:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao nhất do phần mềm tự động nhận dạng" id="keyword1" name="keyword1" style="width:100%;display:block;float:left;position:relative;display:none;" ></textarea>
+        <input type="hidden" id="auto_des" name="auto_des" value="@Model.auto_des">
+        <input type="hidden" id="keyword1" name="keyword1" value="@Model.keyword1">
         @*<label class="label">Tập từ khóa quan trọng 2:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ nhì do phần mềm tự động nhận dạng" id="keyword2" name="keyword2" style="width:100%;display:block;float:left;position:relative;" ></textarea>
         <label class="label">Tập từ khóa quan trọng 3:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ ba do phần mềm tự động nhận dạng" id="keyword3" name="keyword3" style="width:100%;display:block;float:left;position:relative;" ></textarea>*@
 
@@ -53,8 +53,10 @@
                 //$('#dvimagefile').show();
                 //hideLoadingImage();
                 //alert(xhr.responseText);
-                var items = xhr.responseText.split(" ");
-
+                var items = xhr.responseText.split("____________");
+                $('#name').val(items[2]);
+                $('#code').val(items[0]);
+                $('#keyword1').val(items[3]);
             }
         }
         return false;
