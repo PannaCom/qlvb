@@ -104,6 +104,8 @@ namespace qlvb.Controllers
             string code = "";
             string year = "";
             string title = "";
+            string p1 = "";
+            string p2 = "";
             for (int i = 0; i < countFile; i++)
             {
                 if (System.IO.File.Exists(fullPath))
@@ -139,11 +141,13 @@ namespace qlvb.Controllers
                 content = content.Replace("\r\a", " ");
                 code = Config.getCode(content);
                 year = Config.getYear(content);
+                p1 = Config.getP1(content);
+                p2 = Config.getP2(content);
                 // Close word.
                 application.Quit();
                 break;
             }
-            return code + "____________" + year + "____________" + title;// "/Files/" + nameFile;
+            return code + Config.sp + year + Config.sp + title + Config.sp + p1 + Config.sp + p2;// "/Files/" + nameFile;
         }
         //
         // GET: /Document/Delete/5
