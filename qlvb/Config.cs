@@ -59,10 +59,11 @@ namespace qlvb
                 string rs = "";
                 int l = code.Length > 10 ? 10 : code.Length;
                 for (int i = 1; i < l; i++) {
+                    if (code[i].StartsWith("Căn cứ")) break;
                     if (code[i] != "\a" && code[i] != "") {
                         rs += code[i] + " ";
                     }
-                    if (code[i].StartsWith("Căn cứ")) break;
+                    
                 }
                 return rs;
             }
