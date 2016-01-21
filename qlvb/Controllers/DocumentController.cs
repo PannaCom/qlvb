@@ -101,6 +101,9 @@ namespace qlvb.Controllers
             int countFile = Request.Files.Count;
             string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
             StringBuilder sb = new StringBuilder();
+            string code = "";
+            string year = "";
+            string title = "";
             for (int i = 0; i < countFile; i++)
             {
                 if (System.IO.File.Exists(fullPath))
@@ -111,27 +114,36 @@ namespace qlvb.Controllers
                 Application application = new Application();
                 Document document = application.Documents.Open(fullPath);
                 //Số: .*/.*/.*\S-*([A-Z])\w+ Lấy ra ký hiệu văn bản
+                //Ngày tháng năm ngày.* tháng .* năm .*\w lấy ra ngày đầu tiên
+                //string content=document.Content.Words.ToString();
+                
                 // Loop through all words in the document.
                 //int count = document.Words.Count;
+                //string text = "";
                 //for (int j = 1; j <= count; j++)
                 //{
                 //    // Write the word.
                 //    try
                 //    {
-                //        string text = document.Words[j].Text;
+                //        text = document.Words[j].Text;
                 //        sb.Append(text);
                 //    }
-                //    catch (Exception ex) { 
+                //    catch (Exception ex)
+                //    {
 
                 //    }
-                   
+
                 //}
-                
+                string content = document.Content.Text;
+                title = Config.getTitle(content);
+                content = content.Replace("\r\a", " ");
+                code = Config.getCode(content);
+                year = Config.getYear(content);
                 // Close word.
                 application.Quit();
                 break;
             }
-            return sb.ToString();// "/Files/" + nameFile;
+            return code + "____________" + year + "____________" + title;// "/Files/" + nameFile;
         }
         //
         // GET: /Document/Delete/5

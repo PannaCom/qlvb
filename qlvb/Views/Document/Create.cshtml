@@ -36,12 +36,12 @@
         //formdata.append("filename", title);
         //showLoadingImage();
         var xhr = new XMLHttpRequest();
-        xhr.upload.addEventListener("progress", function (evt) {
-            if (evt.lengthComputable) {
-                var progress = Math.round(evt.loaded * 100 / evt.total);
-                $("#progressbar").progressbar("value", progress);
-            }
-        }, false);
+        //xhr.upload.addEventListener("progress", function (evt) {
+        //    if (evt.lengthComputable) {
+        //        var progress = Math.round(evt.loaded * 100 / evt.total);
+        //        $("#progressbar").progressbar("value", progress);
+        //    }
+        //}, false);
 
         xhr.open('POST', '/Document/UploadDocProcess');
         xhr.send(formdata);
