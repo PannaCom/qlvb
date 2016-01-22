@@ -17,7 +17,6 @@ namespace qlvb.Models
         public int id { get; set; }
         public string name { get; set; }
         public string auto_des { get; set; }
-        public string des { get; set; }
         public string code { get; set; }
         public string keyword1 { get; set; }
         public string keyword2 { get; set; }
@@ -30,5 +29,7 @@ namespace qlvb.Models
         public Nullable<System.DateTime> date_time { get; set; }
         public string related_id { get; set; }
         public Nullable<int> year { get; set; }
+        public string link { get; set; }
+        public Nullable<byte> status { get; set; }
     }
 }

@@ -33,8 +33,30 @@ namespace qlvb.Controllers
         }
         public string getCat2(string keyword)
         {
-            var p = (from q in db.cat2 where keyword.Contains(keyword) select q.name).Distinct().Take(20).ToList();
+            var p = (from q in db.cat2 where keyword.Contains(keyword) select q.name).Distinct().ToList();
             return JsonConvert.SerializeObject(p);
+        }
+        public string getCat(int type)
+        {
+            switch(type){
+                case 1:
+                    var p = (from q in db.cat1 orderby q.name select q).Distinct().OrderBy(o => o.name).ToList();
+                    return JsonConvert.SerializeObject(p);
+                    break;
+                case 2:
+                    var p2 = (from q in db.cat2 orderby q.name select q).Distinct().OrderBy(o => o.name).ToList();
+                    return JsonConvert.SerializeObject(p2);
+                    break;
+                case 3:
+                    var p3 = (from q in db.cat3 orderby q.name select q).Distinct().OrderBy(o => o.name).ToList();
+                    return JsonConvert.SerializeObject(p3);
+                    break;
+                case 4:
+                    var p4 = (from q in db.cat4 orderby q.name select q).Distinct().OrderBy(o => o.name).ToList();
+                    return JsonConvert.SerializeObject(p4);
+                    break;
+            }
+            return "";
         }
     }
 }

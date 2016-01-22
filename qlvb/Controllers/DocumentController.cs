@@ -44,7 +44,13 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            document document=new document();
+           
+            ViewBag.cat1 = "1";
+            ViewBag.cat2 = "2";
+            ViewBag.cat3 = "3";
+            ViewBag.cat4 = "4";
+            return View(document);
         }
 
         //
@@ -147,7 +153,7 @@ namespace qlvb.Controllers
                 application.Quit();
                 break;
             }
-            return code + Config.sp + year + Config.sp + title + Config.sp + p1 + Config.sp + p2;// "/Files/" + nameFile;
+            return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + p2;// "/Files/" + nameFile;
         }
         //
         // GET: /Document/Delete/5

@@ -75,7 +75,6 @@
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="nvarchar" MaxLength="550" />
           <Property Name="auto_des" Type="ntext" />
-          <Property Name="des" Type="ntext" />
           <Property Name="code" Type="nvarchar" MaxLength="150" />
           <Property Name="keyword1" Type="ntext" />
           <Property Name="keyword2" Type="ntext" />
@@ -88,6 +87,8 @@
           <Property Name="date_time" Type="datetime" />
           <Property Name="related_id" Type="nvarchar" MaxLength="450" />
           <Property Name="year" Type="int" />
+          <Property Name="link" Type="nvarchar" MaxLength="150" />
+          <Property Name="status" Type="tinyint" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -163,7 +164,6 @@
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="name" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="des" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="code" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="keyword2" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -176,6 +176,8 @@
           <Property Type="DateTime" Name="date_time" Precision="3" />
           <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="year" />
+          <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Byte" Name="status" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -246,6 +248,8 @@
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="related_id" ColumnName="related_id" />
                 <ScalarProperty Name="date_time" ColumnName="date_time" />
@@ -258,7 +262,6 @@
                 <ScalarProperty Name="keyword2" ColumnName="keyword2" />
                 <ScalarProperty Name="keyword1" ColumnName="keyword1" />
                 <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="des" ColumnName="des" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />

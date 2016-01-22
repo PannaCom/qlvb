@@ -39,6 +39,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.cat1 = "1";
             return View();
         }
 
