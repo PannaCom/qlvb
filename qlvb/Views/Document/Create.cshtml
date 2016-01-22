@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div id=addnewcat style="width:50%;display:block;float:left;position:fixed;top:40%;left:25%;background-color:#c8e19b;z-index:1001;text-align:center;">
+<div id=addnewcat style="width:50%;display:block;float:left;position:fixed;top:40%;left:25%;background-color:#c8e19b;z-index:1001;text-align:center;display:none;">
     <label class="label" id="addnewcatlabel">Thêm mới *:</label><input type="text" class="form-control" placeholder="Nhập giá trị" id="addvalue" name="addvalue" style="width:100%;display:block;float:left;position:relative;border-color:#808080" >
     <input type="button" value="Thêm mới" onclick="addnewcat();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>
     <input type="button" value="Đóng lại" onclick="$('#addnewcat').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>
@@ -13,6 +13,7 @@
 <div class="container">
 <h2>Thêm mới Văn bản</h2>
 <script>
+    var currentTypeCat = 1;
     function getCat(type, id) {
         var formdata = new FormData(); //FormData object
         formdata.append("type", type);
@@ -130,22 +131,74 @@
         return false;
     }
     function chooseCat(type) {
-        var value=$("#")
-        if ()
-        $('#addnewcat').show();
+        
         switch(type){
             case 1:
-                $('#addnewcatlabel').html("Thêm mới lĩnh vực văn bản");
+                if ($('#cat1').val() == -1) {
+                    $('#addnewcat').show();
+                    $('#addnewcatlabel').html("Thêm mới lĩnh vực văn bản");
+                    currentTypeCat = 1;
+                }
                 break;
             case 2:
-                $('#addnewcatlabel').html("Thêm mới loại văn bản");
+                if ($('#cat2').val() == -1) {
+                    $('#addnewcat').show();
+                    $('#addnewcatlabel').html("Thêm mới loại văn bản");
+                    currentTypeCat = 2;
+                }
                 break;
             case 3:
-                $('#addnewcatlabel').html("Thêm mới người ký văn bản");
+                if ($('#cat3').val() == -1) {
+                    $('#addnewcat').show();
+                    $('#addnewcatlabel').html("Thêm mới người ký văn bản");
+                    currentTypeCat = 3;
+                }
                 break;
             case 4:
-                $('#addnewcatlabel').html("Thêm mới cơ quan ban hành văn bản");
+                if ($('#cat4').val() == -1) {
+                    $('#addnewcat').show();
+                    $('#addnewcatlabel').html("Thêm mới cơ quan ban hành văn bản");
+                    currentTypeCat = 4;
+                }
                 break;
+        }
+    }
+    function addnewcat() {
+        if (document.getElementById("addvalue").value == "") {
+            alert("Nhập giá trị");
+            document.getElementById("addvalue").focus();
+            return;
+        }
+        var formdata = new FormData(); //FormData object
+       
+        formdata.append("type", currentTypeCat);
+        formdata.append("value", document.getElementById("addvalue").value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Document/addNewCat');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var items = xhr.responseText.split("____________");
+                switch (currentTypeCat) {
+                    case 1:
+                        $("#cat1").append("<option value=" + items[0] + ">" + items[1] + "</option>");
+                        $("#cat1").val(items[0]);
+                        break;
+                    case 2:
+                        $("#cat2").append("<option value=" + items[0] + ">" + items[1] + "</option>");
+                        $("#cat2").val(items[0]);
+                        break;
+                    case 3:
+                        $("#cat3").append("<option value=" + items[0] + ">" + items[1] + "</option>");
+                        $("#cat3").val(items[0]);
+                        break;
+                    case 4:
+                        $("#cat4").append("<option value=" + items[0] + ">" + items[1] + "</option>");
+                        $("#cat4").val(items[0]);
+                        break;
+                }
+                $('#addnewcat').hide();
+            }
         }
     }
 </script>

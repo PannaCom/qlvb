@@ -155,6 +155,43 @@ namespace qlvb.Controllers
             }
             return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + p2;// "/Files/" + nameFile;
         }
+        public string addNewCat(int type, string value) {
+            switch (type) { 
+                case 1:
+                    cat1 c1 = new cat1();
+                    c1.name = value;
+                    c1.no = 0;
+                    db.cat1.Add(c1);
+                    db.SaveChanges();
+                    return c1.id + Config.sp + c1.name;
+                    break;
+                case 2:
+                    cat2 c2 = new cat2();
+                    c2.name = value;
+                    c2.no = 0;
+                    db.cat2.Add(c2);
+                    db.SaveChanges();
+                    return c2.id + Config.sp + c2.name;
+                    break;
+                case 3:
+                    cat3 c3 = new cat3();
+                    c3.name = value;
+                    c3.no = 0;
+                    db.cat3.Add(c3);
+                    db.SaveChanges();
+                    return c3.id + Config.sp + c3.name;
+                    break;
+                case 4:
+                    cat4 c4 = new cat4();
+                    c4.name = value;
+                    c4.no = 0;
+                    db.cat4.Add(c4);
+                    db.SaveChanges();
+                    return c4.id + Config.sp + c4.name;
+                    break;
+            }
+            return "0";
+        }
         //
         // GET: /Document/Delete/5
 
