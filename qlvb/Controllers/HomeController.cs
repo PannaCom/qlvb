@@ -36,6 +36,16 @@ namespace qlvb.Controllers
             var p = (from q in db.cat2 where keyword.Contains(keyword) select q.name).Distinct().ToList();
             return JsonConvert.SerializeObject(p);
         }
+        public string getCat3(string keyword)
+        {
+            var p = (from q in db.cat3 where keyword.Contains(keyword) select q.name).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
+        public string getCat4(string keyword)
+        {
+            var p = (from q in db.cat4 where keyword.Contains(keyword) select q.name).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
         public string getCat(int type)
         {
             switch(type){

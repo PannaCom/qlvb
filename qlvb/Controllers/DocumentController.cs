@@ -22,11 +22,28 @@ namespace qlvb.Controllers
         //
         // GET: /Document/
 
-        public ActionResult Index()
+        public ActionResult Index(string word, int? page)
         {
-            return View(db.documents.ToList());
+            if (word == null) word = "";
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            var p = (from q in db.documents where q.auto_des.Contains(word) select q).OrderBy(o => o.name).Take(1000);
+            return View(p.ToPagedList(pageNumber, pageSize));
+            //return View(db.cat2.ToList());
         }
-
+        public string getDoc(string keyword) {
+            if (keyword != null && keyword.Contains("/"))
+            {
+                var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
+                return JsonConvert.SerializeObject(p.ToList());
+            }
+            else
+            {
+                //Sẽ thay bằng search fulltext
+                var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
+                return JsonConvert.SerializeObject(p.ToList());
+            }
+        }
         //
         // GET: /Document/Details/5
 
@@ -43,15 +60,39 @@ namespace qlvb.Controllers
         //
         // GET: /Document/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            document document=new document();
-            ViewBag.id = "-1";
-            ViewBag.cat1 = "-1";
-            ViewBag.cat2 = "-1";
-            ViewBag.cat3 = "-1";
-            ViewBag.cat4 = "-1";
-            return View(document);
+            if (id == null)
+            {
+                document document = new document();
+                ViewBag.id = "-1";
+                ViewBag.cat1 = "-2";
+                ViewBag.cat2 = "-2";
+                ViewBag.cat3 = "-2";
+                ViewBag.cat4 = "-2";
+                ViewBag.year = "-2";
+                return View(document);
+            }
+            else {
+                document document = db.documents.Find(id);
+                if (document == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.id = id;
+                ViewBag.name = document.name;
+                ViewBag.code = document.code;
+                ViewBag.cat1 = document.cat1_id;
+                ViewBag.cat2 = document.cat2_id;
+                ViewBag.cat3 = document.cat3_id;
+                ViewBag.cat4 = document.cat4_id;
+                ViewBag.keyword1 = document.keyword1;
+                ViewBag.keyword2 = document.keyword2;
+                ViewBag.link = document.link;
+                ViewBag.year = document.year;
+                ViewBag.related_id = document.related_id;
+                return View(document);
+            }
         }
 
         //
@@ -209,7 +250,7 @@ namespace qlvb.Controllers
         {
             try
             {
-                if (id != -1)
+                if (id == -1)
                 {
                     document doc = new document();
                     doc.name = name;

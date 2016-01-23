@@ -1,61 +1,28 @@
-﻿@model IEnumerable<qlvb.Models.document>
-
+﻿@model PagedList.IPagedList<qlvb.Models.document>
+@using PagedList.Mvc; 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<div id="tf-services">
+<div class="container">
+<div style="width:100%;padding-top:30px;">
+    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
+    <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
+</div>
+<div style="width:100%;padding-top:30px;">
+    <h3>Loại Văn Bản</h3>
+    <p>
+        <img src="/Images/create.png">@Html.ActionLink("Thêm Mới", "Create")
+    </p>
+</div>
+<table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Ký hiệu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.auto_des)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.des)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.keyword1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.keyword2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.keyword3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cat1_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cat2_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cat3_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cat4_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date_time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.related_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.year)
+            Tên văn bản
         </th>
         <th></th>
     </tr>
@@ -63,56 +30,41 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.code)
+        </td>
+        <td align="left">
             @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.auto_des)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.des)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.keyword1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.keyword2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.keyword3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cat1_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cat2_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cat3_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cat4_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date_time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.related_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.year)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Sửa", "Create", new { id=item.id }) |            
+            @Html.ActionLink("Xóa", "Delete", new { id=item.id })
         </td>
     </tr>
 }
-
 </table>
+ <div>Trang:
+@for (int i = 1; i <= Model.PageCount; i++){
+                                        <a href="/Cat2?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
+                                    }
+</div>
+</div>
+</div>
+<script>
+    function search() {
+        var word = document.getElementById("word").value;
+        window.location.href = "/Document/Index?page=1&word=" + word;
+    }
+    function autosearch() {
+        var keyword = document.getElementById("word").value;
+        urlSearch = '/Document/getDoc?keyword=';
+        $('#word').autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);
+                search();
+                return false;
+            },
+            minLength: 1
+        });
+    }
+</script>

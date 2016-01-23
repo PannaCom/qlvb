@@ -230,7 +230,7 @@
     }
     function addNewDocument() {
         
-        if (document.getElementById("imageFile").value == "") {
+        if (idDocument==-1 && document.getElementById("imageFile").value == "") {
             alert("Chọn file văn bản");
             document.getElementById("imageFile").focus();
             return;
@@ -263,6 +263,11 @@
         if (document.getElementById("cat4").value == -2) {
             alert("Nhập cơ quan ban hành");
             document.getElementById("cat4").focus();
+            return;
+        }
+        if (document.getElementById("year").value == -2) {
+            alert("Nhập năm ban hành");
+            document.getElementById("year").focus();
             return;
         }
         var formdata = new FormData(); //FormData object
