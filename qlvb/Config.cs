@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-
+using qlvb.Models;
 namespace qlvb
 {
     public class Config
     {
         public static string sp = "____________";
+        private static qlvbEntities db=new qlvbEntities();
         public static string getCode(string content){
             try{
                 Regex titRegex = new Regex(@"Số: (.*?)/(.*?)/.*[A-Z]\s", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r
@@ -109,6 +110,21 @@ namespace qlvb
             {
                 return "";
             }
+        }
+        //public static string[] arrCat1=new string[100];
+        public static Array getCat2()
+        {
+            var p=(from q in db.cat2 select q.name).ToArray();
+            return p;
+        }
+        public static string ReplaceFirst(string text, string search, string replace)
+        {
+            int pos = text.IndexOf(search);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
         }
     }
 }

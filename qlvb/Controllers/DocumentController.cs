@@ -12,6 +12,7 @@ using System.IO;
 using System.Collections;
 using Microsoft.Office.Interop.Word;
 using System.Text;
+using System.Text.RegularExpressions;
 namespace qlvb.Controllers
 {
     public class DocumentController : Controller
@@ -45,11 +46,11 @@ namespace qlvb.Controllers
         public ActionResult Create()
         {
             document document=new document();
-           
-            ViewBag.cat1 = "1";
-            ViewBag.cat2 = "2";
-            ViewBag.cat3 = "3";
-            ViewBag.cat4 = "4";
+            ViewBag.id = "-1";
+            ViewBag.cat1 = "-1";
+            ViewBag.cat2 = "-1";
+            ViewBag.cat3 = "-1";
+            ViewBag.cat4 = "-1";
             return View(document);
         }
 
@@ -102,6 +103,8 @@ namespace qlvb.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public string UploadDocProcess(HttpPostedFileBase file)
         {
+            //Array test = Config.getCat2();
+            //return "";
             string physicalPath = HttpContext.Server.MapPath("../Files/");
             string nameFile = String.Format("{0}.doc", Guid.NewGuid().ToString());
             int countFile = Request.Files.Count;
@@ -112,6 +115,7 @@ namespace qlvb.Controllers
             string title = "";
             string p1 = "";
             string p2 = "";
+            string type_document="";
             for (int i = 0; i < countFile; i++)
             {
                 if (System.IO.File.Exists(fullPath))
@@ -144,6 +148,15 @@ namespace qlvb.Controllers
                 //}
                 string content = document.Content.Text;
                 title = Config.getTitle(content);
+                //var Regex = new Regex();
+                Array arrT=Config.getCat2();
+                foreach (string item in arrT) {
+                    if (title.StartsWith(item.ToUpperInvariant())) {
+                        title = Config.ReplaceFirst(title, item.ToUpperInvariant(), "").Trim();
+                        type_document = item;
+                        break;
+                    }
+                }
                 content = content.Replace("\r\a", " ");
                 code = Config.getCode(content);
                 year = Config.getYear(content);
@@ -153,7 +166,7 @@ namespace qlvb.Controllers
                 application.Quit();
                 break;
             }
-            return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + p2;// "/Files/" + nameFile;
+            return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
         }
         public string addNewCat(int type, string value) {
             switch (type) { 
@@ -191,6 +204,70 @@ namespace qlvb.Controllers
                     break;
             }
             return "0";
+        }
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, int cat1, int cat2, int cat3, int cat4, int year, string related_id)
+        {
+            try
+            {
+                if (id != -1)
+                {
+                    document doc = new document();
+                    doc.name = name;
+                    doc.code = code;
+                    doc.link = link;
+                    doc.keyword1 = keyword1;
+                    doc.keyword2 = keyword2;
+                    doc.keyword3 = "";
+                    doc.cat1_id = cat1;
+                    doc.cat2_id = cat2;
+                    doc.cat3_id = cat3;
+                    doc.cat4_id = cat4;
+                    string f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name;
+                    string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
+                    string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
+                    string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
+                    doc.auto_des = code + " " + name + " " + keyword1 + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    doc.date_time = DateTime.Now;
+                    doc.related_id = related_id;
+                    doc.status = 0;
+                    doc.type = 0;
+                    doc.year = year;
+                    db.documents.Add(doc);
+                    db.SaveChanges();
+                    return "1";
+                }
+                else
+                {
+                    document doc = db.documents.Find(id);
+                    doc.name = name;
+                    doc.code = code;
+                    doc.link = link;
+                    doc.keyword1 = keyword1;
+                    doc.keyword2 = keyword2;
+                    doc.keyword3 = "";
+                    doc.cat1_id = cat1;
+                    doc.cat2_id = cat2;
+                    doc.cat3_id = cat3;
+                    doc.cat4_id = cat4;
+                    string f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name;
+                    string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
+                    string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
+                    string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
+                    doc.auto_des = code + " " + name + " " + keyword1 + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    //doc.date_time = DateTime.Now;
+                    doc.related_id = related_id;
+                    //doc.status = 0;
+                    //doc.type = 0;
+                    doc.year = year;
+                    db.Entry(doc).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return "1";
+                }
+            }
+            catch (Exception ex) {
+                    return "0";
+            }
+            
         }
         //
         // GET: /Document/Delete/5
