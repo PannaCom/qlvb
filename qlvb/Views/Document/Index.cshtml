@@ -7,7 +7,7 @@
 <div id="tf-services">
 <div class="container">
 <div style="width:100%;padding-top:30px;">
-    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
+    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.word" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
     <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
 </div>
 <div style="width:100%;padding-top:30px;">
@@ -44,7 +44,7 @@
 </table>
  <div>Trang:
 @for (int i = 1; i <= Model.PageCount; i++){
-                                        <a href="/Cat2?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
+                                        <a href="/Document?word=@ViewBag.word&page=@i" style="cursor:pointer;">@i,</a>
                                     }
 </div>
 </div>

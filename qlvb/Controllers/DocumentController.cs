@@ -25,6 +25,7 @@ namespace qlvb.Controllers
         public ActionResult Index(string word, int? page)
         {
             if (word == null) word = "";
+            ViewBag.word = word;
             int pageSize = 20;
             int pageNumber = (page ?? 1);
             var p = (from q in db.documents where q.auto_des.Contains(word) select q).OrderBy(o => o.name).Take(1000);
@@ -32,7 +33,7 @@ namespace qlvb.Controllers
             //return View(db.cat2.ToList());
         }
         public string getDoc(string keyword) {
-            if (keyword != null && keyword.Contains("/"))
+            if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
             {
                 var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 return JsonConvert.SerializeObject(p.ToList());
@@ -331,8 +332,14 @@ namespace qlvb.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             document document = db.documents.Find(id);
+            string physicalPath = HttpContext.Server.MapPath("/Files/");
+            string nameFile = document.link;
+            string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
             db.documents.Remove(document);
             db.SaveChanges();
+            if (System.IO.File.Exists(fullPath)) {
+                System.IO.File.Delete(fullPath);
+            }
             return RedirectToAction("Index");
         }
 
