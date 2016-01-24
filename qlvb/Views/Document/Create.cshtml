@@ -95,7 +95,6 @@
         <input type="hidden" id="keyword1" name="keyword1" value="@ViewBag.keyword1">
         <input type="hidden" id="keyword2" name="keyword2" value="@ViewBag.keyword2">
         <input type="hidden" id="link" name="link" value="@ViewBag.link">
-        <input type="hidden" id="year" name="year" value="@ViewBag.year">
         <input type="hidden" id="related_id" name="related_id" value="@ViewBag.related_id">  
         <input type="button" value="Save" onclick="addNewDocument();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>      
         <a href="/Document/Index">&nbsp;Quay lại danh sách</a>
@@ -152,7 +151,7 @@
                 $('#keyword2').val(items[6]);
                 $('#year').val(items[5]);
                 $('#namelabel').show();
-                $('#namelabel').attr("src",'https://docs.google.com/viewer?url=http://localhost:59574/Files/'+items[3]+'&embedded=true');    
+                $('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');    
                 hideLoadingImage();    
             }
         }
@@ -271,6 +270,7 @@
             document.getElementById("year").focus();
             return;
         }
+        document.getElementById("btnAddNew").disabled=true;
         var formdata = new FormData(); //FormData object
 
         formdata.append("id", idDocument);
@@ -292,7 +292,10 @@
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if (xhr.responseText=="1"){
                     window.location.href="/Document/Index";
+                }else{
+                    alert("Lỗi định dạng văn bản");
                 }
+                document.getElementById("btnAddNew").disabled=false;
             }
         }
     }

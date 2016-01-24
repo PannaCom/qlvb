@@ -10,6 +10,7 @@ namespace qlvb
     {
         public static string sp = "____________";
         private static qlvbEntities db=new qlvbEntities();
+        public static string domain = "http://localhost:59574/";
         public static string getCode(string content){
             try{
                 Regex titRegex = new Regex(@"Số: (.*?)/(.*?)/.*[A-Z]\s", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r
@@ -125,6 +126,27 @@ namespace qlvb
                 return text;
             }
             return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
+        public static string getCatNameById(int type,int? id) { 
+            switch(type){
+                case 1:
+                    string p = db.cat1.Where(o => o.id == id).FirstOrDefault().name;
+                    return p;
+                    break;
+                case 2:
+                    string p2 = db.cat2.Where(o => o.id == id).FirstOrDefault().name;
+                    return p2;
+                    break;
+                case 3:
+                    string p3 = db.cat3.Where(o => o.id == id).FirstOrDefault().name;
+                    return p3;
+                    break;
+                case 4:
+                    string p4 = db.cat4.Where(o => o.id == id).FirstOrDefault().name;
+                    return p4;
+                    break;
+            }
+            return "";
         }
     }
 }

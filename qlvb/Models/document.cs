@@ -31,5 +31,6 @@ namespace qlvb.Models
         public Nullable<int> year { get; set; }
         public string link { get; set; }
         public Nullable<byte> status { get; set; }
+        public Nullable<int> views { get; set; }
     }
 }

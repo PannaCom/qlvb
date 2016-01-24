@@ -5,117 +5,38 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
 
-<fieldset>
-    <legend>document</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.name)
+<div id="tf-services">
+    <div class="container">
+        <div style="width:100%;text-align:center;">  
+        
+        <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link/&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>      
+        <table style="width:100%;text-align:center;">
+            <tr>
+                <td class="label">Tiêu đề *:</td><td >@Model.name</td>
+            </tr>
+            <tr>
+                <td class="label">Ký hiệu *:</td><td >@Model.code</td>
+            </tr>
+            <tr>
+                <td class="label">Lĩnh vực *:</td><td >@qlvb.Config.getCatNameById(1,@Model.cat1_id)</td>
+            </tr>
+            <tr>        
+                <td class="label">Loại văn bản *:</td><td >@qlvb.Config.getCatNameById(2,@Model.cat2_id)</td>     
+            </tr>
+            <tr>       
+                <td class="label">Người ký *:</td><td >@qlvb.Config.getCatNameById(3,@Model.cat3_id)</td>
+            </tr>
+            <tr>
+                <td class="label">Cơ quan ban hành *:</td><td >@qlvb.Config.getCatNameById(4,@Model.cat4_id)</td>
+            </tr>
+            <tr>
+                <td class="label">Năm ban hành *:</td><td >@Model.year</td>
+             </tr>
+        </table> 
+        <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--Quay lại danh sách</a></div>
+        
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.auto_des)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.auto_des)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.des)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.des)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.code)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.code)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.keyword1)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.keyword1)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.keyword2)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.keyword2)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.keyword3)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.keyword3)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.cat1_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.cat1_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.cat2_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.cat2_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.cat3_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.cat3_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.cat4_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.cat4_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.type)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.type)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.date_time)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.date_time)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.related_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.related_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.year)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.year)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</div>
+</div>

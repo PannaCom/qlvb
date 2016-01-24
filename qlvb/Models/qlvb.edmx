@@ -89,6 +89,7 @@
           <Property Name="year" Type="int" />
           <Property Name="link" Type="nvarchar" MaxLength="150" />
           <Property Name="status" Type="tinyint" />
+          <Property Name="views" Type="int" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -178,6 +179,7 @@
           <Property Type="Int32" Name="year" />
           <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="Byte" Name="status" />
+          <Property Type="Int32" Name="views" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -248,6 +250,7 @@
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="views" ColumnName="views" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="year" ColumnName="year" />

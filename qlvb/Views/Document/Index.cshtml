@@ -24,6 +24,9 @@
         <th>
             Tên văn bản
         </th>
+        <th>
+            Người ký
+        </th>
         <th></th>
     </tr>
 
@@ -32,11 +35,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.code)
         </td>
-        <td align="left">
+        <td align="left" >
             @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
-            @Html.ActionLink("Sửa", "Create", new { id=item.id }) |            
+            @qlvb.Config.getCatNameById(3,@item.cat3_id)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Create", new { id=item.id }) |   
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.id }) |            
             @Html.ActionLink("Xóa", "Delete", new { id=item.id })
         </td>
     </tr>

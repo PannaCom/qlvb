@@ -1,4 +1,160 @@
-﻿@{
+﻿
+@model PagedList.IPagedList<qlvb.Controllers.HomeController.searchitem>
+@using PagedList.Mvc; 
+@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div id="tf-services">
+<div class="container">
+    <div style="width:100%;padding-top:30px;">
+        <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
+        <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
+    </div>
+    <div style="width:100%;padding-top:30px;">
+       <div style="width:100%;padding-top:30px;"><div class="span9">
+           @if (ViewBag.keyword != "")
+           {
+                <text> tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></text>
+           }
+           else
+           {
+               <text> <span>Xem nhiều nhất</span></text>
+           }
+               
+           </div><div class="span4">
+               @if (ViewBag.keyword != "")
+               {
+                    <text>Sắp xếp theo:
+                            <select id="order" onchange="chooseOder();">
+                              <option value="-1">Chọn</option>  
+                              <option value="1">Phù hợp nhất</option>
+                              <option value="2">Mới nhất</option>
+                              <option value="3">Cũ nhất</option>
+                              <option value="4">Xem nhiều nhất</option>
+                            </select>
+                    </text>
+               }
+       </div></div> 
+       <table class="table">
+        <tr>
+            <th>
+                Ký hiệu
+            </th>
+            <th>
+                Tên văn bản
+            </th>
+            <th>
+                Lĩnh vực
+            </th>
+            <th>Người ký</th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Document/Details/@item.id" target="_blank">@item.code</a>
+                </td>
+                <td align="left" >
+                    @if (item.RANK > 0)
+                    {
+                        <a href="/Document/Details/@item.id" target="_blank"><b>@item.name</b></a>
+                    }
+                    else { @item.name }
+                </td>
+                <td>
+                    @qlvb.Config.getCatNameById(1, @item.cat1_id)
+                </td>
+                <td>
+                     @qlvb.Config.getCatNameById(3, @item.cat3_id)
+                </td>
+            </tr>
+        }
+        </table>
+ <div>Trang:
+    @for (int i = 1; i <= Model.PageCount; i++)
+    {
+           <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
+    }
+</div>
+    </div>
+</div>
+</div>
+<script>
+    var pg=@ViewBag.page;
+    var order="@ViewBag.order";
+    var to="@ViewBag.to";
+    if (order.toString().indexOf("RANK")>=0){
+        $("#order").val(1);
+    }
+    if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Desc")>=0){
+        $("#order").val(2);
+    }
+    if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Asc")>=0){
+        $("#order").val(3);
+    }
+    if (order.toString().indexOf("total_views")>=0){
+        $("#order").val(4);
+    }
+    function chooseOder(){
+        if ($("#order").val()=="1"){
+            setorder('RANK','Desc');
+        }else
+            if ($("#order").val()=="2"){
+                setorder('id','Desc');
+            }
+            else
+                if ($("#order").val()=="3"){
+                    setorder('id','Asc');
+                }
+                else
+                    if ($("#order").val()=="4"){
+                        setorder('views','Desc');
+                    }
+    }
+    function setorder(field,t) {
+        order=field;
+        to=t;
+        pg=1;
+        search();
+    }
+    function setpage(page) {
+        pg=page;
+        search();
+    }
+    function search() {
+        var url = "/?";
+        var k = $("#word").val();
+        if (k == "") {
+            return;
+        }
+        var f1="";
+        var f2="";
+        var f3="";
+        var f4="";
+        f1="@ViewBag.f1";
+        f2="@ViewBag.f2";
+        f3="@ViewBag.f3";
+        f4="@ViewBag.f4";
+        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&order="+order+"&to="+to+"&pg="+pg;
+        window.location.href = url;
+    }
+    //function search() {
+    //    var word = document.getElementById("word").value;
+    //    window.location.href = "/Document/Index?page=1&word=" + word;
+    //}
+    function autosearch() {
+        var keyword = document.getElementById("word").value;
+        urlSearch = '/Document/getDoc?keyword=';
+        $('#word').autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);
+                search();
+                return false;
+            },
+            minLength: 1
+        });
+    }
+</script>

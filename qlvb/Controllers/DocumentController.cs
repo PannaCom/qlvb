@@ -28,20 +28,30 @@ namespace qlvb.Controllers
             ViewBag.word = word;
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            var p = (from q in db.documents where q.auto_des.Contains(word) select q).OrderBy(o => o.name).Take(1000);
+            var p = (from q in db.documents where q.auto_des.Contains(word) select q).OrderBy(o => o.code).Take(1000);
             return View(p.ToPagedList(pageNumber, pageSize));
             //return View(db.cat2.ToList());
         }
+        
         public string getDoc(string keyword) {
             if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
             {
-                var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
+                //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
+                string query="SELECT top 100 ";
+                 query+="FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'"+keyword+"') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+			     query+="order by Rank Desc";
+                 var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
             else
             {
                 //Sẽ thay bằng search fulltext
-                var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
+                //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
+                //return JsonConvert.SerializeObject(p.ToList());
+                string query = "SELECT top 100 ";
+                query += "FT_TBL.name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "order by Rank Desc";
+                var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
         }
@@ -55,6 +65,7 @@ namespace qlvb.Controllers
             {
                 return HttpNotFound();
             }
+            db.Database.ExecuteSqlCommand("update documents set views=views+1 where id=" + id);
             return View(document);
         }
 
@@ -92,6 +103,7 @@ namespace qlvb.Controllers
                 ViewBag.link = document.link;
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
+
                 return View(document);
             }
         }
@@ -274,6 +286,7 @@ namespace qlvb.Controllers
                     doc.status = 0;
                     doc.type = 0;
                     doc.year = year;
+                    doc.views = 0;
                     db.documents.Add(doc);
                     db.SaveChanges();
                     return "1";
