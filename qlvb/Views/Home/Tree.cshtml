@@ -1,0 +1,138 @@
+﻿
+@model PagedList.IPagedList<qlvb.Controllers.HomeController.searchitem>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div id="tf-services">
+<div class="container">    
+    <div style="width:100%;padding-top:30px;">
+       <div style="width:100%;padding-top:30px;"><div class="span9">
+           tìm thấy (@Model.TotalItemCount) - <span>văn bản</span>
+           </div><div class="span4">
+               
+                    Sắp xếp theo:
+                            <select id="order" onchange="chooseOder();">
+                              <option value="-1">Chọn</option>  
+                              <option value="1">Ký hiệu văn bản</option>                              
+                              <option value="2">Xem nhiều nhất</option>
+                            </select>
+                    
+               
+       </div></div> 
+       <table class="table">
+        <tr>
+            <th>
+                Ký hiệu
+            </th>
+            <th>
+                Tên văn bản
+            </th>
+            <th>
+                Lĩnh vực
+            </th>
+            <th>Người ký</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Document/Details/@item.id" target="_blank">@item.code</a>
+                </td>
+                <td align="left" >
+                    @item.name
+                </td>
+                <td>
+                    @qlvb.Config.getCatNameById(1, @item.cat1_id)
+                </td>
+                <td>
+                     @qlvb.Config.getCatNameById(3, @item.cat3_id)
+                </td>
+            </tr>
+        }
+        </table>
+ <div>Trang:
+    @for (int i = 1; i <= Model.PageCount; i++)
+    {
+           <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
+    }
+</div>
+    </div>
+</div>
+</div>
+<script>
+    var pg=@ViewBag.page;
+    var order="@ViewBag.order";
+    var to="@ViewBag.to";
+    if (order.toString().indexOf("code")>=0){
+        $("#order").val(1);
+    }
+    if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Desc")>=0){
+        $("#order").val(2);
+    }
+    //if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Asc")>=0){
+    //    $("#order").val(3);
+    //}
+    //if (order.toString().indexOf("total_views")>=0){
+    //    $("#order").val(4);
+    //}
+    function chooseOder(){
+        if ($("#order").val()=="1"){
+            setorder('code','asc');
+        }else
+            if ($("#order").val()=="2"){
+                setorder('views','desc');
+            }
+            //else
+            //    if ($("#order").val()=="3"){
+            //        setorder('id','Asc');
+            //    }
+            //    else
+            //        if ($("#order").val()=="4"){
+            //            setorder('views','Desc');
+            //        }
+    }
+    function setorder(field,t) {
+        order=field;
+        to=t;
+        pg=1;
+        search();
+    }
+    function setpage(page) {
+        pg=page;
+        search();
+    }
+    function search() {
+        var url = "/Tree?";
+        
+        var f1="";
+        var f2="";
+        var f3="";
+        var f4="";
+        f1="@ViewBag.f1";
+        f2="@ViewBag.f2";
+        f3="@ViewBag.f3";
+        f4="@ViewBag.f4";
+        url += "f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&order="+order+"&to="+to+"&pg="+pg;
+        window.location.href = url;
+    }
+    //function search() {
+    //    var word = document.getElementById("word").value;
+    //    window.location.href = "/Document/Index?page=1&word=" + word;
+    //}
+    //function autosearch() {
+    //    var keyword = document.getElementById("word").value;
+    //    urlSearch = '/Document/getDoc?keyword=';
+    //    $('#word').autocomplete({
+    //        source: urlSearch + keyword,
+    //        select: function (event, ui) {
+    //            $(event.target).val(ui.item.value);
+    //            search();
+    //            return false;
+    //        },
+    //        minLength: 1
+    //    });
+    //}
+</script>

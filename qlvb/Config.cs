@@ -148,5 +148,22 @@ namespace qlvb
             }
             return "";
         }
+        public static string  makeQuery(string k,string cols,string f1,string f2,string f3,string f4){
+            string query="select catid,name,count(id) as total from ";
+            query+="(select catid,name,id from ";
+            query += "(select id as catid,name from cat" + cols + ") as A left join ";
+            query += "(select FT_TBL.cat" + cols + "_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'"+k+"')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY]) as B on A.catid=B.cat"+cols+"_id ";
+            
+                string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
+                for (int f = 0; f < filter.Length; f++)
+                {
+                    if (filter[f] != null && filter[f] != "")
+                    {
+                        query += " and (cat" + (f+1) + "_id="+filter[f]+") ";
+                    }
+                }
+            query += " ) as C group by catid,name ";
+            return query;
+        }
     }
 }

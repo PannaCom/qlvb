@@ -11,11 +11,17 @@
         <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
     </div>
+    <div style="width:100%;float:left;display:block;">
+        @Html.Raw(@ViewBag.cat1)        
+    </div>
+    <div style="width:100%;float:left;display:block;">
+        @Html.Raw(@ViewBag.cat2)        
+    </div>
     <div style="width:100%;padding-top:30px;">
        <div style="width:100%;padding-top:30px;"><div class="span9">
            @if (ViewBag.keyword != "")
            {
-                <text> tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></text>
+                <text> <h5>Tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></h5></text>
            }
            else
            {
@@ -85,6 +91,10 @@
     var pg=@ViewBag.page;
     var order="@ViewBag.order";
     var to="@ViewBag.to";
+    var currentCat1="@ViewBag.f1";
+    var currentCat2="@ViewBag.f2";
+    var currentCat3="@ViewBag.f3";
+    var currentCat4="@ViewBag.f4";
     if (order.toString().indexOf("RANK")>=0){
         $("#order").val(1);
     }
@@ -96,6 +106,23 @@
     }
     if (order.toString().indexOf("total_views")>=0){
         $("#order").val(4);
+    }
+    function setCat(type,val){
+        switch(type){
+            case 1:
+                currentCat1=val;
+                break;
+            case 2:
+                currentCat2=val;
+                break;
+            case 3:
+                currentCat3=val;
+                break;
+            case 4:
+                currentCat4=val;
+                break;
+        }
+        search();
     }
     function chooseOder(){
         if ($("#order").val()=="1"){
@@ -133,10 +160,10 @@
         var f2="";
         var f3="";
         var f4="";
-        f1="@ViewBag.f1";
-        f2="@ViewBag.f2";
-        f3="@ViewBag.f3";
-        f4="@ViewBag.f4";
+        f1=currentCat1;
+        f2=currentCat2;
+        f3=currentCat3;
+        f4=currentCat4;
         url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&order="+order+"&to="+to+"&pg="+pg;
         window.location.href = url;
     }
