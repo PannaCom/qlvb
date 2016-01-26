@@ -11,11 +11,17 @@
         <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
     </div>
-    <div style="width:100%;float:left;display:block;">
+    <div style="width:100%;float:left;display:block;text-align: left;">
         @Html.Raw(@ViewBag.cat1)        
     </div>
-    <div style="width:100%;float:left;display:block;">
+    <div style="width:100%;float:left;display:block;text-align: left;">
         @Html.Raw(@ViewBag.cat2)        
+    </div>
+    <div style="width:100%;float:left;display:block;text-align: left;">
+        @Html.Raw(@ViewBag.cat3)        
+    </div>
+    <div style="width:100%;float:left;display:block;text-align: left;">
+        @Html.Raw(@ViewBag.cat4)        
     </div>
     <div style="width:100%;padding-top:30px;">
        <div style="width:100%;padding-top:30px;"><div class="span9">
@@ -25,7 +31,7 @@
            }
            else
            {
-               <text> <span>Xem nhiều nhất</span></text>
+               <text> <h5>Xem nhiều nhất</h5></text>
            }
                
            </div><div class="span4">
@@ -35,9 +41,9 @@
                             <select id="order" onchange="chooseOder();">
                               <option value="-1">Chọn</option>  
                               <option value="1">Phù hợp nhất</option>
-                              <option value="2">Mới nhất</option>
-                              <option value="3">Cũ nhất</option>
-                              <option value="4">Xem nhiều nhất</option>
+                             @* <option value="2">Mới nhất</option>
+                              <option value="3">Cũ nhất</option>*@
+                              <option value="2">Xem nhiều nhất</option>
                             </select>
                     </text>
                }
@@ -67,7 +73,7 @@
                     {
                         <a href="/Document/Details/@item.id" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
                     }
-                    else { @item.name }
+                    else { <a href="/Document/Details/@item.id" target="_blank" >@item.name </a>}
                 </td>
                 <td>
                     @qlvb.Config.getCatNameById(1, @item.cat1_id)
@@ -98,14 +104,14 @@
     if (order.toString().indexOf("RANK")>=0){
         $("#order").val(1);
     }
-    if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Desc")>=0){
+    //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Desc")>=0){
+    //    $("#order").val(2);
+    //}
+    //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Asc")>=0){
+    //    $("#order").val(3);
+    //}
+    if (order.toString().indexOf("views")>=0){
         $("#order").val(2);
-    }
-    if (order.toString().indexOf("id")>=0 && to.toString().indexOf("Asc")>=0){
-        $("#order").val(3);
-    }
-    if (order.toString().indexOf("total_views")>=0){
-        $("#order").val(4);
     }
     function setCat(type,val){
         switch(type){
@@ -127,16 +133,17 @@
     function chooseOder(){
         if ($("#order").val()=="1"){
             setorder('RANK','Desc');
-        }else
-            if ($("#order").val()=="2"){
-                setorder('id','Desc');
-            }
-            else
-                if ($("#order").val()=="3"){
-                    setorder('id','Asc');
-                }
+        }
+        //else
+        //    if ($("#order").val()=="2"){
+        //        setorder('code','Desc');
+        //    }
+        //    else
+        //        if ($("#order").val()=="3"){
+        //            setorder('code','Asc');
+        //        }
                 else
-                    if ($("#order").val()=="4"){
+                    if ($("#order").val()=="2"){
                         setorder('views','Desc');
                     }
     }

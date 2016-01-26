@@ -1122,3 +1122,9 @@ ul.meta-tags li:last-child:after { content: ' ' }
     color:#6f6f6f;
     font-weight:bold;
 }
+.filteritem {
+    padding-left:3px;
+    position:relative;
+    font-size:12px;
+    
+}

@@ -76,37 +76,76 @@ namespace qlvb.Controllers
                         string query4 = Config.makeQuery(k, "4", f1, f2, f3, f4);
                         int jj = 0;
                         string scat1 = "", scat2 = "", scat3 = "", scat4 = "";
-                        if (f1 != "")
+                        try
                         {
                             var cat1 = db.Database.SqlQuery<catitem>(query1).ToList();
                             scat1 = "<b>Lĩnh vực:</b>";
+                            string color = "";
                             for (jj = 0; jj < cat1.Count; jj++)
                             {
-                                scat1 += "<a onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
+                                color = "";
+                                if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
+                                else if (cat1[jj].total > 0) color = "color:blue;";
+                                scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
                             }
                         }
-                        if (f2 != "")
+                        catch (Exception exc1) { 
+                        }
+                        try
                         {
                             var cat2 = db.Database.SqlQuery<catitem>(query2).ToList();
                             scat2 = "<b>Loại văn bản:</b>";
+                            string color = "";
                             for (jj = 0; jj < cat2.Count; jj++)
                             {
-                                scat2 += "<a onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;'>" + cat2[jj].name + "(" + cat2[jj].total + ")</a>,";
+                                color = "";
+                                if (cat2[jj].catid.ToString() == f2) color = "color:red;font-weight:bold;";
+                                else if (cat2[jj].total > 0) color = "color:blue;";
+                                scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "(" + cat2[jj].total + ")</a>,";
                             }
                         }
-                        if (f3 != "")
+                        catch (Exception exc2)
                         {
-                            var cat3 = db.Database.SqlQuery<catitem>(query2).ToList();
-                            scat3 = "<b>Người ký:</b>";
                         }
-                        if (f4 != "")
+                        try
+                        {
+                            var cat3 = db.Database.SqlQuery<catitem>(query3).ToList();
+                            scat3 = "<b>Người ký:</b>";
+                            string color = "";
+                            for (jj = 0; jj < cat3.Count; jj++)
+                            {
+                                color = "";
+                                if (cat3[jj].catid.ToString() == f3) color = "color:red;font-weight:bold;";
+                                else if (cat3[jj].total > 0) color = "color:blue;";
+                                scat3 += "<a class='filteritem' onclick='setCat(3," + cat3[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat3[jj].name + "(" + cat3[jj].total + ")</a>,";
+                            }
+                        }
+                        catch (Exception exc3)
+                        {
+                        }
+                        try
                         {
                             var cat4 = db.Database.SqlQuery<catitem>(query4).ToList();
                             scat4 = "<b>Cơ quan ban hành:</b>";
+                            string color = "";
+                            for (jj = 0; jj < cat4.Count; jj++)
+                            {
+                                color = "";
+                                if (cat4[jj].catid.ToString() == f4)
+                                    color = "color:red;font-weight:bold;";
+                                else if (cat4[jj].total > 0) color = "color:blue;";
+                                
+                                scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "(" + cat4[jj].total + ")</a>,";
+                            }
+                        }
+                        catch (Exception exc4)
+                        {
                         }
                         
                         ViewBag.cat1 = scat1;
                         ViewBag.cat2 = scat2;
+                        ViewBag.cat3 = scat3;
+                        ViewBag.cat4 = scat4;
                     }
                     catch (Exception ex2)
                     {
