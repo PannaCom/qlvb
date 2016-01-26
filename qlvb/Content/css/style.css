@@ -1125,6 +1125,16 @@ ul.meta-tags li:last-child:after { content: ' ' }
 .filteritem {
     padding-left:3px;
     position:relative;
-    font-size:12px;
-    
+    font-size:12px;    
+}
+.refinements-summary a {
+    margin-bottom: 5px;
+    padding: 6px 5px;
+    color: #1a1a1a;
+    background-color: #eee;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-radius: 6px;
+    text-transform: none;
+    vertical-align: top;
 }

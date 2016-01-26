@@ -165,17 +165,47 @@ namespace qlvb
                 query += " ) as C group by catid,name order by name";
             return query;
         }
-        public static string tags(string keyword)
+        public static string tags(string f1,string f2, string f3,string f4)
         {
-            string[] all = keyword.Split(',');
             string val = "";
-            for (int i = 0; i < all.Length; i++)
+
+            if (f1 != "")
             {
-                if (all[i] != "")
+                int tf1 = -1;
+                bool res = Int32.TryParse(f1, out tf1);
+                if (res == true)
                 {
-                    val += "<a style=\"cursor:pointer;\" onclick=\"removeFilter('" + all[i] + "');\">" + all[i] + "</a>,";
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(1,'');\">" + getCatNameById(1, tf1) + "</a>,";
                 }
             }
+            if (f2 != "")
+            {
+                int tf2 = -1;
+                bool res = Int32.TryParse(f2, out tf2);
+                if (res == true)
+                {
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(2,'');\">" + getCatNameById(2, tf2) + "</a>,";
+                }
+            }
+            if (f3 != "")
+            {
+                int tf3 = -1;
+                bool res = Int32.TryParse(f3, out tf3);
+                if (res == true)
+                {
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(3,'');\">" + getCatNameById(3, tf3) + "</a>,";
+                }
+            }
+            if (f4 != "")
+            {
+                int tf4 = -1;
+                bool res = Int32.TryParse(f4, out tf4);
+                if (res == true)
+                {
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(4,'');\">" + getCatNameById(4, tf4) + "</a>,";
+                }
+            }
+           
             return val;
         }
     }

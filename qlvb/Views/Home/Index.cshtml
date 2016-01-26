@@ -2,9 +2,9 @@
 @model PagedList.IPagedList<qlvb.Controllers.HomeController.searchitem>
 @using PagedList.Mvc; 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Tìm Kiếm Văn Bản Quy Phạm";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    string allFilter =ViewBag.f1 + ViewBag.f2 + ViewBag.f3 + ViewBag.f4;
+    string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
 }
 <div id="tf-services">
 <div class="container">
@@ -12,23 +12,27 @@
         <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
     </div>
-    <div style="width:100%;float:left;display:block;text-align: left;">
+    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat1)        
     </div>
-    <div style="width:100%;float:left;display:block;text-align: left;">
+    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat2)        
     </div>
-    <div style="width:100%;float:left;display:block;text-align: left;">
+    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat3)        
     </div>
-    <div style="width:100%;float:left;display:block;text-align: left;">
+    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat4)        
     </div>
-    <section class="refinements-summary">
-        @Html.Raw(qlvb.Config.tags(allFilter))
-                                @if (allFilter != "" && allFilter != null)
-                                {<a style="cursor:pointer;" onclick="removeAllFilter();">xóa bộ lọc</a>}
-    </section>
+    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+        <section class="refinements-summary">
+            @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != ""){
+             <b>Bộ lọc: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1,@ViewBag.f2,@ViewBag.f3,@ViewBag.f4))
+                                    
+                                    <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
+            }
+        </section>
+    </div>
     <div style="width:100%;padding-top:30px;">
        <div style="width:100%;padding-top:30px;"><div class="span9">
            @if (ViewBag.keyword != "")
@@ -79,7 +83,8 @@
                     {
                         <a href="/Document/Details/@item.id" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
                     }
-                    else { <a href="/Document/Details/@item.id" target="_blank" >@item.name </a>}
+                    else
+                    { <a href="/Document/Details/@item.id" target="_blank" >@item.name </a>}
                 </td>
                 <td>
                     @qlvb.Config.getCatNameById(1, @item.cat1_id)
@@ -118,6 +123,13 @@
     //}
     if (order.toString().indexOf("views")>=0){
         $("#order").val(2);
+    }
+    function resetCat(){
+        currentCat1="";
+        currentCat2="";
+        currentCat3="";
+        currentCat4="";
+        search();
     }
     function setCat(type,val){
         switch(type){
