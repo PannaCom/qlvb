@@ -55,6 +55,9 @@ namespace qlvb.Controllers
                 return JsonConvert.SerializeObject(p.ToList());
             }
         }
+        public string checkDuplicate(string code){
+            return db.documents.Any(o => o.code == code).ToString();
+        }
         //
         // GET: /Document/Details/5
 

@@ -81,7 +81,7 @@
         
         <iframe id="namelabel" src="https://docs.google.com/viewer?url=http://vbpl.vn/TW/Lists/vbpq/Attachments/96251/06.2016.ND.CP.doc&embedded=true" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      
         <label class="label" >Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" value="@ViewBag.name" style="width:100%;display:block;float:left;position:relative;">
-        <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onkeyup="autocheck();">
+        <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onblur="checkDuplicate(this.value);">
         <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
         <script>getCat(1,"@ViewBag.cat1");</script>
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>       
@@ -152,10 +152,27 @@
                 $('#year').val(items[5]);
                 $('#namelabel').show();
                 $('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');    
+                checkDuplicate(items[0]);
                 hideLoadingImage();    
             }
         }
         return false;
+    }
+    function checkDuplicate(code){
+        var formdata = new FormData(); //FormData object
+        formdata.append("code", code);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Document/checkDuplicate');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //alert(xhr.responseText);
+                if (xhr.responseText=="True"){
+                    alert("Văn bản có mã là "+code+" đã tồn tại trong hệ thống. Kiểm tra lại!");
+                    document.getElementById("code").focus();
+                }
+            }
+        }
     }
     function chooseCat(type) {
         
