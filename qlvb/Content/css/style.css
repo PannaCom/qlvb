@@ -55,7 +55,7 @@ a:focus {
     height: auto;
 }
 .navbar-brand img {
-    height: 30px;
+    /*height: 30px;*/
     width: auto;
 }
 .navbar-brand { padding: 12px 15px }
