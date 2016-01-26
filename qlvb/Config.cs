@@ -165,5 +165,18 @@ namespace qlvb
                 query += " ) as C group by catid,name order by name";
             return query;
         }
+        public static string tags(string keyword)
+        {
+            string[] all = keyword.Split(',');
+            string val = "";
+            for (int i = 0; i < all.Length; i++)
+            {
+                if (all[i] != "")
+                {
+                    val += "<a style=\"cursor:pointer;\" onclick=\"removeFilter('" + all[i] + "');\">" + all[i] + "</a>,";
+                }
+            }
+            return val;
+        }
     }
 }

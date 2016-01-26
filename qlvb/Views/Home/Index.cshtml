@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string allFilter =ViewBag.f1 + ViewBag.f2 + ViewBag.f3 + ViewBag.f4;
 }
 <div id="tf-services">
 <div class="container">
@@ -24,6 +25,9 @@
         @Html.Raw(@ViewBag.cat4)        
     </div>
     <section class="refinements-summary">
+        @Html.Raw(qlvb.Config.tags(allFilter))
+                                @if (allFilter != "" && allFilter != null)
+                                {<a style="cursor:pointer;" onclick="removeAllFilter();">xóa bộ lọc</a>}
     </section>
     <div style="width:100%;padding-top:30px;">
        <div style="width:100%;padding-top:30px;"><div class="span9">
