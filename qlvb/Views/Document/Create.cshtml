@@ -22,6 +22,7 @@
     var idDocument=@ViewBag.id;
     //var keyword1="";
     //var keyword2="";
+    
     function getCat(type, id) {
         var formdata = new FormData(); //FormData object
         formdata.append("type", type);
@@ -79,9 +80,11 @@
         <div style="width:100%;">
         <label class="label">Chọn file *:</label><input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
         
-        <iframe id="namelabel" src="https://docs.google.com/viewer?url=http://vbpl.vn/TW/Lists/vbpq/Attachments/96251/06.2016.ND.CP.doc&embedded=true" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      
+        @*<iframe id="namelabel" src="" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      *@
+        <a style="width:100%;display:none;float:left;position:relative;color:blue;text-decoration:solid;" id="viewdoc" target="_blank" href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@ViewBag.link">Upload thành công, Xem toàn văn nội dung</a>    
         <label class="label" >Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" value="@ViewBag.name" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onblur="checkDuplicate(this.value);">
+        <label class="label">Nội dung tóm tắt(Lấy từ điều 1 của văn bản) *:</label><textarea class="form-control" id="keyword1" name="keyword1" rows="8">@Html.Raw(@ViewBag.keyword1)</textarea>
         <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
         <script>getCat(1,"@ViewBag.cat1");</script>
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>       
@@ -92,11 +95,11 @@
         <script>getCat(4, "@ViewBag.cat4");</script>   
         <label class="label">Năm ban hành *:</label><select id="year" name="year" class="form-control" onchange="chooseCat(4);"></select> 
         <script>getYear(@ViewBag.year);</script>         
-        <input type="hidden" id="keyword1" name="keyword1" value="@ViewBag.keyword1">
+        
         <input type="hidden" id="keyword2" name="keyword2" value="@ViewBag.keyword2">
         <input type="hidden" id="link" name="link" value="@ViewBag.link">
         <input type="hidden" id="related_id" name="related_id" value="@ViewBag.related_id">  
-        <input type="button" value="Save" onclick="addNewDocument();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>      
+        <input type="button" id="btnAddNew" value="Save" onclick="addNewDocument();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>      
         <a href="/Document/Index">&nbsp;Quay lại danh sách</a>
         @*<label class="label">Tập từ khóa quan trọng 2:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ nhì do phần mềm tự động nhận dạng" id="keyword2" name="keyword2" style="width:100%;display:block;float:left;position:relative;" ></textarea>
         <label class="label">Tập từ khóa quan trọng 3:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ ba do phần mềm tự động nhận dạng" id="keyword3" name="keyword3" style="width:100%;display:block;float:left;position:relative;" ></textarea>*@
@@ -105,6 +108,7 @@
     </div>
 </div>
 <script>
+    if (idDocument!=-1) $("#viewdoc").show();
     function uploadProcess() {
      
         var formdata = new FormData(); //FormData object
@@ -134,31 +138,36 @@
                 //$('#image').val(xhr.responseText);
                 //$('#dvimagefile').show();
                 //hideLoadingImage();
-                //alert(xhr.responseText);
-                var items = xhr.responseText.split("____________");
-                $('#name').val(items[1]);
-                $('#code').val(items[0]);                
-                $('#link').val(items[3]);
-                var text2 = items[4];
-                var ddcat2 = document.getElementById('cat2');
-                for (var i = 0; i < ddcat2.options.length; i++) {
-                    if (ddcat2.options[i].text === text2) {
-                        ddcat2.selectedIndex = i;
-                        break;
-                    }
-                }
-                $('#keyword1').val(items[2]);
+                alert("Upload thành công, nhập các thuộc tính cho văn bản.");
+                //console.log(xhr.responseText);
+                //var items = xhr.responseText.split("____________");
+                //$('#name').val(items[1]);
+                //$('#code').val(items[0]);                
+                //$('#link').val(items[3]);
+                //var text2 = items[4];
+                //var ddcat2 = document.getElementById('cat2');
+                //for (var i = 0; i < ddcat2.options.length; i++) {
+                //    if (ddcat2.options[i].text === text2) {
+                //        ddcat2.selectedIndex = i;
+                //        break;
+                //    }
+                //}
+                @*$('#keyword1').val(items[2]);
                 $('#keyword2').val(items[6]);
                 $('#year').val(items[5]);
                 $('#namelabel').show();
-                $('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');    
-                checkDuplicate(items[0]);
+                //$('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');  *@  
+                $('#viewdoc').attr("href",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+xhr.responseText+'&embedded=true');    
+                //checkDuplicate(items[0]);
+                $('#viewdoc').show();
+                $('#link').val(xhr.responseText);
                 hideLoadingImage();    
             }
         }
         return false;
     }
     function checkDuplicate(code){
+        if (idDocument!=-1 && code=="@ViewBag.code") return;
         var formdata = new FormData(); //FormData object
         formdata.append("code", code);
         var xhr = new XMLHttpRequest();
@@ -260,6 +269,11 @@
         if (document.getElementById("code").value == "") {
             alert("Nhập ký hiệu văn bản");
             document.getElementById("code").focus();
+            return;
+        }
+        if (document.getElementById("keyword1").value == "") {
+            alert("Nhập nội dung tóm tắt lấy từ điều 1 của văn bản");
+            document.getElementById("keyword1").focus();
             return;
         }
         if (document.getElementById("cat1").value == -2) {

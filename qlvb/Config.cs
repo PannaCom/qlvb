@@ -10,7 +10,7 @@ namespace qlvb
     {
         public static string sp = "____________";
         private static qlvbEntities db=new qlvbEntities();
-        public static string domain = "http://localhost:59574/";
+        public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
         public static string getCode(string content){
             try{
                 Regex titRegex = new Regex(@"Số: (.*?)/(.*?)/.*[A-Z]\s", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r

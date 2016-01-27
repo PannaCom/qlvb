@@ -13,6 +13,8 @@ using System.Collections;
 using Microsoft.Office.Interop.Word;
 using System.Text;
 using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Packaging;
 namespace qlvb.Controllers
 {
     public class DocumentController : Controller
@@ -180,50 +182,43 @@ namespace qlvb.Controllers
                     System.IO.File.Delete(fullPath);
                 }
                 Request.Files[i].SaveAs(fullPath);
-                Application application = new Application();
-                Document document = application.Documents.Open(fullPath);
-                //Số: .*/.*/.*\S-*([A-Z])\w+ Lấy ra ký hiệu văn bản
-                //Ngày tháng năm ngày.* tháng .* năm .*\w lấy ra ngày đầu tiên
-                //string content=document.Content.Words.ToString();
-                
-                // Loop through all words in the document.
-                //int count = document.Words.Count;
-                //string text = "";
-                //for (int j = 1; j <= count; j++)
+                return nameFile;
+                //try
                 //{
-                //    // Write the word.
-                //    try
-                //    {
-                //        text = document.Words[j].Text;
-                //        sb.Append(text);
-                //    }
-                //    catch (Exception ex)
-                //    {
-
-                //    }
-
+                //    //Application application = new Application();
+                //    //Document document = application.Documents.Open(fullPath);
+                //    //string content = document.Content.Text;
+                //    //string content = "";
+                //    //WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(fullPath, true);
+                //    //content = wordprocessingDocument.MainDocumentPart.Document.InnerText;
+                    
+                //    //title = Config.getTitle(content);
+                //    ////var Regex = new Regex();
+                //    //Array arrT = Config.getCat2();
+                //    //foreach (string item in arrT)
+                //    //{
+                //    //    if (title.StartsWith(item.ToUpperInvariant()))
+                //    //    {
+                //    //        title = Config.ReplaceFirst(title, item.ToUpperInvariant(), "").Trim();
+                //    //        type_document = item;
+                //    //        break;
+                //    //    }
+                //    //}
+                //    //content = content.Replace("\r\a", " ");
+                //    //code = Config.getCode(content);
+                //    //year = Config.getYear(content);
+                //    //p1 = Config.getP1(content);
+                //    //p2 = Config.getP2(content);
+                //    //// Close word.
+                //    ////application.Quit();
+                //    //break;
                 //}
-                string content = document.Content.Text;
-                title = Config.getTitle(content);
-                //var Regex = new Regex();
-                Array arrT=Config.getCat2();
-                foreach (string item in arrT) {
-                    if (title.StartsWith(item.ToUpperInvariant())) {
-                        title = Config.ReplaceFirst(title, item.ToUpperInvariant(), "").Trim();
-                        type_document = item;
-                        break;
-                    }
-                }
-                content = content.Replace("\r\a", " ");
-                code = Config.getCode(content);
-                year = Config.getYear(content);
-                p1 = Config.getP1(content);
-                p2 = Config.getP2(content);
-                // Close word.
-                application.Quit();
-                break;
+                //catch (Exception exdoc) {
+                //    return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
+                //}
             }
-            return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
+            //return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
+            return nameFile;
         }
         public string addNewCat(int type, string value) {
             switch (type) { 
