@@ -5,6 +5,7 @@
     ViewBag.Title = "Tìm Kiếm Văn Bản Quy Phạm";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
+    int count = 0;
 }
 
 <div id="tf-services">
@@ -80,7 +81,7 @@
                     <a href="/Document/Details/@item.id" target="_blank">@item.code</a>
                 </td>
                 <td align="left" >
-                    @if (item.RANK > 0)
+                    @if (item.RANK > 0 && count==0)
                     {
                         <a href="/Document/Details/@item.id" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
                     }
@@ -94,6 +95,7 @@
                      @qlvb.Config.getCatNameById(3, @item.cat3_id)
                 </td>
             </tr>
+            count++;
         }
         </table>
  <div>Trang:
@@ -179,9 +181,9 @@
     function search() {
         var url = "/?";
         var k = $("#word").val();
-        if (k == "") {
-            return;
-        }
+        //if (k == "") {
+        //    return;
+        //}
         var f1="";
         var f2="";
         var f3="";

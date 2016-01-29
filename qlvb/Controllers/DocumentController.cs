@@ -28,7 +28,7 @@ namespace qlvb.Controllers
         {
             if (word == null) word = "";
             ViewBag.word = word;
-            int pageSize = 20;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             var p = (from q in db.documents where q.auto_des.Contains(word) select q).OrderBy(o => o.code).Take(1000);
             return View(p.ToPagedList(pageNumber, pageSize));
@@ -40,7 +40,7 @@ namespace qlvb.Controllers
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 string query="SELECT top 100 ";
-                 query+="FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'"+keyword+"') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.code+' '+ FT_TBL.name as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
 			     query+="order by Rank Desc";
                  var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());
@@ -51,7 +51,7 @@ namespace qlvb.Controllers
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
                 string query = "SELECT top 100 ";
-                query += "FT_TBL.name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.name +' ' +FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += "order by Rank Desc";
                 var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());

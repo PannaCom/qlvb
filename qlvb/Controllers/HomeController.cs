@@ -154,7 +154,7 @@ namespace qlvb.Controllers
                     ViewBag.order = order;
                     ViewBag.to = to;
                     var p = db.Database.SqlQuery<searchitem>(query);
-                    int pageSize = 21;
+                    int pageSize = 10;
                     int pageNumber = (pg ?? 1);
                     return View(p.ToPagedList(pageNumber, pageSize));
                 }
@@ -194,7 +194,7 @@ namespace qlvb.Controllers
                     ViewBag.order = order;
                     ViewBag.to = to;
                     var p = db.Database.SqlQuery<searchitem>(query);
-                    int pageSize = 21;
+                    int pageSize = 10;
                     int pageNumber = (pg ?? 1);
                     return View(p.ToPagedList(pageNumber, pageSize));
                 }
