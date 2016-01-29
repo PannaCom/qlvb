@@ -11,7 +11,7 @@
 <div id="tf-services">
 <div class="container">
     <div style="width:100%;padding-top:30px;">
-        <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch();">
+        <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
     </div>
     <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
@@ -199,7 +199,7 @@
     //    var word = document.getElementById("word").value;
     //    window.location.href = "/Document/Index?page=1&word=" + word;
     //}
-    function autosearch() {
+    function autosearch(e) {
         var keyword = document.getElementById("word").value;
         urlSearch = '/Document/getDoc?keyword=';
         $('#word').autocomplete({
@@ -211,5 +211,16 @@
             },
             minLength: 1
         });
+        var keyCode = e.keyCode || e.which;//('which' in event) ? event.which : event.keyCode;
+        
+        //alert(keyCode);
+        if (keyCode == 13) {
+            if (keyword == "") {
+                alert("Bạn phải nhập từ khóa");
+                return;
+            }else{
+                search();
+            }
+        }
     }
 </script>
