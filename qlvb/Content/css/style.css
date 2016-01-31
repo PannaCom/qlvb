@@ -1138,3 +1138,12 @@ ul.meta-tags li:last-child:after { content: ' ' }
     text-transform: none;
     vertical-align: top;
 }
+.refinements-summary a:after {
+    content: "x";    
+    color: #b3b3b3;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-left: 5px;
+    line-height: 1px;
+    vertical-align: middle;
+}

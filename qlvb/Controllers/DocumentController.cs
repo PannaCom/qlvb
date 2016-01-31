@@ -39,7 +39,7 @@ namespace qlvb.Controllers
             if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
-                string query="SELECT top 100 ";
+                string query="SELECT top 10 ";
                 query += "FT_TBL.code+' '+ FT_TBL.name as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
 			     query+="order by Rank Desc";
                  var p = db.Database.SqlQuery<string>(query);
@@ -50,7 +50,7 @@ namespace qlvb.Controllers
                 //Sẽ thay bằng search fulltext
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
-                string query = "SELECT top 100 ";
+                string query = "SELECT top 10 ";
                 query += "FT_TBL.name +' ' +FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += "order by Rank Desc";
                 var p = db.Database.SqlQuery<string>(query);
