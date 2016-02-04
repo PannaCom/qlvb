@@ -64,6 +64,9 @@
     <EntitySetMapping Name="documents">
       <EntityTypeMapping TypeName="qlvbModel.document">
         <MappingFragment StoreEntitySet="documents">
+          <ScalarProperty Name="views" ColumnName="views" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="link" ColumnName="link" />
           <ScalarProperty Name="year" ColumnName="year" />
           <ScalarProperty Name="related_id" ColumnName="related_id" />
           <ScalarProperty Name="date_time" ColumnName="date_time" />
@@ -76,8 +79,16 @@
           <ScalarProperty Name="keyword2" ColumnName="keyword2" />
           <ScalarProperty Name="keyword1" ColumnName="keyword1" />
           <ScalarProperty Name="code" ColumnName="code" />
-          <ScalarProperty Name="des" ColumnName="des" />
           <ScalarProperty Name="auto_des" ColumnName="auto_des" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="members">
+      <EntityTypeMapping TypeName="qlvbModel.member">
+        <MappingFragment StoreEntitySet="members">
+          <ScalarProperty Name="pass" ColumnName="pass" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>

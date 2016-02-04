@@ -9,6 +9,7 @@
     <EntitySet Name="dic_normal" EntityType="qlvbModel.dic_normal" />
     <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
     <EntitySet Name="documents" EntityType="qlvbModel.document" />
+    <EntitySet Name="members" EntityType="qlvbModel.member" />
   </EntityContainer>
   <EntityType Name="cat1">
     <Key>
@@ -70,7 +71,6 @@
     <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="name" MaxLength="550" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="des" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="code" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="keyword2" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -83,5 +83,16 @@
     <Property Type="DateTime" Name="date_time" Precision="3" />
     <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="year" />
+    <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="status" />
+    <Property Type="Int32" Name="views" />
+  </EntityType>
+  <EntityType Name="member">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="pass" MaxLength="150" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>
