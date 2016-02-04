@@ -259,6 +259,7 @@
     <Compile Include="Controllers\DicProController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\membersController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -286,6 +287,9 @@
       <DependentUpon>qlvb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\document.cs">
+      <DependentUpon>qlvb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\member.cs">
       <DependentUpon>qlvb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\qlvb.Context.cs">
@@ -622,6 +626,13 @@
     <Content Include="Views\Document\Edit.cshtml" />
     <Content Include="Views\Document\Delete.cshtml" />
     <Content Include="Views\Home\Tree.cshtml" />
+    <Content Include="Views\members\Index.cshtml" />
+    <Content Include="Views\members\Details.cshtml" />
+    <Content Include="Views\members\Create.cshtml" />
+    <Content Include="Views\members\Edit.cshtml" />
+    <Content Include="Views\members\Delete.cshtml" />
+    <Content Include="Views\members\Login.cshtml" />
+    <Content Include="Views\members\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

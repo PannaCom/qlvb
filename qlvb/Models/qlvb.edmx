@@ -14,6 +14,7 @@
           <EntitySet Name="dic_normal" EntityType="qlvbModel.Store.dic_normal" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="dic_pro" EntityType="qlvbModel.Store.dic_pro" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="documents" EntityType="qlvbModel.Store.documents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="members" EntityType="qlvbModel.Store.members" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -91,6 +92,14 @@
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
         </EntityType>
+        <EntityType Name="members">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="pass" Type="nvarchar" MaxLength="150" />
+        </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -104,6 +113,7 @@
           <EntitySet Name="dic_normal" EntityType="qlvbModel.dic_normal" />
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="documents" EntityType="qlvbModel.document" />
+          <EntitySet Name="members" EntityType="qlvbModel.member" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -180,6 +190,14 @@
           <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="Byte" Name="status" />
           <Property Type="Int32" Name="views" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="pass" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -266,6 +284,15 @@
                 <ScalarProperty Name="keyword1" ColumnName="keyword1" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="members">
+            <EntityTypeMapping TypeName="qlvbModel.member">
+              <MappingFragment StoreEntitySet="members">
+                <ScalarProperty Name="pass" ColumnName="pass" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

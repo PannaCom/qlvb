@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div id="tf-services">
+<div class="container">
+<h2>Đăng nhập</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        <div class="editor-label">
+            Tên 
+        </div>
+        <div class="editor-field">
+            <input type="text" id="name" name="name" >
+        </div>
+        <div class="editor-label">
+            Mật khẩu 
+        </div>
+        <div class="editor-field">
+            <input type="password" id="pass" name="pass">
+        </div>
+        
+        <p>
+            <input type="button" value="Login" onclick="Login();" id="btnSA" />
+        </p>
+    </fieldset>
+}
+
+</div>
+</div>
+<script>
+    function Login() {
+        var formdata = new FormData(); //FormData object
+        var name = document.getElementById("name").value;
+        var pass = document.getElementById("pass").value;
+        
+        
+        if (name == "") {
+            alert("Nhập tên truy cập");
+            return;
+        }
+        if (pass == "") {
+            alert("Nhập mật khẩu");
+            return;
+        }
+        
+        
+        document.getElementById("btnSA").disabled = true;
+        formdata.append("name", name);
+        formdata.append("pass", pass);
+       
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/members/checkLogin');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText != "0") {
+                    window.location.href = "/members/index";
+                } else {
+                    document.getElementById("btnSA").disabled = false;
+                    alert("Không tìm thấy user và pass này! Kiểm tra lại pass và tên truy cập!");
+                }
+            }
+        }
+    }
+</script>

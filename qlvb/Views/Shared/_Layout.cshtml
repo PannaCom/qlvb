@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         <!-- Favicons    ================================================== -->
@@ -23,7 +23,7 @@
     <link href="~/Content/css/owl.carousel.css" rel="stylesheet" media="screen">
     <link href="~/Content/css/owl.theme.css" rel="stylesheet" media="screen">
 
-     <link rel="stylesheet" href="~/Content/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/jquery-ui.css">
     
     <!--================================================== -->
     <link rel="stylesheet" type="text/css"  href="~/Content/css/style.css">
@@ -35,11 +35,11 @@
     <script src="~/Scripts/jquery-ui.js"></script>
     <link rel="stylesheet" href="~/Scripts/jquery-ui.css">
     <script src="~/Scripts/core.js"></script>
-
+    <!-- Stylesheet
     <!-- Google Fonts    ================================================== -->
     <link href='http://fonts.googleapis.com/css?family=Tahoma:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="~/Content/js/modernizr.custom.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/modernizr.custom.js"></script>*@
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,7 +50,7 @@
     </head>
     <body>
         <!-- Main Navigation     ================================================== -->
-    <nav id="tf-menu" class="navbar navbar-default navbar-fixed-top">
+    <nav id="tf-menu" class="navbar navbar-default navbar-fixed-top" style="background:url('/Images/bghd.gif') no-repeat scroll center top transparent !important;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -62,16 +62,16 @@
               </button>
               <a class="navbar-brand" href="/Home" style="padding:0 0 0 0;margin-top:0px;padding-top:0px;"><img src="/Images/logo.png" alt="..."></a>
             </div>
-            @*<h5 style="font-weight:bold;color:green;">HỆ THỐNG TÌM KIẾM VĂN BẢN QUY PHẠM</h5>*@
+            @*<b style="font-weight:bold;color:green;">HỆ THỐNG TÌM KIẾM VĂN BẢN QUY PHẠM</b>*@
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            @*<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="/Home" class="scroll">Trang chủ</a></li>
                 <li><a href="#" class="scroll">Giới thiệu</a></li>
                 <li><a href="#" class="scroll">Liên hệ</a></li>
                 <li><a href="#" class="scroll">Đăng nhập</a></li>
               </ul>
-            </div><!-- /.navbar-collapse -->
+            </div><!-- /.navbar-collapse -->*@
         </div><!-- /.container-fluid -->
     </nav>
         <div id="body">
@@ -92,7 +92,34 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        
     </body>
+    
+    
+    @*<!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="/Content/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="/Content/js/owl.carousel.js"></script><!-- Owl Carousel Plugin -->
+
+    <script type="text/javascript" src="/Content/js/SmoothScroll.js"></script>
+
+    
+
+    <!-- Parallax Effects -->
+    <script type="text/javascript" src="/Content/js/skrollr.js"></script>
+    <script type="text/javascript" src="/Content/js/imagesloaded.js"></script>
+
+    <!-- Portfolio Filter -->
+    <script type="text/javascript" src="/Content/js/jquery.isotope.js"></script>
+
+    <!-- LightBox Nivo -->
+    <script type="text/javascript" src="/Content/js/nivo-lightbox.min.js"></script>
+
+    <!-- Contact page-->
+    <script type="text/javascript" src="/Content/js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="/Content/js/contact.js"></script>
+
+    <!-- Javascripts
+    ================================================== -->
+    <script type="text/javascript" src="/Content/js/main.js"></script>*@
 </html>

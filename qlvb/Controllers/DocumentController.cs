@@ -26,6 +26,7 @@ namespace qlvb.Controllers
 
         public ActionResult Index(string word, int? page)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (word == null) word = "";
             ViewBag.word = word;
             int pageSize = 10;
@@ -79,6 +80,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create(int? id)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (id == null)
             {
                 document document = new document();
@@ -120,6 +122,7 @@ namespace qlvb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(document document)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (ModelState.IsValid)
             {
                 db.documents.Add(document);
@@ -327,6 +330,7 @@ namespace qlvb.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             document document = db.documents.Find(id);
             if (document == null)
             {
@@ -342,6 +346,7 @@ namespace qlvb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             document document = db.documents.Find(id);
             string physicalPath = HttpContext.Server.MapPath("/Files/");
             string nameFile = document.link;

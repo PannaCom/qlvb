@@ -1,0 +1,41 @@
+﻿@model qlvb.Models.member
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div id="tf-services">
+<div class="container">
+<h2>Sửa user</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        <div class="editor-label">
+            Tên 
+        </div>
+        <div class="editor-field">
+            <input type="text" id="name" name="name" value="@Model.name">
+        </div>
+        <div class="editor-label">
+            Mật khẩu 
+        </div>
+        <div class="editor-field">
+            <input type="password" id="pass" name="pass">
+        </div>
+        
+        <p>
+            <input type="submit" value="Sửa" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+</div>
+</div>

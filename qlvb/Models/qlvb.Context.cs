@@ -33,5 +33,6 @@ namespace qlvb.Models
         public DbSet<dic_normal> dic_normal { get; set; }
         public DbSet<dic_pro> dic_pro { get; set; }
         public DbSet<document> documents { get; set; }
+        public DbSet<member> members { get; set; }
     }
 }
