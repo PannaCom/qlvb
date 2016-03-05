@@ -65,7 +65,7 @@ namespace qlvb
             
             try
             {
-                Regex titRegex = new Regex(@"năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.*", RegexOptions.IgnoreCase);
+                Regex titRegex = new Regex(@"năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.*
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
                 {
@@ -92,6 +92,7 @@ namespace qlvb
             }
         }
         public static string getKeyWordFromContent(string content){
+            content = content.Replace("\n", " ");
             int lengthWord = 4;
             string result = "";
             string[] arrContent = content.Split(' ');
@@ -107,7 +108,7 @@ namespace qlvb
                 }
                     lengthWord--;
             }
-            return "";
+            return result;
         }
         public static string getP1(string content) {
             try

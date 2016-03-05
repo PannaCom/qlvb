@@ -202,8 +202,8 @@ namespace qlvb.Controllers
                         content=string.Empty;
                     }
                     sb.Append(Config.GetPlainText(element));
-                    content=sb.ToString(); 
-
+                    content=sb.ToString();
+                    content = content.Replace("\r\n\r\n", "\r\n");
                     Config.loadDic();
                     title = Config.getTitle(content);
                     //var Regex = new Regex();
