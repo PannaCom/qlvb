@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
 namespace qlvb.Controllers
 {
     public class DocumentController : Controller
@@ -185,44 +186,55 @@ namespace qlvb.Controllers
                     System.IO.File.Delete(fullPath);
                 }
                 Request.Files[i].SaveAs(fullPath);
-                return nameFile;
-                //try
-                //{
-                //    //Application application = new Application();
-                //    //Document document = application.Documents.Open(fullPath);
-                //    //string content = document.Content.Text;
-                //    //string content = "";
-                //    //WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(fullPath, true);
-                //    //content = wordprocessingDocument.MainDocumentPart.Document.InnerText;
-                    
-                //    //title = Config.getTitle(content);
-                //    ////var Regex = new Regex();
-                //    //Array arrT = Config.getCat2();
-                //    //foreach (string item in arrT)
-                //    //{
-                //    //    if (title.StartsWith(item.ToUpperInvariant()))
-                //    //    {
-                //    //        title = Config.ReplaceFirst(title, item.ToUpperInvariant(), "").Trim();
-                //    //        type_document = item;
-                //    //        break;
-                //    //    }
-                //    //}
-                //    //content = content.Replace("\r\a", " ");
-                //    //code = Config.getCode(content);
-                //    //year = Config.getYear(content);
-                //    //p1 = Config.getP1(content);
-                //    //p2 = Config.getP2(content);
-                //    //// Close word.
-                //    ////application.Quit();
-                //    //break;
-                //}
-                //catch (Exception exdoc) {
-                //    return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
-                //}
+                //return nameFile;
+                try
+                {
+                    //Application application = new Application();
+                    //Microsoft.Office.Interop.Word.Document document = application.Documents.Open(fullPath);
+                    //string content = document.Content.Text;
+                    string content = "";
+                    WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(fullPath, true);
+                    //content = wordprocessingDocument.MainDocumentPart.Document.InnerText;
+                    sb = new StringBuilder();
+                    OpenXmlElement element = wordprocessingDocument.MainDocumentPart.Document.Body;
+                    if (element == null)
+                    {
+                        content=string.Empty;
+                    }
+                    sb.Append(Config.GetPlainText(element));
+                    content=sb.ToString(); 
+
+                    Config.loadDic();
+                    title = Config.getTitle(content);
+                    //var Regex = new Regex();
+                    Array arrT = Config.getCat2();
+                    foreach (string item in arrT)
+                    {
+                        if (title.StartsWith(item.ToUpperInvariant()))
+                        {
+                            title = Config.ReplaceFirst(title, item.ToUpperInvariant(), "").Trim();
+                            type_document = item;
+                            break;
+                        }
+                    }
+                    content = content.Replace("\r\a", " ");
+                    code = Config.getCode(content);
+                    year = Config.getYear(content);
+                    p1 = Config.getP1(content);
+                    p2 = Config.getP2(content);
+                    // Close word.
+                    //application.Quit();
+                    break;
+                }
+                catch (Exception exdoc)
+                {
+                    return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
+                }
             }
-            //return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
-            return nameFile;
+            return code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
+            //return nameFile;
         }
+
         public string addNewCat(int type, string value) {
             switch (type) { 
                 case 1:

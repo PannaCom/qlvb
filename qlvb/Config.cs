@@ -6,6 +6,8 @@ using System.Web;
 using qlvb.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections;
+using DocumentFormat.OpenXml;
 namespace qlvb
 {
     public class Config
@@ -13,6 +15,16 @@ namespace qlvb
         public static string sp = "____________";
         private static qlvbEntities db=new qlvbEntities();
         public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
+        public static Hashtable allword=null;
+        public static void loadDic(){
+            var p = (from q in db.dic_normal select q).ToList();
+            if (allword == null || allword.Count <= 0) allword = new Hashtable(); else return;
+            for (int i = 0; i < p.Count; i++) {
+                if (!allword.ContainsKey(p[i].word.ToLowerInvariant().Trim())) {
+                    allword.Add(p[i].word.ToLowerInvariant().Trim(), "1");
+                }
+            }
+        }
         public static string getCode(string content){
             try{
                 Regex titRegex = new Regex(@"Số: (.*?)/(.*?)/.*[A-Z]\s", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r
@@ -70,12 +82,32 @@ namespace qlvb
                     }
                     
                 }
-                return rs;
+                //Bóc tách từ khóa
+                return getKeyWordFromContent(rs);
+                //return rs;
             }
             catch
             {
                 return "";
             }
+        }
+        public static string getKeyWordFromContent(string content){
+            int lengthWord = 4;
+            string result = "";
+            string[] arrContent = content.Split(' ');
+            while (lengthWord >= 2) {
+                for (int l = 0; l <= arrContent.Length - lengthWord; l++) {
+                    string tempword = "";
+                    for (int l1 = l; l1 < l + lengthWord; l1++) {
+                        tempword += arrContent[l1] + " ";
+                    }
+                    if (allword.ContainsKey(tempword.ToLowerInvariant().Trim())) {
+                        result += tempword + ",";
+                    }
+                }
+                    lengthWord--;
+            }
+            return "";
         }
         public static string getP1(string content) {
             try
@@ -249,5 +281,51 @@ namespace qlvb
                 return "";
             }
         }
+        /// <summary> 
+        ///  Read Plain Text in all XmlElements of word document 
+        /// </summary> 
+        /// <param name="element">XmlElement in document</param> 
+        /// <returns>Plain Text in XmlElement</returns> 
+        public static string GetPlainText(OpenXmlElement element)
+        {
+            StringBuilder PlainTextInWord = new StringBuilder();
+            foreach (OpenXmlElement section in element.Elements())
+            {
+                switch (section.LocalName)
+                {
+                    // Text 
+                    case "t":
+                        PlainTextInWord.Append(section.InnerText);
+                        break;
+
+
+                    case "cr":                          // Carriage return 
+                    case "br":                          // Page break 
+                        PlainTextInWord.Append(Environment.NewLine);
+                        break;
+
+
+                    // Tab 
+                    case "tab":
+                        PlainTextInWord.Append("\t");
+                        break;
+
+
+                    // Paragraph 
+                    case "p":
+                        PlainTextInWord.Append(GetPlainText(section));
+                        PlainTextInWord.AppendLine(Environment.NewLine);
+                        break;
+
+
+                    default:
+                        PlainTextInWord.Append(GetPlainText(section));
+                        break;
+                }
+            }
+
+
+            return PlainTextInWord.ToString();
+        } 
     }
 }
