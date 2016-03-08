@@ -205,8 +205,10 @@ namespace qlvb.Controllers
                     content=sb.ToString();
                     content = content.Replace("\r\n\r\n", "\r\n");
                     Config.loadDic();
-                    title = Config.getTitle(content);
+                    title = Config.getTitle(content).Replace("\n"," ").Trim();
+                    p1 = Config.getP1(title);
                     //var Regex = new Regex();
+                    //Bỏ đi các từ khóa thông tư, nghị định... ở đầu, lấy ra loại tài liệu là thông tư? nghị định
                     Array arrT = Config.getCat2();
                     foreach (string item in arrT)
                     {
@@ -218,9 +220,12 @@ namespace qlvb.Controllers
                         }
                     }
                     content = content.Replace("\r\a", " ");
-                    code = Config.getCode(content);
+                    content = content.Replace("\r\n", " ");
+                    content = content.Replace("\r", " ");
+                    content = content.Replace("\n", " ");
+                    code = Config.getCode(content).Replace("\r","");
                     year = Config.getYear(content);
-                    p1 = Config.getP1(content);
+                    //p1 = Config.getP1(content);
                     p2 = Config.getP2(content);
                     // Close word.
                     //application.Quit();

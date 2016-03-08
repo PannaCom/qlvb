@@ -18,7 +18,7 @@ namespace qlvb
         public static Hashtable allword=null;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
-            if (allword == null || allword.Count <= 0) allword = new Hashtable(); else return;
+            //if (allword == null || allword.Count <= 0) allword = new Hashtable(); else return;
             for (int i = 0; i < p.Count; i++) {
                 if (!allword.ContainsKey(p[i].word.ToLowerInvariant().Trim())) {
                     allword.Add(p[i].word.ToLowerInvariant().Trim(), "1");
@@ -83,7 +83,7 @@ namespace qlvb
                     
                 }
                 //Bóc tách từ khóa
-                return getKeyWordFromContent(rs);
+                return rs;//getKeyWordFromContent(rs);
                 //return rs;
             }
             catch
@@ -91,8 +91,9 @@ namespace qlvb
                 return "";
             }
         }
+        
         public static string getKeyWordFromContent(string content){
-            content = content.Replace("\n", " ");
+            content = content.Replace("\n", " ").ToLowerInvariant().Trim();
             int lengthWord = 4;
             string result = "";
             string[] arrContent = content.Split(' ');
@@ -102,8 +103,9 @@ namespace qlvb
                     for (int l1 = l; l1 < l + lengthWord; l1++) {
                         tempword += arrContent[l1] + " ";
                     }
-                    if (allword.ContainsKey(tempword.ToLowerInvariant().Trim())) {
-                        result += tempword + ",";
+                    if (allword.ContainsKey(tempword.ToLowerInvariant().Trim()) && !result.Contains(tempword.ToLowerInvariant().Trim()))
+                    {
+                        result += tempword + ", ";
                     }
                 }
                     lengthWord--;
@@ -113,15 +115,16 @@ namespace qlvb
         public static string getP1(string content) {
             try
             {
-                Regex titRegex = new Regex(@"(?<=Điều 1. )(.*)(?=Điều 2. )", RegexOptions.IgnoreCase);
-                Match titm = titRegex.Match(content);
-                if (titm.Success)
-                {
-                    content = titm.Groups[0].Value;
-                }
-                else return "";
+                //Regex titRegex = new Regex(@"(?<=Điều 1. )(.*)(?=Điều 2. )", RegexOptions.IgnoreCase);
+                //Match titm = titRegex.Match(content);
+                //if (titm.Success)
+                //{
+                //    content = titm.Groups[0].Value;
+                //}
+                //else return "";
                 
-                return content;
+                //return content;
+                return getKeyWordFromContent(content);
             }
             catch
             {
@@ -132,7 +135,7 @@ namespace qlvb
         {
             try
             {
-                Regex titRegex = new Regex(@"(?<=Điều 2. )(.*)(?=Điều 3. )", RegexOptions.IgnoreCase);
+                Regex titRegex = new Regex(@"(?<=Điều 1. )(.*)(?=Điều 2. )", RegexOptions.IgnoreCase);
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
                 {
@@ -140,7 +143,7 @@ namespace qlvb
                 }
                 else return "";
 
-                return content;
+                return getKeyWordFromContent(content);
             }
             catch
             {
