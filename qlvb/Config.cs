@@ -18,7 +18,8 @@ namespace qlvb
         public static Hashtable allword=null;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
-            //if (allword == null || allword.Count <= 0) allword = new Hashtable(); else return;
+            if (allword == null || allword.Count <= 0) allword = new Hashtable(); 
+            //else return;
             for (int i = 0; i < p.Count; i++) {
                 if (!allword.ContainsKey(p[i].word.ToLowerInvariant().Trim())) {
                     allword.Add(p[i].word.ToLowerInvariant().Trim(), "1");
@@ -93,7 +94,7 @@ namespace qlvb
         }
         
         public static string getKeyWordFromContent(string content){
-            content = content.Replace("\n", " ").ToLowerInvariant().Trim();
+            content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
             int lengthWord = 4;
             string result = "";
             string[] arrContent = content.Split(' ');
@@ -103,12 +104,55 @@ namespace qlvb
                     for (int l1 = l; l1 < l + lengthWord; l1++) {
                         tempword += arrContent[l1] + " ";
                     }
-                    if (allword.ContainsKey(tempword.ToLowerInvariant().Trim()) && !result.Contains(tempword.ToLowerInvariant().Trim()))
+                    tempword = tempword.ToLowerInvariant().Trim();
+                    if (allword.ContainsKey(tempword) && !result.Contains(tempword) && tempword.Split(' ').Length>=2)
                     {
-                        result += tempword + ", ";
+                        result += tempword + " , ";
                     }
                 }
                     lengthWord--;
+            }
+            return result;
+        }
+        public static string getTopKeyword(string content)
+        {
+            content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
+            int lengthWord = 4;
+            string result = "";
+            string[] arrContent = content.Split(' ');
+            int tempcount=0;
+            Dictionary<String,int> top=new Dictionary<String,int>();
+            while (lengthWord >= 2)
+            {
+                for (int l = 0; l <= arrContent.Length - lengthWord; l++)
+                {
+                    string tempword = "";
+                    for (int l1 = l; l1 < l + lengthWord; l1++)
+                    {
+                        tempword += arrContent[l1] + " ";
+                    }
+                    tempword = tempword.ToLowerInvariant().Trim();
+                    if (allword.ContainsKey(tempword) && tempword.Split(' ').Length >= 2)
+                    {
+                        //result += tempword + " , ";
+                        if (top.ContainsKey(tempword)){
+                            tempcount=top[tempword]+1;
+                            top.Remove(tempword);
+                            top.Add(tempword,tempcount);
+                        }else{
+                            top.Add(tempword,1);
+                        }
+                    }
+                }
+                lengthWord--;
+            }
+            var sortedDict = from entry in top orderby entry.Value descending select entry;
+            tempcount = 0;
+            foreach (var entry in sortedDict)
+            {
+                tempcount++;
+                result += entry.Key + " , ";
+                if (tempcount >= 4) break;
             }
             return result;
         }
@@ -135,15 +179,93 @@ namespace qlvb
         {
             try
             {
-                Regex titRegex = new Regex(@"(?<=Điều 1. )(.*)(?=Điều 2. )", RegexOptions.IgnoreCase);
+                string content1,content2;
+                Regex titRegex = new Regex(@"(\sĐiều 1. )(.*?)(\sĐiều 2. )", RegexOptions.IgnoreCase);//(?<=Điều 1. )(.*)(?=Điều 2. )
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
                 {
-                    content = titm.Groups[0].Value;
+                    content1 = titm.Groups[0].Value;
                 }
-                else return "";
+                else content1="";
+                content1 = content1.Replace("Điều 1. ", "").Replace("Điều 2. ", "");
+                titRegex = new Regex(@"(\sĐiều 2. )(.*?)(\sĐiều 3. )", RegexOptions.IgnoreCase);
+                titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content2 = titm.Groups[0].Value;
+                }
+                else content2 = "";
+                content2 = content2.Replace("Điều 2. ", "").Replace("Điều 3. ", "");
+                return getKeyWordFromContent(content1 + content2);
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        public static string getP3(string content)
+        {
+            try
+            {
+                string content1, content2, content3;
+                Regex titRegex = new Regex(@"(\sChương I )(.*?)(\sChương II )", RegexOptions.IgnoreCase);//(?<=Điều 1. )(.*)(?=Điều 2. )
+                Match titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content1 = titm.Groups[0].Value;
+                }
+                else content1 = "";
+                //content1 = content1.Replace("Điều 1. ", "").Replace("Điều 2. ", "");
+                titRegex = new Regex(@"(\sChương II )(.*?)(\sChương III )", RegexOptions.IgnoreCase);
+                titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content2 = titm.Groups[0].Value;
+                }
+                else content2 = "";
+               // content2 = content2.Replace("Điều 2. ", "").Replace("Điều 3. ", "");
+                titRegex = new Regex(@"(\sChương III )(.*?)(\sChương IV )", RegexOptions.IgnoreCase);
+                titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content3 = titm.Groups[0].Value;
+                }
+                else content3 = "";
+                //content3 = content2.Replace("Điều 3. ", "").Replace("Điều 4. ", "");
+                return getKeyWordFromContent(content1 + content2+content3);
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        public static string getP4(string content)
+        {
 
-                return getKeyWordFromContent(content);
+            try
+            {
+                Regex titRegex = new Regex(@"năm [0-9]{4}(.*?).*\s\S.*\s\S.", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.*
+                Match titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content = titm.Value;
+                }
+                else content="";
+                //string[] code = content.Split('\r');
+                //string rs = "";
+                //int l = code.Length > 10 ? 10 : code.Length;
+                //for (int i = 1; i < l; i++)
+                //{
+                //    if (code[i].StartsWith("Căn cứ")) break;
+                //    if (code[i] != "\a" && code[i] != "")
+                //    {
+                //        rs += code[i] + " ";
+                //    }
+
+                //}
+                //Bóc tách từ khóa
+                return getTopKeyword(content);//getKeyWordFromContent(rs);
+                //return rs;
             }
             catch
             {

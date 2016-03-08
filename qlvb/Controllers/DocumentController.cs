@@ -177,7 +177,7 @@ namespace qlvb.Controllers
             string year = "";
             string title = "";
             string p1 = "";
-            string p2 = "";
+            string p2 = "", p3 = "", p4 = "", p5 = "";
             string type_document="";
             for (int i = 0; i < countFile; i++)
             {
@@ -227,6 +227,8 @@ namespace qlvb.Controllers
                     year = Config.getYear(content);
                     //p1 = Config.getP1(content);
                     p2 = Config.getP2(content);
+                    p3 = Config.getP3(content);
+                    p4 = Config.getP4(content);
                     // Close word.
                     //application.Quit();
                     break;
