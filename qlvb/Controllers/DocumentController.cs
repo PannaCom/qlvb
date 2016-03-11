@@ -229,6 +229,7 @@ namespace qlvb.Controllers
                     p2 = Config.getP2(content);
                     p3 = Config.getP3(content);
                     p4 = Config.getP4(content);
+                    p5 = Config.getP5(content);
                     // Close word.
                     //application.Quit();
                     break;
