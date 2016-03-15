@@ -205,8 +205,9 @@
         $('#word').autocomplete({
             source: urlSearch + keyword,
             select: function (event, ui) {
-                $(event.target).val(ui.item.value);
-                search();
+                //$(event.target).val(ui.item.name);
+                //search();
+                alert(ui.item.id);
                 return false;
             },
             minLength: 1

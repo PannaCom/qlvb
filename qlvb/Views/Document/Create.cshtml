@@ -147,8 +147,8 @@
                 var items = xhr.responseText.split("____________");
                 $('#name').val(items[1]);
                 $('#code').val(items[0]);                
-                $('#link').val(items[3]);
-                var text2 = items[4];
+                //$('#link').val(items[3]);
+                var text2 = items[8];
                 var ddcat2 = document.getElementById('cat2');
                 for (var i = 0; i < ddcat2.options.length; i++) {
                     if (ddcat2.options[i].text === text2) {
@@ -156,15 +156,18 @@
                         break;
                     }
                 }
-                @*$('#keyword1').val(items[2]);
-                $('#keyword2').val(items[6]);
-                $('#year').val(items[5]);
+                $('#keyword1').val(items[2]);
+                $('#keyword2').val(items[3]);
+                $('#keyword3').val(items[4]);
+                $('#keyword4').val(items[5]);
+                $('#keyword5').val(items[6]);                
+                $('#year').val(items[9]);
                 $('#namelabel').show();
-                //$('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');  *@  
-                $('#viewdoc').attr("href",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+xhr.responseText+'&embedded=true');    
+                //$('#namelabel').attr("src",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[3]+'&embedded=true');   
+                $('#viewdoc').attr("href",'https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/'+items[7]+'&embedded=true');    
                 //checkDuplicate(items[0]);
                 $('#viewdoc').show();
-                $('#link').val(xhr.responseText);
+                $('#link').val(items[7]);
                 hideLoadingImage();    
             }
         }
@@ -314,6 +317,9 @@
         formdata.append("link", document.getElementById("link").value);
         formdata.append("keyword1", document.getElementById("keyword1").value);
         formdata.append("keyword2", document.getElementById("keyword2").value);
+        formdata.append("keyword3", document.getElementById("keyword3").value);
+        formdata.append("keyword4", document.getElementById("keyword4").value);
+        formdata.append("keyword5", document.getElementById("keyword5").value);
         formdata.append("cat1", document.getElementById("cat1").value);
         formdata.append("cat2", document.getElementById("cat2").value);
         formdata.append("cat3", document.getElementById("cat3").value);

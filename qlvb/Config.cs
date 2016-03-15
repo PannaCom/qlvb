@@ -58,7 +58,7 @@ namespace qlvb
                 {
                     //Console.WriteLine("'{0}' found at index {1}.",
                     //                  m.Value, m.Index);
-                    content += m.Value + ", ";
+                    content += m.Value + " , ";
                 }
                 //string[] code = content.Split(' ');
                 return content;
