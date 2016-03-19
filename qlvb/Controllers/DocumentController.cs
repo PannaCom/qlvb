@@ -46,9 +46,9 @@ namespace qlvb.Controllers
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 string query="SELECT top 10 ";
-                query += "FT_TBL.code+' '+ FT_TBL.name as name,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.code+' '+ FT_TBL.name as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
 			     query+="order by Rank Desc";
-                 var p = db.Database.SqlQuery<search>(query);
+                 var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
             else
@@ -57,9 +57,9 @@ namespace qlvb.Controllers
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
                 string query = "SELECT top 10 ";
-                query += "FT_TBL.name +' ' +FT_TBL.code as name,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.name +' ' +FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += "order by Rank Desc";
-                var p = db.Database.SqlQuery<search>(query);
+                var p = db.Database.SqlQuery<string>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
         }
@@ -112,6 +112,9 @@ namespace qlvb.Controllers
                 ViewBag.cat4 = document.cat4_id;
                 ViewBag.keyword1 = document.keyword1;
                 ViewBag.keyword2 = document.keyword2;
+                ViewBag.keyword3 = document.keyword3;
+                ViewBag.keyword4 = document.keyword4;
+                ViewBag.keyword5 = document.keyword5;
                 ViewBag.link = document.link;
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
@@ -173,7 +176,7 @@ namespace qlvb.Controllers
             //Array test = Config.getCat2();
             //return "";
             string physicalPath = HttpContext.Server.MapPath("../Files/");
-            string nameFile = String.Format("{0}.doc", Guid.NewGuid().ToString());
+            string nameFile = String.Format("{0}", Request.Files[0].FileName.Replace(" ", "_"));//Guid.NewGuid().ToString()
             int countFile = Request.Files.Count;
             string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
             StringBuilder sb = new StringBuilder();
@@ -307,7 +310,9 @@ namespace qlvb.Controllers
                     string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
                     string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
-                    doc.auto_des = code + " " + name + " " + keyword1 +" " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5 + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
+                    allKeyWord = allKeyWord.Replace(" , ", " ");
+                    doc.auto_des = code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     doc.status = 0;
@@ -326,7 +331,9 @@ namespace qlvb.Controllers
                     doc.link = link;
                     doc.keyword1 = keyword1;
                     doc.keyword2 = keyword2;
-                    doc.keyword3 = "";
+                    doc.keyword3 = keyword3;
+                    doc.keyword4 = keyword4;
+                    doc.keyword5 = keyword5;
                     doc.cat1_id = cat1;
                     doc.cat2_id = cat2;
                     doc.cat3_id = cat3;
@@ -335,7 +342,9 @@ namespace qlvb.Controllers
                     string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
                     string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
-                    doc.auto_des = code + " " + name + " " + keyword1 + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
+                    allKeyWord = allKeyWord.Replace(" , ", " ");
+                    doc.auto_des = code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     //doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     //doc.status = 0;

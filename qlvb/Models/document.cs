@@ -21,6 +21,8 @@ namespace qlvb.Models
         public string keyword1 { get; set; }
         public string keyword2 { get; set; }
         public string keyword3 { get; set; }
+        public string keyword4 { get; set; }
+        public string keyword5 { get; set; }
         public Nullable<int> cat1_id { get; set; }
         public Nullable<int> cat2_id { get; set; }
         public Nullable<int> cat3_id { get; set; }
@@ -30,6 +32,8 @@ namespace qlvb.Models
         public string related_id { get; set; }
         public Nullable<int> year { get; set; }
         public string link { get; set; }
+        public string link_to { get; set; }
+        public string be_linked { get; set; }
         public Nullable<byte> status { get; set; }
         public Nullable<int> views { get; set; }
     }

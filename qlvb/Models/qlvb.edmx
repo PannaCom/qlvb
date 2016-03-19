@@ -80,6 +80,8 @@
           <Property Name="keyword1" Type="ntext" />
           <Property Name="keyword2" Type="ntext" />
           <Property Name="keyword3" Type="ntext" />
+          <Property Name="keyword4" Type="ntext" />
+          <Property Name="keyword5" Type="ntext" />
           <Property Name="cat1_id" Type="int" />
           <Property Name="cat2_id" Type="int" />
           <Property Name="cat3_id" Type="int" />
@@ -89,6 +91,8 @@
           <Property Name="related_id" Type="nvarchar" MaxLength="450" />
           <Property Name="year" Type="int" />
           <Property Name="link" Type="nvarchar" MaxLength="150" />
+          <Property Name="link_to" Type="nvarchar" MaxLength="152" />
+          <Property Name="be_linked" Type="nvarchar" MaxLength="150" />
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
         </EntityType>
@@ -112,8 +116,8 @@
           <EntitySet Name="dic_ignore" EntityType="qlvbModel.dic_ignore" />
           <EntitySet Name="dic_normal" EntityType="qlvbModel.dic_normal" />
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
-          <EntitySet Name="documents" EntityType="qlvbModel.document" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
+          <EntitySet Name="documents" EntityType="qlvbModel.document" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -168,6 +172,14 @@
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="word" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="pass" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="document">
           <Key>
             <PropertyRef Name="id" />
@@ -179,6 +191,8 @@
           <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="keyword2" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="keyword3" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="keyword4" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="keyword5" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="cat1_id" />
           <Property Type="Int32" Name="cat2_id" />
           <Property Type="Int32" Name="cat3_id" />
@@ -188,16 +202,10 @@
           <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="year" />
           <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="link_to" MaxLength="152" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="be_linked" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="Byte" Name="status" />
           <Property Type="Int32" Name="views" />
-        </EntityType>
-        <EntityType Name="member">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="pass" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -265,11 +273,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="members">
+            <EntityTypeMapping TypeName="qlvbModel.member">
+              <MappingFragment StoreEntitySet="members">
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
                 <ScalarProperty Name="views" ColumnName="views" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="be_linked" ColumnName="be_linked" />
+                <ScalarProperty Name="link_to" ColumnName="link_to" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="related_id" ColumnName="related_id" />
@@ -279,20 +298,13 @@
                 <ScalarProperty Name="cat3_id" ColumnName="cat3_id" />
                 <ScalarProperty Name="cat2_id" ColumnName="cat2_id" />
                 <ScalarProperty Name="cat1_id" ColumnName="cat1_id" />
+                <ScalarProperty Name="keyword5" ColumnName="keyword5" />
+                <ScalarProperty Name="keyword4" ColumnName="keyword4" />
                 <ScalarProperty Name="keyword3" ColumnName="keyword3" />
                 <ScalarProperty Name="keyword2" ColumnName="keyword2" />
                 <ScalarProperty Name="keyword1" ColumnName="keyword1" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="members">
-            <EntityTypeMapping TypeName="qlvbModel.member">
-              <MappingFragment StoreEntitySet="members">
-                <ScalarProperty Name="pass" ColumnName="pass" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

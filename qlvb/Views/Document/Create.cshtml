@@ -85,10 +85,10 @@
         <label class="label" >Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" value="@ViewBag.name" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onblur="checkDuplicate(this.value);">
         <label class="label">Tập từ khóa 1(Lấy từ title của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy các từ khóa từ title văn bản" id="keyword1" name="keyword1" value="@Html.Raw(@ViewBag.keyword1)">
-        <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" value="@Html.Raw(@ViewBag.keyword2)">
-        <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" value="@Html.Raw(@ViewBag.keyword3)">
-        <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><input type="text" class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4" value="@Html.Raw(@ViewBag.keyword4)">
-        <label class="label">Tập từ khóa 5(Lấy từ các ký hiệu của văn bản khác xuất hiện trong văn bản này) *:</label><input type="text" class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" value="@Html.Raw(@ViewBag.keyword5)">
+        <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
+        <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
+        <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4">@Html.Raw(@ViewBag.keyword4)</textarea>
+        <label class="label">Tập từ khóa 5(Lấy từ các ký hiệu của văn bản khác xuất hiện trong văn bản này) *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
         <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
         <script>getCat(1,"@ViewBag.cat1");</script>
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>       
@@ -120,6 +120,8 @@
         for (i = 0; i < fileInput.files.length; i++) {
             //Appending each file to FormData object
             formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            //alert(fileInput.files[i].name);
+            //return;
             break;
         }
         //formdata.append("filename", title);
