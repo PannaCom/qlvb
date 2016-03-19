@@ -83,6 +83,7 @@ namespace qlvb.Controllers
                             string color = "";
                             for (jj = 0; jj < cat1.Count; jj++)
                             {
+                                if (cat1[jj].total <= 0) continue;
                                 color = "";
                                 if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
                                 else if (cat1[jj].total > 0) color = "color:blue;";
@@ -98,6 +99,7 @@ namespace qlvb.Controllers
                             string color = "";
                             for (jj = 0; jj < cat2.Count; jj++)
                             {
+                                if (cat2[jj].total <= 0) continue;
                                 color = "";
                                 if (cat2[jj].catid.ToString() == f2) color = "color:red;font-weight:bold;";
                                 else if (cat2[jj].total > 0) color = "color:blue;";
@@ -114,6 +116,7 @@ namespace qlvb.Controllers
                             string color = "";
                             for (jj = 0; jj < cat3.Count; jj++)
                             {
+                                if (cat3[jj].total <= 0) continue;
                                 color = "";
                                 if (cat3[jj].catid.ToString() == f3) color = "color:red;font-weight:bold;";
                                 else if (cat3[jj].total > 0) color = "color:blue;";
@@ -130,6 +133,7 @@ namespace qlvb.Controllers
                             string color = "";
                             for (jj = 0; jj < cat4.Count; jj++)
                             {
+                                if (cat4[jj].total <= 0) continue;
                                 color = "";
                                 if (cat4[jj].catid.ToString() == f4)
                                     color = "color:red;font-weight:bold;";
