@@ -46,6 +46,7 @@ namespace qlvb
             try
             {
                 Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*[^a-zA-Z0-9]\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r
+                
                 //Match titm = titRegex.Match(content);
                 //if (titm.Success)
                 //{
@@ -58,7 +59,7 @@ namespace qlvb
                 {
                     //Console.WriteLine("'{0}' found at index {1}.",
                     //                  m.Value, m.Index);
-                    content += m.Value.Replace(";", "").Replace(".", "").Replace(")", "").Replace("(", "") + " , ";
+                    if (!content.Contains(m.Value)) content += m.Value.Replace(";", "").Replace(".", "").Replace(")", "").Replace("(", "") + " , ";
                 }
                 //string[] code = content.Split(' ');
                 return content;
