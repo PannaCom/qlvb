@@ -82,15 +82,15 @@
         
         @*<iframe id="namelabel" src="" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      *@
         <a style="width:100%;display:none;float:left;position:relative;color:blue;text-decoration:solid;" id="viewdoc" target="_blank" href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@ViewBag.link">Upload thành công, Xem toàn văn nội dung</a>    
-        <label class="label" >Tiêu đề *:</label><input type="text" class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" value="@ViewBag.name" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label" >Tiêu đề *:</label><textarea class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" rows="4">@Html.Raw(@ViewBag.name)</textarea>
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onblur="checkDuplicate(this.value);">
         <label class="label">Tập từ khóa 1(Lấy từ title của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy các từ khóa từ title văn bản" id="keyword1" name="keyword1" value="@Html.Raw(@ViewBag.keyword1)">
         <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
         <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
         <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4">@Html.Raw(@ViewBag.keyword4)</textarea>
         <label class="label">Tập từ khóa 5(Lấy từ các ký hiệu của văn bản khác xuất hiện trong văn bản này) *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
-        <label class="label" >Văn bản này điều chỉnh đến các văn bản sau:</label><input type="text" class="form-control" placeholder="Nhập mã văn bản" id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
-        <label class="label" >Văn bản này chịu sự điều chỉnh từ văn bản:</label><input type="text" class="form-control" placeholder="Nhập mã văn bản" id="be_linked" name="be_linked" value="@ViewBag.be_linked" onkeyup="autosearch(event,1);" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label" >Văn bản này hướng dẫn/điều chỉnh đến các văn bản sau:</label><input type="text" class="form-control" placeholder="Nhập mã văn bản" id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label" >Văn bản này chịu sự hướng dẫn/điều chỉnh từ văn bản:</label><input type="text" class="form-control" placeholder="Nhập mã văn bản" id="be_linked" name="be_linked" value="@ViewBag.be_linked" onkeyup="autosearch(event,1);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
         <script>getCat(1,"@ViewBag.cat1");</script>
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>       
@@ -134,7 +134,7 @@
                 var progress = Math.round(evt.loaded * 100 / evt.total);
                 //$("#progressbar").progressbar("value", progress);
                 $("#progresslabelpr").css("width",progress+"%");
-                $("#progresslabelpr").html(progress+"%");
+                $("#progresslabelpr").html("Đang phân tích từ khóa:"+progress+"%<br><img src='/Images/loading.gif'>");
             }
         }, false);
 
@@ -142,11 +142,15 @@
         xhr.send(formdata);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText==""){
+                    hideLoadingImage();    
+                    alert("Văn bản này dùng phiên bản Word đã cũ. Xin mở bằng Word bản mới nhất(từ 2007 trở đi), Sau đó save as sang định dạng file .docx! Và upload lại!");
+                }
                 //$('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
                 //$('#image').val(xhr.responseText);
                 //$('#dvimagefile').show();
                 //hideLoadingImage();
-                alert("Upload thành công, nhập các thuộc tính cho văn bản.");
+                //alert("Upload thành công, nhập các thuộc tính cho văn bản.");
                 //console.log(xhr.responseText);
                 var items = xhr.responseText.split("____________");
                 $('#name').val(items[1]);
@@ -312,6 +316,7 @@
             document.getElementById("year").focus();
             return;
         }
+        document.getElementById("btnAddNew").value="Saving...";
         document.getElementById("btnAddNew").disabled=true;
         var formdata = new FormData(); //FormData object
 
@@ -345,6 +350,7 @@
                     alert("Lỗi định dạng văn bản");
                 }
                 document.getElementById("btnAddNew").disabled=false;
+                document.getElementById("btnAddNew").value="Save";
             }
         }
     }

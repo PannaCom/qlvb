@@ -196,9 +196,17 @@ namespace qlvb.Controllers
             {
                 if (System.IO.File.Exists(fullPath))
                 {
-                    System.IO.File.Delete(fullPath);
+                    try
+                    {
+                        System.IO.File.Delete(fullPath);
+                        Request.Files[i].SaveAs(fullPath);
+                    }
+                    catch (Exception ex) { 
+
+                    }
                 }
-                Request.Files[i].SaveAs(fullPath);
+                else Request.Files[i].SaveAs(fullPath);
+                
                 //return nameFile;
                 try
                 {
@@ -249,7 +257,8 @@ namespace qlvb.Controllers
                 }
                 catch (Exception exdoc)
                 {
-                    return code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
+                    return ""; 
+                        //code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
                 }
             }
             return code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year;// code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
