@@ -63,6 +63,10 @@ namespace qlvb.Controllers
                 return JsonConvert.SerializeObject(p.ToList());
             }
         }
+        public string getDocByCode(string code) {
+            var p = (from q in db.documents where q.code.Contains(code) select q.code).ToList();
+            return JsonConvert.SerializeObject(p);
+        }
         public string checkDuplicate(string code){
             return db.documents.Any(o => o.code == code).ToString();
         }
@@ -115,6 +119,8 @@ namespace qlvb.Controllers
                 ViewBag.keyword3 = document.keyword3;
                 ViewBag.keyword4 = document.keyword4;
                 ViewBag.keyword5 = document.keyword5;
+                ViewBag.be_linked = document.be_linked;
+                ViewBag.link_to = document.link_to;
                 ViewBag.link = document.link;
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
@@ -287,7 +293,7 @@ namespace qlvb.Controllers
             }
             return "0";
         }
-        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id)
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked,string link_to)
         {
             try
             {
@@ -319,6 +325,8 @@ namespace qlvb.Controllers
                     doc.type = 0;
                     doc.year = year;
                     doc.views = 0;
+                    doc.be_linked = be_linked;
+                    doc.link_to = link_to;
                     db.documents.Add(doc);
                     db.SaveChanges();
                     return "1";
@@ -350,6 +358,8 @@ namespace qlvb.Controllers
                     //doc.status = 0;
                     //doc.type = 0;
                     doc.year = year;
+                    doc.be_linked = be_linked;
+                    doc.link_to = link_to;
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
                     return "1";
