@@ -62,7 +62,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if (xhr.responseText != "0") {
-                    window.location.href = "/members/index";
+                    window.location.href = "/Document/index";
                 } else {
                     document.getElementById("btnSA").disabled = false;
                     alert("Không tìm thấy user và pass này! Kiểm tra lại pass và tên truy cập!");
