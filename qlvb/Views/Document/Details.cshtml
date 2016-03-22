@@ -57,13 +57,13 @@
                 <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword5))</section></td>
+                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewhashtags(@Model.keyword5))</section></td>
              </tr>
             <tr>
-                <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh đến :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.link_to))</section></td>
+                <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh đến :</td><td ><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
              </tr>
             <tr>
-                <td class="label">Văn bản căn cứ từ các văn bản:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.be_linked))</section></td>
+                <td class="label">Văn bản căn cứ từ các văn bản:</td><td ><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
              </tr>
         </table> 
         <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--Quay lại danh sách</a></div>

@@ -1148,3 +1148,39 @@ ul.meta-tags li:last-child:after { content: ' ' }
     line-height: 1px;
     vertical-align: middle;
 }
+.refinements-summary1 a {
+    margin-bottom: 5px;
+    padding: 6px 5px;
+    color: yellow;
+    background-color: #E5B112;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-radius: 6px;
+    text-transform: none;
+    vertical-align: top;
+    display:inline-block;
+}
+.refinements-summary2 a {
+    margin-bottom: 5px;
+    padding: 6px 5px;
+    color: #ffffff;
+    background-color: #6f6f6f;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-radius: 6px;
+    text-transform: none;
+    vertical-align: top;
+    display:inline-block;
+}
+.refinements-summary3 a {
+    margin-bottom: 5px;
+    padding: 6px 5px;
+    color: blue;
+    background-color: #E5B112;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-radius: 6px;
+    text-transform: none;
+    vertical-align: top;
+    display:inline-block;
+}

@@ -369,6 +369,32 @@ namespace qlvb
             }
             return val;
         }
+        public static string viewhashtags(string f)
+        {
+            string val = "";
+
+            if (f != "")
+            {
+                string[] word = f.Split(',');
+                for (int i = 0; i < word.Length; i++)
+                    if (word[i].Trim() != "")
+                    {
+                        string temp = word[i].Trim();
+                        var p=db.documents.Where(o => o.code.Contains(temp)).FirstOrDefault();
+                        int? idvb=null;
+                        if (p!=null) idvb=p.id;
+                        if (idvb != null)
+                        {
+                            string name = p.name;
+                            val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name+"</span><br>"+word[i].Trim() + "</a>&nbsp;";
+                        }
+                        else {
+                            val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>&nbsp;";
+                        }
+                    }
+            }
+            return val;
+        }
         public static string tags(string f1,string f2, string f3,string f4)
         {
             string val = "";
