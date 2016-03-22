@@ -21,40 +21,49 @@
         <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>      
         <table style="width:100%;text-align:center;">
             <tr>
-                <td class="label">Tiêu đề *:</td><td >@Model.name</td>
+                <td class="label">Tiêu đề :</td><td >@Model.name</td>
             </tr>
             <tr>
-                <td class="label">Ký hiệu *:</td><td >@Model.code</td>
+                <td class="label">Tải về :</td><td ><a href="/Files/@Model.link" style="text-decoration:underline;">Download</a></td>
             </tr>
             <tr>
-                <td class="label">Lĩnh vực *:</td><td >@qlvb.Config.getCatNameById(1,@Model.cat1_id)</td>
+                <td class="label">Ký hiệu :</td><td >@Model.code</td>
+            </tr>
+            <tr>
+                <td class="label">Lĩnh vực :</td><td >@qlvb.Config.getCatNameById(1,@Model.cat1_id)</td>
             </tr>
             <tr>        
-                <td class="label">Loại văn bản *:</td><td >@qlvb.Config.getCatNameById(2,@Model.cat2_id)</td>     
+                <td class="label">Loại văn bản :</td><td >@qlvb.Config.getCatNameById(2,@Model.cat2_id)</td>     
             </tr>
             <tr>       
-                <td class="label">Người ký *:</td><td >@qlvb.Config.getCatNameById(3,@Model.cat3_id)</td>
+                <td class="label">Người ký :</td><td >@qlvb.Config.getCatNameById(3,@Model.cat3_id)</td>
             </tr>
             <tr>
-                <td class="label">Cơ quan ban hành *:</td><td >@qlvb.Config.getCatNameById(4,@Model.cat4_id)</td>
+                <td class="label">Cơ quan ban hành :</td><td >@qlvb.Config.getCatNameById(4,@Model.cat4_id)</td>
             </tr>
             <tr>
-                <td class="label">Năm ban hành *:</td><td >@Model.year</td>
+                <td class="label">Năm ban hành :</td><td >@Model.year</td>
              </tr>
              <tr>
-                <td class="label">Tập từ khóa 1(từ tiêu đề văn bản) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
+                <td class="label">Tập từ khóa 1(từ tiêu đề văn bản) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 2(từ điều 1, điều 2...) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+                <td class="label">Tập từ khóa 2(từ điều 1, điều 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+                <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
+                <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword5))</section></td>
+                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword5))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh đến :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.link_to))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Văn bản căn cứ từ các văn bản:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.be_linked))</section></td>
              </tr>
         </table> 
         <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--Quay lại danh sách</a></div>

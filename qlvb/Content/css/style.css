@@ -1137,6 +1137,7 @@ ul.meta-tags li:last-child:after { content: ' ' }
     border-radius: 6px;
     text-transform: none;
     vertical-align: top;
+    display:inline-block;
 }
 .refinements-summary a:after {
     content: "x";    
