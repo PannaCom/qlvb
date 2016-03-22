@@ -95,7 +95,8 @@ namespace qlvb
             
             try
             {
-                Regex titRegex = new Regex(@"năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.*
+                content = content.Replace("  ", "");
+                Regex titRegex = new Regex(@"năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.* //năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
                 {
