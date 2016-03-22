@@ -354,6 +354,21 @@ namespace qlvb
                 query += " ) as C group by catid,name order by name";
             return query;
         }
+        public static string hashtags(string f)
+        {
+            string val = "";
+
+            if (f != "")
+            {
+                string[] word = f.Split(',');
+                for (int i = 0; i < word.Length;i++)
+                if (word[i].Trim()!="")
+                {
+                    val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>,";
+                }
+            }
+            return val;
+        }
         public static string tags(string f1,string f2, string f3,string f4)
         {
             string val = "";

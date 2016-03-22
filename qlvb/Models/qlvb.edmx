@@ -74,7 +74,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="nvarchar" MaxLength="550" />
+          <Property Name="name" Type="nvarchar" MaxLength="851" />
           <Property Name="auto_des" Type="ntext" />
           <Property Name="code" Type="nvarchar" MaxLength="150" />
           <Property Name="keyword1" Type="ntext" />
@@ -90,9 +90,9 @@
           <Property Name="date_time" Type="datetime" />
           <Property Name="related_id" Type="nvarchar" MaxLength="450" />
           <Property Name="year" Type="int" />
-          <Property Name="link" Type="nvarchar" MaxLength="150" />
+          <Property Name="link" Type="nvarchar" MaxLength="550" />
           <Property Name="link_to" Type="nvarchar" MaxLength="152" />
-          <Property Name="be_linked" Type="nvarchar" MaxLength="150" />
+          <Property Name="be_linked" Type="nvarchar" MaxLength="152" />
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
         </EntityType>
@@ -185,7 +185,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="name" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="851" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="code" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -201,9 +201,9 @@
           <Property Type="DateTime" Name="date_time" Precision="3" />
           <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="year" />
-          <Property Type="String" Name="link" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="link" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="link_to" MaxLength="152" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="be_linked" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="be_linked" MaxLength="152" FixedLength="false" Unicode="true" />
           <Property Type="Byte" Name="status" />
           <Property Type="Int32" Name="views" />
         </EntityType>

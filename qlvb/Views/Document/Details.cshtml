@@ -4,7 +4,14 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<style>
+    table tr {
+        border-bottom: 1px dotted #ccc;
+        height:auto;
+        
+        
+    }
+</style>
 
 
 <div id="tf-services">
@@ -34,9 +41,40 @@
             <tr>
                 <td class="label">Năm ban hành *:</td><td >@Model.year</td>
              </tr>
+             <tr>
+                <td class="label">Tập từ khóa 1(từ tiêu đề văn bản) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Tập từ khóa 2(từ điều 1, điều 2...) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
+             </tr>
+            <tr>
+                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) *:</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword5))</section></td>
+             </tr>
         </table> 
         <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--Quay lại danh sách</a></div>
         
     </div>
 </div>
 </div>
+<script>
+    function searchkw(keyword) {
+        var url = "/Document/index?";
+        var k = keyword;
+        //if (k == "") {
+        //    return;
+        //}
+        var f1 = "";
+        var f2 = "";
+        var f3 = "";
+        var f4 = "";
+        
+        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
+        window.location.href = url;
+    }
+</script>
