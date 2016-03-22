@@ -409,7 +409,8 @@ namespace qlvb.Controllers
                     }
                     sb.Append(Config.GetPlainText(element));
                     content=sb.ToString();
-                    content = content.Replace("\r\n\r\n", "\r\n");
+                    content = content.Replace("\t", "\r\n");
+                    content = content.Replace("\r\n\r\n", "\r\n");                    
                     Config.loadDic();
                     title = Config.getTitle(content).Replace("\n"," ").Trim();
                     p1 = Config.getP1(title);
