@@ -1,7 +1,7 @@
 ﻿@model qlvb.Models.document
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.name+"-"+Model.code;
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <style>
@@ -16,7 +16,7 @@
 
 <div id="tf-services">
     <div class="container">
-        <div style="width:100%;text-align:center;">  
+        <div style="width:100%;text-align:center;padding-top:30px;">  
         
         <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>      
         <table style="width:100%;text-align:center;">
@@ -57,7 +57,7 @@
                 <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 5(các ký hiệu của văn bản khác xuất hiện trong văn bản) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewhashtags(@Model.keyword5))</section></td>
+                <td class="label">Tập từ khóa 5(các văn bản khác có liên quan, xuất hiện trong nội dung văn bản này) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewhashtags(@Model.keyword5))</section></td>
              </tr>
             <tr>
                 <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh đến :</td><td ><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>

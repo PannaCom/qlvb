@@ -47,6 +47,8 @@ namespace qlvb.Controllers
         }
         public ActionResult Index(string k, string f1, string f2, string f3, string f4, string order, string to, int? pg)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
+            ViewBag.user = Config.getCookie("userid");
             //try
             //{
             if (k != null && k.Trim() != "")

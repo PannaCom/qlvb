@@ -64,14 +64,15 @@
             </div>
             @*<b style="font-weight:bold;color:green;">HỆ THỐNG TÌM KIẾM VĂN BẢN QUY PHẠM</b>*@
             <!-- Collect the nav links, forms, and other content for toggling -->
-            @*<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="/Home" class="scroll">Trang chủ</a></li>
+                @*<li><a href="/Home" class="scroll">Trang chủ</a></li>
                 <li><a href="#" class="scroll">Giới thiệu</a></li>
-                <li><a href="#" class="scroll">Liên hệ</a></li>
-                <li><a href="#" class="scroll">Đăng nhập</a></li>
+                <li><a href="#" class="scroll">Liên hệ</a></li>*@
+                <li id="loginli"><a href="/Members/Login" class="scroll" style="color:#ffffff;background:#808080;">Đăng nhập</a></li>
+                <li id="logoutli" style="display:none;"><a href="/Members/Logout" class="scroll" style="color:#ffffff;background:#808080;">Thoát</a></li>
               </ul>
-            </div><!-- /.navbar-collapse -->*@
+            </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
         <div id="body">
