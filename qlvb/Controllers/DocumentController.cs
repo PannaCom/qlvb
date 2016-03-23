@@ -526,6 +526,15 @@ namespace qlvb.Controllers
                     doc.link_to = link_to;
                     db.documents.Add(doc);
                     db.SaveChanges();
+                    ////Tự động chèn vào từ khóa có liên quan của văn bản bị điều chỉnh, sửa đổi
+                    //if (link_to != "") {
+                    //    string[] items = link_to.Split(',');
+                    //    for (int i = 0; i < items.Length; i++) {
+                    //        if (items[i].Trim() != "") {
+                    //            db.Database.ExecuteSqlCommand("update documents set keyword5=keyword5+N'" + code + "' where code=N'" + items[i].Trim() + "'");
+                    //        }
+                    //    }
+                    //}
                     return "1";
                 }
                 else

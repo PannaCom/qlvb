@@ -57,7 +57,7 @@
                 <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 5(các văn bản khác có liên quan, xuất hiện trong nội dung văn bản này) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewhashtags(@Model.keyword5))</section></td>
+                <td class="label">Tập từ khóa 5(các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5,@Model.code))</section></td>
              </tr>
             <tr>
                 <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td><td ><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
