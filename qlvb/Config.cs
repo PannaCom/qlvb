@@ -45,7 +45,7 @@ namespace qlvb
         {
             try
             {
-                Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*[^a-zA-Z0-9]\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r
+                Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*[^a-zA-Z0-9]\S\S*
                 
                 //Match titm = titRegex.Match(content);
                 //if (titm.Success)
@@ -60,7 +60,10 @@ namespace qlvb
                     //Console.WriteLine("'{0}' found at index {1}.",
                     //                  m.Value, m.Index);
                     string temp = m.Value.Replace(";", "").Replace(".", "").Replace(")", "").Replace("(", "").Replace(",", "");
-                    if (!content.Contains(temp)) content += temp + " , ";
+                    if (temp.Split('/').Length >= 3)
+                    {
+                        if (!content.Contains(temp)) content += temp + " , ";
+                    }
                 }
                 //string[] code = content.Split(' ');
                 return content;
@@ -358,7 +361,7 @@ namespace qlvb
         public static string hashtags(string f)
         {
             string val = "";
-
+            if (f == null) return "";
             if (f != "")
             {
                 string[] word = f.Split(',');
@@ -373,7 +376,7 @@ namespace qlvb
         public static string viewhashtags(string f)
         {
             string val = "";
-
+            if (f == null) return "";
             if (f != "")
             {
                 string[] word = f.Split(',');

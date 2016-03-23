@@ -12,3 +12,7 @@ function showLoadingImage() {
 function hideLoadingImage() {
     $("#progressbar").hide();
 }
+function tolower() {
+    var temp = $("#name").val();
+    $("#name").val(temp.toLowerCase());
+}
