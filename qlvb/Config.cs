@@ -361,15 +361,67 @@ namespace qlvb
         public static string hashtags(string f)
         {
             string val = "";
-            if (f == null) return "";
-            if (f != "")
+            try
             {
-                string[] word = f.Split(',');
-                for (int i = 0; i < word.Length;i++)
-                if (word[i].Trim()!="")
+                if (f == null) return "";
+                if (f != "")
                 {
-                    val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>,";
+                    string[] word = f.Split(',');
+                    for (int i = 0; i < word.Length; i++)
+                        if (word[i].Trim() != "")
+                        {
+                            val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>,";
+                        }
                 }
+            }
+            catch (Exception ex) {
+                return f;
+            }
+            return val;
+        }
+        public static string viewallhashtags(string f,string code)
+        {
+            string val = "";
+            try
+            {
+                
+                if (f == null) return "";
+                if (f != "")
+                {
+                    string[] word = f.Split(',');
+                    for (int i = 0; i < word.Length; i++)
+                        if (word[i].Trim() != "")
+                        {
+                            string temp = word[i].Trim();
+                            var p = db.documents.Where(o => o.code.Contains(temp)).FirstOrDefault();
+                            int? idvb = null;
+                            if (p != null) idvb = p.id;
+                            if (idvb != null)
+                            {
+                                string name = p.name;
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                            }
+                            else
+                            {
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>&nbsp;";
+                            }
+                        }
+                    //Tìm xem còn văn bản nào điều chỉnh văn bản này không?
+                    var rel = db.documents.Where(o => o.link_to.Contains(code)).FirstOrDefault();
+                    if (rel != null) {
+                        var li = (from q in db.documents where q.link_to.Contains(code) select q).ToList();
+                        for (int ii = 0; ii < li.Count; ii++)
+                        {
+                            if (!f.Contains(li[ii].code)) {
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + li[ii].id + "\"><span style='font-size:10px;color:#ffffff;'>" + li[ii].name + "</span><br>" + li[ii].code + "</a>&nbsp;";
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex) {
+                return f;
             }
             return val;
         }
@@ -377,25 +429,35 @@ namespace qlvb
         {
             string val = "";
             if (f == null) return "";
-            if (f != "")
+            try
             {
-                string[] word = f.Split(',');
-                for (int i = 0; i < word.Length; i++)
-                    if (word[i].Trim() != "")
-                    {
-                        string temp = word[i].Trim();
-                        var p=db.documents.Where(o => o.code.Contains(temp)).FirstOrDefault();
-                        int? idvb=null;
-                        if (p!=null) idvb=p.id;
-                        if (idvb != null)
+                if (f != "")
+                {
+                    string[] word = f.Split(',');
+                    for (int i = 0; i < word.Length; i++)
+                        if (word[i].Trim() != "")
                         {
-                            string name = p.name;
-                            val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name+"</span><br>"+word[i].Trim() + "</a>&nbsp;";
+                            string temp = word[i].Trim();
+                            var p = db.documents.Where(o => o.code.Contains(temp)).FirstOrDefault();
+                            int? idvb = null;
+                            if (p != null) idvb = p.id;
+                            if (idvb != null)
+                            {
+                                string name = p.name;
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                            }
+                            else
+                            {
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>&nbsp;";
+                            }
                         }
-                        else {
-                            val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>&nbsp;";
-                        }
-                    }
+                    //Tìm xem còn văn bản nào điều chỉnh văn bản này hoặc căn cứ vào văn bản này không?
+
+
+                }
+            }
+            catch (Exception ex) {
+                return f;
             }
             return val;
         }
