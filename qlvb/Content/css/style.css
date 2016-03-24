@@ -1139,6 +1139,9 @@ ul.meta-tags li:last-child:after { content: ' ' }
     vertical-align: top;
     display:inline-block;
 }
+.refinements-summary a:hover,.refinements-summary1 a:hover,.refinements-summary2 a:hover,.refinements-summary3 a:hover {
+    background-color:#ffcc33;
+}
 .refinements-summary a:after {
     content: "x";    
     color: #b3b3b3;

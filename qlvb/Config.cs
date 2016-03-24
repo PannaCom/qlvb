@@ -99,6 +99,7 @@ namespace qlvb
             try
             {
                 content = content.Replace("  ", "");
+                content = content.Replace("\n", " ").Replace(".", " ").Replace(",", " ").Trim();
                 Regex titRegex = new Regex(@"năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.* //năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
@@ -390,7 +391,7 @@ namespace qlvb
                 {
                     string[] word = f.Split(',');
                     for (int i = 0; i < word.Length; i++)
-                        if (word[i].Trim() != "")
+                        if (word[i].Trim() != "" && !word[i].Trim().Equals(code))
                         {
                             string temp = word[i].Trim();
                             var p = db.documents.Where(o => o.code.Contains(temp)).FirstOrDefault();

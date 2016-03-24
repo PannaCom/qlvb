@@ -225,7 +225,7 @@ namespace qlvb.Controllers
         }
         public class search
         {
-            public string name { get; set; }
+            public string value { get; set; }
             public int id { get; set; }
         }
         public string getDoc(string keyword) {
@@ -233,9 +233,9 @@ namespace qlvb.Controllers
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 string query="SELECT top 10 ";
-                query += "FT_TBL.code+' '+ FT_TBL.name as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
 			     query+="order by Rank Desc";
-                 var p = db.Database.SqlQuery<string>(query);
+                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
             else
@@ -244,9 +244,9 @@ namespace qlvb.Controllers
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
                 string query = "SELECT top 10 ";
-                query += "FT_TBL.name +' ' +FT_TBL.code as name FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += "order by Rank Desc";
-                var p = db.Database.SqlQuery<string>(query);
+                var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
         }

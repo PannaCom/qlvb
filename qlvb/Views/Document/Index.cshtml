@@ -216,9 +216,10 @@
         $('#word').autocomplete({
             source: urlSearch + keyword,
             select: function (event, ui) {
-                $(event.target).val(ui.item.value);
-                search();
+                //$(event.target).val(ui.item.value);
+                //search();
                 //alert(ui.item.id);
+                window.open("/Document/Details/"+ui.item.id,"_blank");
                 return false;
             },
             minLength: 1
