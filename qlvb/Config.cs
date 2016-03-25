@@ -98,27 +98,39 @@ namespace qlvb
             
             try
             {
-                content = content.Replace("  ", "");
+                
                 content = content.Replace("\n", " ").Replace(".", " ").Replace(",", " ").Trim();
-                Regex titRegex = new Regex(@"năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.* //năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*
+                content = content.Replace("\r", "");
+                content = content.Replace("\n", "");
+                content = content.Replace("  ", " ");
+                Regex titRegex = new Regex(@"năm [0-9]{4}(.*?)\s\S.*\s\S.*", RegexOptions.IgnoreCase);//năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.* //năm [0-9]{4}\r\n(.*?)\s\S.*\s\S.*
                 Match titm = titRegex.Match(content);
                 if (titm.Success)
                 {
                     content = titm.Groups[0].Value;
                 }
                 else return "";
-                string[] code = content.Split('\r');
-                string rs = "";
-                int l = code.Length > 10 ? 10 : code.Length;
-                for (int i = 1; i < l; i++) {
-                    if (code[i].StartsWith("Căn cứ")) break;
-                    if (code[i] != "\a" && code[i] != "") {
-                        rs += code[i] + " ";
-                    }
+                //string[] code = content.Split('\r');
+                //string rs = "";
+                //int l = code.Length > 10 ? 10 : code.Length;
+                //for (int i = 1; i < l; i++) {
+                //    if (code[i].StartsWith("Căn cứ")) break;
+                //    if (code[i] != "\a" && code[i] != "") {
+                //        rs += code[i] + " ";
+                //    }
                     
-                }
+                //}
                 //Bóc tách từ khóa
-                return rs;//getKeyWordFromContent(rs);
+                
+                for (int i = 1999; i <= 2051; i++) {
+                    string temp="năm " + i.ToString();
+                    if (content.Trim().StartsWith(temp)) {
+                        content = content.Substring(temp.Length, content.Length - temp.Length-1);
+                        break;
+                    }
+                }
+                string rs = content.Substring(0, content.IndexOf("Căn cứ"));
+                return rs.Trim();//getKeyWordFromContent(rs);
                 //return rs;
             }
             catch
