@@ -30,14 +30,25 @@ namespace qlvb
             try{
                 Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r    //Số: (.*?)/(.*?)/.*[A-Z]\s
                 Match titm = titRegex.Match(content);
+                bool notfound = false;
+                string code = "";
                 if (titm.Success)
                 {
-                    content = titm.Groups[0].Value;
+                    code = titm.Groups[0].Value;
                 }
-                else return "";
+                else notfound = true;
+                if (code.Trim().EndsWith("-")) notfound = true;
+                if (notfound) { 
+                    int from=content.IndexOf("Số:");
+                    int to=content.IndexOf("CỘNG HÒA");
+                    if (to < 0) to = content.IndexOf("CỘNG HOÀ");
+                    code = content.Substring(from, to - from);
+                    code = code.Replace(" ", "");
+                    code = code.Replace("Số:", "");
+                }
                 //string[] code = content.Split(' ');
                 //return code[1];
-                return content.Trim();
+                return code.Trim();
             }catch{
                 return "";
             }
