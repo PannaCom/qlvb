@@ -25,7 +25,7 @@ namespace qlvb.Controllers
             if (word == null) word = "";
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            var p = (from q in db.dic_normal where q.word.Contains(word) select q).OrderBy(o => o.word).Take(1000);
+            var p = (from q in db.dic_normal where q.word.Contains(word) select q).OrderBy(o => o.word).Take(30000);
             return View(p.ToPagedList(pageNumber, pageSize));
             //return View(db.cat2.ToList());
         }

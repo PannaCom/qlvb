@@ -597,15 +597,21 @@ namespace qlvb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
-            document document = db.documents.Find(id);
-            string physicalPath = HttpContext.Server.MapPath("/Files/");
-            string nameFile = document.link;
-            string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
-            db.documents.Remove(document);
-            db.SaveChanges();
-            if (System.IO.File.Exists(fullPath)) {
-                System.IO.File.Delete(fullPath);
+            try
+            {
+                if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
+                document document = db.documents.Find(id);
+                string physicalPath = HttpContext.Server.MapPath("/Files/");
+                string nameFile = document.link;
+                string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
+                db.documents.Remove(document);
+                db.SaveChanges();
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+            }
+            catch (Exception ex) { 
             }
             return RedirectToAction("Index");
         }

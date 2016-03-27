@@ -11,10 +11,10 @@
 </div>    
 <div id="progressbar" class="progressbar" style="width:50%;float:left;position:fixed;top:40%;left:25%;background-color:#c8e19b;z-index:1002;text-align:center;display:block;display:none">
       <div id="progresslabel" class="progressbarlabel" style="width:100%;float:left;height:100px;background-color:#ff6a00;color:#ffffff;">
-          <div id="progresslabelpr" style="width:1px;float:left;height:100px;background-color:blue;color:#ffffff;position:absolute;text-align:center;font-size:24px"></div>
+          <div id="progresslabelpr" style="width:100%;float:left;height:100px;background-color:blue;color:#ffffff;position:absolute;text-align:center;font-size:24px"></div>
       </div>
 </div>
-<div id="tf-services">
+<div id="tf-services" style="width:100%;padding-top:100px;">
 <div class="container">
 <h2>Thêm mới Văn bản</h2>
 <script>
@@ -83,7 +83,7 @@
         @*<iframe id="namelabel" src="" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      *@
         <a style="width:100%;display:none;float:left;position:relative;color:blue;text-decoration:solid;" id="viewdoc" target="_blank" href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@ViewBag.link">Upload thành công, Xem toàn văn nội dung</a>    
         <label class="label" >Tiêu đề *:(<img src="/Images/lw.png" style="width:16px;height:16px;cursor:pointer;" onclick="tolower();">)</label><textarea class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" rows="4">@Html.Raw(@ViewBag.name)</textarea>
-        <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" onblur="checkDuplicate(this.value);">
+        <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" >
         <label class="label">Tập từ khóa 1(Lấy từ title của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy các từ khóa từ title văn bản" id="keyword1" name="keyword1" value="@Html.Raw(@ViewBag.keyword1)">
         <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
         <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
@@ -133,7 +133,7 @@
             if (evt.lengthComputable) {
                 var progress = Math.round(evt.loaded * 100 / evt.total);
                 //$("#progressbar").progressbar("value", progress);
-                $("#progresslabelpr").css("width",progress+"%");
+                //$("#progresslabelpr").css("width",progress+"%");
                 $("#progresslabelpr").html("Đang phân tích từ khóa...<br><img src='/Images/loading.gif' >");
             }
         }, false);
@@ -195,6 +195,7 @@
                 if (xhr.responseText=="True"){
                     alert("Văn bản có mã là "+code+" đã tồn tại trong hệ thống. Kiểm tra lại!");
                     document.getElementById("code").focus();
+                    return true;
                 }
             }
         }
@@ -284,6 +285,11 @@
         }
         if (document.getElementById("code").value == "") {
             alert("Nhập ký hiệu văn bản");
+            document.getElementById("code").focus();
+            return;
+        }
+        if (checkDuplicate(document.getElementById("code").value)){
+            alert("Đã có văn bản này rồi!");
             document.getElementById("code").focus();
             return;
         }

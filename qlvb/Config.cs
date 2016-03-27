@@ -28,6 +28,7 @@ namespace qlvb
         }
         public static string getCode(string content){
             try{
+                content = content.Replace(" /", "/");
                 Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r    //Số: (.*?)/(.*?)/.*[A-Z]\s
                 Match titm = titRegex.Match(content);
                 bool notfound = false;
@@ -141,8 +142,11 @@ namespace qlvb
                         break;
                     }
                 }
-                string rs="";                
-                rs = content.Substring(0, content.IndexOf("Căn cứ"));
+                string rs="";
+                if (content.IndexOf("Căn cứ")>0) rs = content.Substring(0, content.IndexOf("Căn cứ"));
+                //if (rs.Equals("")) { 
+
+                //}
                 if (rs.Contains("_")) rs = rs.Substring(0, rs.IndexOf("_"));
                 if (rs.Contains("----")) rs = rs.Substring(0, rs.IndexOf("----"));
                 

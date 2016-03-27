@@ -3,11 +3,11 @@
 @using PagedList.Mvc; 
 @{
     ViewBag.Title = "Tìm Kiếm Văn Bản Quy Phạm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
     int count = 0;
 }
-<div style="width:100%;padding-top:60px;">
+<div style="width:100%;padding-top:100px;">
     <h3>QUẢN LÝ VĂN BẢN</h3>
     <p>
         <img src="/Images/create.png">@Html.ActionLink("Thêm Mới", "Create")
