@@ -222,6 +222,51 @@ namespace qlvb
             }
             return result;
         }
+        public static string getHotKeyword(string content)
+        {
+            try
+            {
+                content = content.ToLowerInvariant().Replace(".", " ").Trim();
+                string result = "";
+                string[] arrContent = content.Split(',');
+                int tempcount = 0;
+                Dictionary<String, int> top = new Dictionary<String, int>();
+
+                for (int l = 0; l < arrContent.Length; l++)
+                {
+                    string tempword = arrContent[l];
+                    tempword = tempword.ToLowerInvariant().Trim();
+                    if (tempword!="" && tempword.Split(' ').Length >= 2)
+                    {
+                        //result += tempword + " , ";
+                        if (top.ContainsKey(tempword))
+                        {
+                            tempcount = top[tempword] + 1;
+                            top.Remove(tempword);
+                            top.Add(tempword, tempcount);
+                        }
+                        else
+                        {
+                            top.Add(tempword, 1);
+                        }
+                    }
+                }
+
+                var sortedDict = from entry in top orderby entry.Value descending select entry;
+                tempcount = 0;
+                foreach (var entry in sortedDict)
+                {
+                    tempcount++;
+                    //result += entry.Key + " , ";
+                    result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
+                    //if (tempcount >= 10) break;
+                }
+                return result;
+            }
+            catch (Exception ex) {
+                return "";
+            }
+        }
         public static string getP1(string content) {
             try
             {
