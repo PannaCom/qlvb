@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
     int count = 0;
+    string allHotKeyword = "";
 }
 
 <div id="tf-services">
@@ -96,6 +97,7 @@
                 </td>
             </tr>
             count++;
+            //allHotKeyword+=@item.ke
         }
         </table>
  <div>Trang:
@@ -107,6 +109,11 @@
     </div>
 </div>
 </div>
+<section class="refinements-summary">Từ khóa nóng nhất:
+<div id="allhotkeyword">
+
+</div>
+</section>
 <script>
     var pg=@ViewBag.page;
     var order="@ViewBag.order";
@@ -224,5 +231,29 @@
                 search();
             }
         }
+    }
+    //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {            
+    //    alert(data);
+    //});
+    $.ajax({
+        url: "/Home/getAllHotKeyWord",
+        cache: false
+    })
+      .done(function( html ) {
+          $( "#allhotkeyword").html(html);
+      });
+    function searchkw(keyword) {
+        var url = "/Home/Index?";
+        var k = keyword;
+        //if (k == "") {
+        //    return;
+        //}
+        var f1 = "";
+        var f2 = "";
+        var f3 = "";
+        var f4 = "";
+        
+        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
+        window.location.href = url;
     }
 </script>

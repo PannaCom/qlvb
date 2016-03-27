@@ -207,6 +207,14 @@ namespace qlvb.Controllers
             //    return View();
             //}
         }
+        public string getAllHotKeyWord() {
+            var p = (from q in db.documents select q).OrderByDescending(o => o.views).Take(20).ToList();
+            string all = "";
+            for (int i = 0; i < p.Count; i++) {
+                all += p[i].keyword1+",";
+            }
+            return Config.getHotKeyword(all);
+        }
         public ActionResult Tree(string f1, string f2, string f3, string f4, string order, string to, int? pg)
         {
 
