@@ -72,7 +72,7 @@
             <th>
                 Lĩnh vực
             </th>
-            <th>Người ký</th>
+            <th>Loại văn bản</th>
         </tr>
 
         @foreach (var item in Model)
@@ -93,7 +93,7 @@
                     @qlvb.Config.getCatNameById(1, @item.cat1_id)
                 </td>
                 <td align="left">
-                     @qlvb.Config.getCatNameById(3, @item.cat3_id)
+                     @qlvb.Config.getCatNameById(2, @item.cat2_id)
                 </td>
             </tr>
             count++;
