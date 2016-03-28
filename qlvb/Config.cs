@@ -258,7 +258,7 @@ namespace qlvb
                 {
                     tempcount++;
                     //result += entry.Key + " , ";
-                    result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
+                    if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
                     //if (tempcount >= 10) break;
                 }
                 return result;
@@ -666,6 +666,11 @@ namespace qlvb
 
 
             return PlainTextInWord.ToString();
-        } 
+        }
+        public static string removeSpecialChar(string input)
+        {
+            input = input.Replace("-", "").Replace(":", "").Replace(",", "").Replace("_", "").Replace("'", "").Replace("\"", "").Replace(";", "").Replace("”", "").Replace(".", "").Replace("%", "");
+            return input;
+        }
     }
 }
