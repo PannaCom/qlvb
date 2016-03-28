@@ -83,10 +83,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td align="left">
                     <a href="/Document/Details/@item.id" target="_blank">@item.code</a>
                 </td>
-                <td align="left" >
+                <td align="left" style="width:45%;">
                     @if (item.RANK > 0 && count==0)
                     {
                         <a href="/Document/Details/@item.id" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
@@ -94,13 +94,13 @@
                     else
                     { <a href="/Document/Details/@item.id" target="_blank" >@item.name </a>}
                 </td>
-                <td>
+                <td align="left">
                     @qlvb.Config.getCatNameById(1, @item.cat1_id)
                 </td>
-                <td>
+                <td align="left">
                      @qlvb.Config.getCatNameById(3, @item.cat3_id)
                 </td>
-                <td>
+                <td align="left">
                     <a href="/Document/Create?id=@item.id">Sửa</a><br />
                     <a href="/Document/Details/@item.id">Chi tiết</a><br />
                     <a href="/Document/Delete/@item.id">Xóa</a><br />
