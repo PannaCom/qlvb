@@ -439,6 +439,8 @@ namespace qlvb.Controllers
                     p3 = Config.getP3(content);
                     p4 = Config.getP4(content);
                     p5 = Config.getP5(content);
+                    wordprocessingDocument.Close();
+                    wordprocessingDocument = null;
                     // Close word.
                     //application.Quit();
                     break;

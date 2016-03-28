@@ -29,6 +29,7 @@ p { font-size: 14px }
 a {
     color: inherit;
     transition: all 0.5s;
+    color:#131E32;
 }
 a:hover,
 a:focus {
