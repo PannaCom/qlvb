@@ -477,7 +477,7 @@ namespace qlvb
                             if (idvb != null)
                             {
                                 string name = p.name;
-                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
                             }
                             else
                             {
@@ -522,7 +522,7 @@ namespace qlvb
                             if (idvb != null)
                             {
                                 string name = p.name;
-                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:10px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
                             }
                             else
                             {
