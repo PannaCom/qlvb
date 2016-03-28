@@ -669,7 +669,7 @@ namespace qlvb
         }
         public static string removeSpecialChar(string input)
         {
-            input = input.Replace("-", "").Replace(":", "").Replace(",", "").Replace("_", "").Replace("'", "").Replace("\"", "").Replace(";", "").Replace("”", "").Replace(".", "").Replace("%", "");
+            input = input.Replace("-", "").Replace(":", "").Replace(",", "").Replace("'", "").Replace("\"", "").Replace(";", "").Replace("”", "").Replace("%", "");//Replace(".", "").Replace("_", "").
             return input;
         }
     }
