@@ -58,6 +58,7 @@ namespace qlvb
         {
             try
             {
+                content = content.Replace(" /", "/");
                 Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*[^a-zA-Z0-9]\S\S*
                 
                 //Match titm = titRegex.Match(content);
