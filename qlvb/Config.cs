@@ -51,9 +51,20 @@ namespace qlvb
         {
             try
             {
-                content = content.Trim();
+                content = content.Trim().ToLowerInvariant();
                 int to = content.IndexOf("(Đã ký)");
-                if (to < 0) return "";
+                if (to < 0) to = content.IndexOf("(đã ký)");
+                if (to > 0) {
+                    var p = (from q in db.cat3 select q.name).ToList();
+                    for (int i = 0; i < p.Count;i++ )
+                    {
+                        string item = p[i].ToLowerInvariant();
+                        if (content.Contains(item) && content.IndexOf(item) >= to)
+                        {
+                            return item;
+                        }
+                    }
+                }
                 
                 return "";
             }

@@ -187,6 +187,16 @@
                         break;
                     }
                 }
+                //Xem ai ký
+                var text3=items[11];
+                //alert(text4.toLowerCase());
+                var ddcat3 = document.getElementById('cat3');
+                for (var i = 0; i < ddcat3.options.length; i++) {
+                    if (ddcat3.options[i].text.toLowerCase() === text3.toLowerCase()) {
+                        ddcat3.selectedIndex = i;
+                        break;
+                    }
+                }
                 hideLoadingImage();    
             }
         }
