@@ -277,6 +277,7 @@ namespace qlvb.Controllers
         public ActionResult Create(int? id)
         {
             if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
+            ViewBag.user = Config.getCookie("userid");
             if (id == null)
             {
                 document document = new document();
