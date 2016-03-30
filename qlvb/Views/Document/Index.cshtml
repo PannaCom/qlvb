@@ -87,7 +87,7 @@
                     <a href="/Document/Details/@item.id" target="_blank">@item.code</a>
                 </td>
                 <td align="left" style="width:45%;">
-                    @if (item.RANK > 0 && count==0)
+                    @if (item.RANK > 0 && count<=2)
                     {
                         <a href="/Document/Details/@item.id" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
                     }
