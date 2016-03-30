@@ -177,6 +177,16 @@
                 checkDuplicate(items[0]);
                 $('#viewdoc').show();
                 $('#link').val(items[7]);
+                //Xem cơ quan nào phát hành
+                var text4=items[10];
+                //alert(text4.toLowerCase());
+                var ddcat4 = document.getElementById('cat4');
+                for (var i = 0; i < ddcat4.options.length; i++) {
+                    if (ddcat4.options[i].text.toLowerCase() === text4.toLowerCase()) {
+                        ddcat4.selectedIndex = i;
+                        break;
+                    }
+                }
                 hideLoadingImage();    
             }
         }

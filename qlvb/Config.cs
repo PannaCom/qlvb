@@ -26,6 +26,42 @@ namespace qlvb
                 }
             }
         }
+        public static string getPublish(string content)
+        {
+            try
+            {
+                content=content.Trim();
+                int to = content.IndexOf("Số:");
+                if (to < 0) to = int.MaxValue;
+                int to2 = content.IndexOf("CỘNG HÒA");
+                int to3 = content.IndexOf("CỘNG HOÀ");
+                if (to2>0 && to2 < to) to = to2;
+                if (to3>0 && to3 < to) to = to3;
+                string val = content.Substring(0, to);
+                val = val.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+                val = val.Replace("  ", " ").Trim();
+                return val;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+        public static string getPeopleSign(string content)
+        {
+            try
+            {
+                content = content.Trim();
+                int to = content.IndexOf("(Đã ký)");
+                if (to < 0) return "";
+                
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
         public static string getCode(string content){
             try{
                 content = content.Replace(" /", "/");
@@ -161,67 +197,86 @@ namespace qlvb
         }
         
         public static string getKeyWordFromContent(string content){
-            content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
-            int lengthWord = 4;
-            string result = "";
-            string[] arrContent = content.Split(' ');
-            while (lengthWord >= 2) {
-                for (int l = 0; l <= arrContent.Length - lengthWord; l++) {
-                    string tempword = "";
-                    for (int l1 = l; l1 < l + lengthWord; l1++) {
-                        tempword += arrContent[l1] + " ";
-                    }
-                    tempword = tempword.ToLowerInvariant().Trim();
-                    if (allword.ContainsKey(tempword) && !result.Contains(tempword) && tempword.Split(' ').Length>=2)
+            try
+            {
+                content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
+                int lengthWord = 4;
+                string result = "";
+                string[] arrContent = content.Split(' ');
+                while (lengthWord >= 2)
+                {
+                    for (int l = 0; l <= arrContent.Length - lengthWord; l++)
                     {
-                        result += tempword + " , ";
+                        string tempword = "";
+                        for (int l1 = l; l1 < l + lengthWord; l1++)
+                        {
+                            tempword += arrContent[l1] + " ";
+                        }
+                        tempword = tempword.ToLowerInvariant().Trim();
+                        if (allword.ContainsKey(tempword) && !result.Contains(tempword) && tempword.Split(' ').Length >= 2)
+                        {
+                            result += tempword + " , ";
+                        }
                     }
-                }
                     lengthWord--;
+                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
         public static string getTopKeyword(string content)
         {
-            content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
-            int lengthWord = 4;
-            string result = "";
-            string[] arrContent = content.Split(' ');
-            int tempcount=0;
-            Dictionary<String,int> top=new Dictionary<String,int>();
-            while (lengthWord >= 2)
+            try
             {
-                for (int l = 0; l <= arrContent.Length - lengthWord; l++)
+                content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
+                int lengthWord = 4;
+                string result = "";
+                string[] arrContent = content.Split(' ');
+                int tempcount = 0;
+                Dictionary<String, int> top = new Dictionary<String, int>();
+                while (lengthWord >= 2)
                 {
-                    string tempword = "";
-                    for (int l1 = l; l1 < l + lengthWord; l1++)
+                    for (int l = 0; l <= arrContent.Length - lengthWord; l++)
                     {
-                        tempword += arrContent[l1] + " ";
-                    }
-                    tempword = tempword.ToLowerInvariant().Trim();
-                    if (allword.ContainsKey(tempword) && tempword.Split(' ').Length >= 2)
-                    {
-                        //result += tempword + " , ";
-                        if (top.ContainsKey(tempword)){
-                            tempcount=top[tempword]+1;
-                            top.Remove(tempword);
-                            top.Add(tempword,tempcount);
-                        }else{
-                            top.Add(tempword,1);
+                        string tempword = "";
+                        for (int l1 = l; l1 < l + lengthWord; l1++)
+                        {
+                            tempword += arrContent[l1] + " ";
+                        }
+                        tempword = tempword.ToLowerInvariant().Trim();
+                        if (allword.ContainsKey(tempword) && tempword.Split(' ').Length >= 2)
+                        {
+                            //result += tempword + " , ";
+                            if (top.ContainsKey(tempword))
+                            {
+                                tempcount = top[tempword] + 1;
+                                top.Remove(tempword);
+                                top.Add(tempword, tempcount);
+                            }
+                            else
+                            {
+                                top.Add(tempword, 1);
+                            }
                         }
                     }
+                    lengthWord--;
                 }
-                lengthWord--;
+                var sortedDict = from entry in top orderby entry.Value descending select entry;
+                tempcount = 0;
+                foreach (var entry in sortedDict)
+                {
+                    tempcount++;
+                    result += entry.Key + " , ";
+                    if (tempcount >= 4) break;
+                }
+                return result;
             }
-            var sortedDict = from entry in top orderby entry.Value descending select entry;
-            tempcount = 0;
-            foreach (var entry in sortedDict)
-            {
-                tempcount++;
-                result += entry.Key + " , ";
-                if (tempcount >= 4) break;
+            catch (Exception ex) {
+                return "";
             }
-            return result;
         }
         public static string getHotKeyword(string content)
         {
