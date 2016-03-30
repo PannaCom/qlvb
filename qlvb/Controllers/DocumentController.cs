@@ -615,7 +615,7 @@ namespace qlvb.Controllers
                 db.SaveChanges();
                 if (System.IO.File.Exists(fullPath))
                 {
-                    System.IO.File.Delete(fullPath);
+                    //System.IO.File.Delete(fullPath);
                 }
             }
             catch (Exception ex) { 

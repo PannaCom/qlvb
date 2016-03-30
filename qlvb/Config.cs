@@ -35,8 +35,10 @@ namespace qlvb
                 if (to < 0) to = int.MaxValue;
                 int to2 = content.IndexOf("CỘNG HÒA");
                 int to3 = content.IndexOf("CỘNG HOÀ");
+                int to4 = content.IndexOf("__");
                 if (to2>0 && to2 < to) to = to2;
                 if (to3>0 && to3 < to) to = to3;
+                if (to4 > 0 && to4 < to) to = to4;
                 string val = content.Substring(0, to);
                 val = val.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
                 val = val.Replace("  ", " ").Trim();
