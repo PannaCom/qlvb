@@ -78,7 +78,7 @@ namespace qlvb
         public static string getCode(string content){
             try{
                 content = content.Replace(" /", "/");
-                Regex titRegex = new Regex(@"\s[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r    //Số: (.*?)/(.*?)/.*[A-Z]\s
+                Regex titRegex = new Regex(@"[0-9]*[^a-zA-Z0-9][0-9]{4}[^a-zA-Z0-9][a-zA-Z]*\S\S*", RegexOptions.IgnoreCase);//Số: .*/.*/.*\S-*([A-Z])\r    //Số: (.*?)/(.*?)/.*[A-Z]\s
                 Match titm = titRegex.Match(content);
                 bool notfound = false;
                 string code = "";
