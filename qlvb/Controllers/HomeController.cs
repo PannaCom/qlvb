@@ -46,8 +46,16 @@ namespace qlvb.Controllers
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
-                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, KEY_TBL.RANK FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                    query += " where (status=0) ";
+                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
+                    query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
+                    query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
+                    query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
+                    query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
+                    query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
+                    query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                    query += "ELSE KEY_TBL.RANK ";
+                    query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += " where (RANK>0) ";
 
                     string[] item = new string[10];
                     int i = 0;

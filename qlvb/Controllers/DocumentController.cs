@@ -61,8 +61,16 @@ namespace qlvb.Controllers
                 ViewBag.keyword = k;
                 if (pg == null) pg = 1;
                 string query = "SELECT top 100 ";
-                query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, KEY_TBL.RANK FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += " where (status=0) ";
+                query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
+                query +="WHEN 7 THEN KEY_TBL.RANK*7 ";
+                query +="WHEN 18 THEN KEY_TBL.RANK*6 ";
+                query +="WHEN 15 THEN KEY_TBL.RANK*5 ";
+		        query +="WHEN 5 THEN KEY_TBL.RANK*4 ";
+                query +="WHEN 23 THEN KEY_TBL.RANK*3 ";
+		        query +="WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query +="ELSE KEY_TBL.RANK ";
+                query +="END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += " where (RANK>0) ";
 
                 string[] item = new string[10];
                 int i = 0;
@@ -233,7 +241,15 @@ namespace qlvb.Controllers
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 string query="SELECT top 10 ";
-                query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
+                query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
+                query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
+                query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
+                query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
+                query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
+                query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query += "ELSE KEY_TBL.RANK ";
+                query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
 			     query+="order by Rank Desc";
                  var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
@@ -244,7 +260,15 @@ namespace qlvb.Controllers
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
                 string query = "SELECT top 10 ";
-                query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
+                query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
+                query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
+                query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
+                query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
+                query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
+                query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query += "ELSE KEY_TBL.RANK ";
+                query += "END  FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += "order by Rank Desc";
                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
@@ -522,7 +546,7 @@ namespace qlvb.Controllers
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
-                    doc.auto_des = code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    doc.auto_des = code + " " + name + code + " " + name + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     doc.status = 0;
@@ -565,7 +589,7 @@ namespace qlvb.Controllers
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
-                    doc.auto_des = code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    doc.auto_des = code + " " + name + code + " " + name + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     //doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     //doc.status = 0;
