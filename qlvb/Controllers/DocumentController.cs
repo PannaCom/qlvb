@@ -250,7 +250,7 @@ namespace qlvb.Controllers
                 query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
                 query += "ELSE KEY_TBL.RANK ";
                 query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-			     query+="order by Rank Desc";
+			     query+=" where RANK>0 order by Rank Desc";
                  var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
@@ -269,7 +269,7 @@ namespace qlvb.Controllers
                 query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
                 query += "ELSE KEY_TBL.RANK ";
                 query += "END  FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += "order by Rank Desc";
+                query += " where RANK>0 order by Rank Desc";
                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
@@ -546,7 +546,7 @@ namespace qlvb.Controllers
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
-                    doc.auto_des = code + " " + name + code + " " + name + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     doc.status = 0;
@@ -589,7 +589,7 @@ namespace qlvb.Controllers
                     string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
-                    doc.auto_des = code + " " + name + code + " " + name + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
+                    doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     //doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
                     //doc.status = 0;
