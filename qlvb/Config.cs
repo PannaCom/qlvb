@@ -492,7 +492,7 @@ namespace qlvb
             string query="select catid,name,count(id) as total from ";
             query+="(select catid,name,id from ";
             query += "(select id as catid,name from cat" + cols + ") as A left join ";
-            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY]) as B on A.catid=B.cat" + cols + "_id ";
+            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and KEY_TBL.RANK>0) as B on A.catid=B.cat" + cols + "_id ";
             
                 string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
                 for (int f = 0; f < filter.Length; f++)
