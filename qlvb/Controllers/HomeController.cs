@@ -219,7 +219,7 @@ namespace qlvb.Controllers
             var p = (from q in db.documents select q).OrderByDescending(o => o.views).Take(20).ToList();
             string all = "";
             for (int i = 0; i < p.Count; i++) {
-                all += p[i].keyword1+",";
+                all += p[i].keyword1 + "," + p[i].keyword2;
             }
             return Config.getHotKeyword(all);
         }
