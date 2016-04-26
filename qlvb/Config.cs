@@ -310,13 +310,17 @@ namespace qlvb
                         //result += tempword + " , ";
                         if (top.ContainsKey(tempword))
                         {
-                            tempcount = top[tempword] + 1;
+                            int klength = tempword.Split(' ').Length;
+                            if (klength <= 2) klength = 1; else klength = klength * 10;
+                            tempcount = top[tempword] + klength;
                             top.Remove(tempword);
                             top.Add(tempword, tempcount);
                         }
                         else
                         {
-                            top.Add(tempword, 1);
+                            int klength = tempword.Split(' ').Length;
+                            if (klength <= 2) klength = 1; else klength=klength*10;
+                            top.Add(tempword, klength);
                         }
                     }
                 }
@@ -328,7 +332,7 @@ namespace qlvb
                     tempcount++;
                     //result += entry.Key + " , ";
                     if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
-                    //if (tempcount >= 10) break;
+                    if (tempcount >= 50) break;
                 }
                 return result;
             }
