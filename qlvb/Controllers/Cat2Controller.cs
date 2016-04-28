@@ -19,10 +19,11 @@ namespace qlvb.Controllers
 
         public ActionResult Index(string word,int? page)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (word == null) word = "";
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            var p = (from q in db.cat2 where q.name.Contains(word) select q).OrderBy(o=>o.name).Take(1000);
+            var p = (from q in db.cat2 where q.name.Contains(word) select q).OrderByDescending(o => o.no).ThenBy(o => o.name).Take(1000);
             return View(p.ToPagedList(pageNumber, pageSize));
             //return View(db.cat2.ToList());
         }
@@ -45,6 +46,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             return View();
         }
 
@@ -55,9 +57,10 @@ namespace qlvb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(cat2 cat2)
         {
+
             if (ModelState.IsValid)
             {
-                cat2.no = 0;
+                //cat2.no = 0;
                 db.cat2.Add(cat2);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -71,6 +74,7 @@ namespace qlvb.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat2 cat2 = db.cat2.Find(id);
             if (cat2 == null)
             {
@@ -88,7 +92,7 @@ namespace qlvb.Controllers
         {
             if (ModelState.IsValid)
             {
-                cat2.no = 0;
+                //cat2.no = 0;
                 db.Entry(cat2).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -101,6 +105,7 @@ namespace qlvb.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat2 cat2 = db.cat2.Find(id);
             if (cat2 == null)
             {

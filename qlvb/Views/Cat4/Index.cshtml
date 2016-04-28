@@ -24,6 +24,7 @@
         <th>
             Tên Cơ quan ban hành
         </th>
+        <th>Hệ số</th>
         <th></th>
     </tr>
 
@@ -34,6 +35,9 @@
         </td>*@
         <td align="left">
             @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td align="left">
+            @Html.DisplayFor(modelItem => item.no)
         </td>
         <td>
             @Html.ActionLink("Sửa", "Edit", new { id=item.id }) |            

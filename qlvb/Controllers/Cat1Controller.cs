@@ -18,7 +18,8 @@ namespace qlvb.Controllers
 
         public ActionResult Index()
         {
-            return View(db.cat1.ToList());
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
+            return View(db.cat1.OrderByDescending(o => o.no).ThenBy(o=>o.name).ToList());
         }
 
         //
@@ -39,6 +40,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             ViewBag.cat1 = "1";
             return View();
         }
@@ -66,6 +68,7 @@ namespace qlvb.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat1 cat1 = db.cat1.Find(id);
             if (cat1 == null)
             {
@@ -96,6 +99,7 @@ namespace qlvb.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat1 cat1 = db.cat1.Find(id);
             if (cat1 == null)
             {

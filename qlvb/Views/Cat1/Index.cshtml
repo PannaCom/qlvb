@@ -18,16 +18,20 @@
         <th>
             Tên lĩnh vực
         </th>
+        <th>Hệ số</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td align="left">
             @Html.DisplayFor(modelItem => item.id)
         </td>
-        <td>
+        <td align="left">
             @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td align="left">
+            @Html.DisplayFor(modelItem => item.no)
         </td>
         <td>
             @Html.ActionLink("Sửa", "Edit", new { id=item.id }) |            

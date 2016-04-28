@@ -45,19 +45,19 @@
                 <td class="label">Năm ban hành :</td><td >@Model.year</td>
              </tr>
              <tr>
-                <td class="label">Tập từ khóa 1(từ tiêu đề văn bản) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
+                <td class="label">Tập từ khóa từ tiêu đề văn bản :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 2(từ điều 1, điều 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+                <td class="label">Tập từ khóa từ điều 1, điều 2... :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
              </tr>
-            <tr>
+            @*<tr>
                 <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+             </tr>*@
+            <tr>
+                <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
              </tr>
             <tr>
-                <td class="label">Tập từ khóa 4(các từ khóa lặp đi lặp lại nhiều nhất) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
-             </tr>
-            <tr>
-                <td class="label">Tập từ khóa 5(các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này) :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5,@Model.code))</section></td>
+                <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5,@Model.code))</section></td>
              </tr>
             <tr>
                 <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td><td ><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>

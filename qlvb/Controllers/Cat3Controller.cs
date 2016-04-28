@@ -20,6 +20,7 @@ namespace qlvb.Controllers
 
         public ActionResult Index(string word, int? page)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (word == null) word = "";
             int pageSize = 20;
             int pageNumber = (page ?? 1);
@@ -46,6 +47,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             return View();
         }
 
@@ -72,6 +74,7 @@ namespace qlvb.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat3 cat3 = db.cat3.Find(id);
             if (cat3 == null)
             {

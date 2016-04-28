@@ -16,6 +16,7 @@ namespace qlvb
         private static qlvbEntities db=new qlvbEntities();
         public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
         public static Hashtable allword=null;
+        public static int minRank = 100;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
             if (allword == null || allword.Count <= 0) allword = new Hashtable(); 
@@ -493,10 +494,10 @@ namespace qlvb
             return "";
         }
         public static string  makeQuery(string k,string cols,string f1,string f2,string f3,string f4){
-            string query="select catid,name,count(id) as total from ";
+            string query="select catid,name,total,no from (select catid,name,count(id) as total from ";
             query+="(select catid,name,id from ";
             query += "(select id as catid,name from cat" + cols + ") as A left join ";
-            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and KEY_TBL.RANK>0) as B on A.catid=B.cat" + cols + "_id ";
+            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and KEY_TBL.RANK>" + Config.minRank + ") as B on A.catid=B.cat" + cols + "_id ";
             
                 string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
                 for (int f = 0; f < filter.Length; f++)
@@ -506,7 +507,8 @@ namespace qlvb
                         query += " and (cat" + (f+1) + "_id="+filter[f]+") ";
                     }
                 }
-                query += " ) as C group by catid,name order by name";
+                query += " ) as C group by catid,name";
+                query += ") as total left join (select id,no from cat" + cols + ") as total2 on total.catid=total2.id order by no desc, name";
             return query;
         }
         public static string hashtags(string f)

@@ -70,7 +70,7 @@ namespace qlvb.Controllers
 		        query +="WHEN 6 THEN KEY_TBL.RANK*2 ";
                 query +="ELSE KEY_TBL.RANK ";
                 query +="END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += " where (RANK>0) ";
+                query += " where (RANK>" + Config.minRank + ") ";
 
                 string[] item = new string[10];
                 int i = 0;

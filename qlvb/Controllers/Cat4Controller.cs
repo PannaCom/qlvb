@@ -20,10 +20,11 @@ namespace qlvb.Controllers
 
         public ActionResult Index(string word, int? page)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             if (word == null) word = "";
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            var p = (from q in db.cat4 where q.name.Contains(word) select q).OrderBy(o => o.name).Take(1000);
+            var p = (from q in db.cat4 where q.name.Contains(word) select q).OrderByDescending(o => o.no).ThenBy(o=>o.name).Take(1000);
             return View(p.ToPagedList(pageNumber, pageSize));
             //return View(db.cat2.ToList());
         }
@@ -46,6 +47,7 @@ namespace qlvb.Controllers
 
         public ActionResult Create()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace qlvb.Controllers
         {
             if (ModelState.IsValid)
             {
-                cat4.no = 0;
+                //cat4.no = 0;
                 db.cat4.Add(cat4);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -72,6 +74,7 @@ namespace qlvb.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat4 cat4 = db.cat4.Find(id);
             if (cat4 == null)
             {
@@ -89,7 +92,7 @@ namespace qlvb.Controllers
         {
             if (ModelState.IsValid)
             {
-                cat4.no = 0;
+                //cat4.no = 0;
                 db.Entry(cat4).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -102,6 +105,7 @@ namespace qlvb.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             cat4 cat4 = db.cat4.Find(id);
             if (cat4 == null)
             {
