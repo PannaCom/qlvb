@@ -526,6 +526,7 @@
       <DependentUpon>qlvb.edmx</DependentUpon>
       <LastGenOutput>qlvb.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\qlvb.pubxml" />
     <None Include="Properties\PublishProfiles\vanbanquocgia.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\core.js" />

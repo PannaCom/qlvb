@@ -330,7 +330,9 @@ namespace qlvb
                 tempcount = 0;
                 foreach (var entry in sortedDict)
                 {
+                    if (entry.Key.Split(' ').Length >= 10) continue;
                     tempcount++;
+                    
                     //result += entry.Key + " , ";
                     if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
                     if (tempcount >= 50) break;
