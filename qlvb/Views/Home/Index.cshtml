@@ -40,11 +40,11 @@
        <div style="width:100%;padding-top:30px;"><div class="span9">
            @if (ViewBag.keyword != "")
            {
-                <text> <h5>Tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></h5></text>
+                <text> <h2>Tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></h2></text>
            }
            else
            {
-               <text> <h5>Xem nhiều nhất</h5></text>
+               <text> <h2>Xem nhiều nhất</h2></text>
            }
                
            </div><div class="span4">
@@ -109,8 +109,15 @@
     </div>
 </div>
 </div>
-<section class="refinements-summary">Từ khóa nóng nhất:
-<div id="allhotkeyword">
+<section class="refinements-summary" style="text-align:left;"><h2>Thống kê</h2>
+    <div id="allcat1" style="text-align:left;">
+    </div>
+    <div id="allcat2" style="text-align:left;">
+
+    </div>
+</section>
+<section class="refinements-summary" style="text-align:left;"><h2>Từ khóa nóng nhất</h2>
+<div id="allhotkeyword" style="text-align:left;">
 
 </div>
 </section>
@@ -238,10 +245,21 @@
     $.ajax({
         url: "/Home/getAllHotKeyWord",
         cache: false
-    })
-      .done(function( html ) {
+    }).done(function( html ) {
           $( "#allhotkeyword").html(html);
-      });
+    });
+    $.ajax({
+        url: "/Home/getAllCat?id=1",
+        cache: false
+    }).done(function( html ) {
+        $( "#allcat1").html("<b>Lĩnh vực: </b>"+html);
+    });
+    $.ajax({
+        url: "/Home/getAllCat?id=2",
+        cache: false
+    }).done(function( html ) {
+        $( "#allcat2").html("<b>Loại văn bản: </b>"+html);
+    });
     function searchkw(keyword) {
         var url = "/Home/Index?";
         var k = keyword;
