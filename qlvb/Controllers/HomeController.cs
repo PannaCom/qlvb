@@ -223,6 +223,35 @@ namespace qlvb.Controllers
             }
             return Config.getHotKeyword(all);
         }
+        public class catitemtotal {
+            public string name { get;set;}
+            public byte? no { get; set; }
+            public int total { get; set; }
+        }
+        public string getAllCat(int id) {
+            try
+            {
+                string query="select name,no,count(*) as total from (select id,name,no from cat"+id+") as A left join";
+                query += "(select cat" + id + "_id from documents) as B on A.id=B.cat" + id + "_id ";
+                            query += " group by name,no order by no desc,name";
+                var cat1 = db.Database.SqlQuery<catitemtotal>(query).ToList();
+                string scat1 = "";
+                string color = "";
+                for (int jj = 0; jj < cat1.Count; jj++)
+                {
+                    if (cat1[jj].total <= 0) continue;
+                    color = "";
+                    //if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
+                    //else if (cat1[jj].total > 0) 
+                        color = "color:blue;";
+                    scat1 += "<a class='filteritem' onclick='gotoCat(" + id + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
+                }
+                return scat1;
+            }
+            catch (Exception ex) {
+                return "";
+            }
+        }
         public ActionResult Tree(string f1, string f2, string f3, string f4, string order, string to, int? pg)
         {
 
