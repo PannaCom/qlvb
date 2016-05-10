@@ -39,6 +39,22 @@ namespace qlvb.Controllers
             public int RANK { get; set; }
 
         }
+        public class catlist
+        {
+            //FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id, FT_TBL.views, KEY_TBL.RANK
+            public int id { get; set; }
+            public string code { get; set; }
+            public string name { get; set; }
+            public int cat1_id { get; set; }
+            public string cat1 { get; set; }
+            public int cat2_id { get; set; }
+            public string cat2 { get; set; }
+            public int cat4_id { get; set; }
+            public string cat4 { get; set; }
+            public int? views { get; set; }
+            public byte? no { get; set; }
+
+        }
         public class catitem
         {
             public int catid { get; set; }
@@ -230,6 +246,105 @@ namespace qlvb.Controllers
             //catch (Exception exmain) {
             //    return View();
             //}
+        }
+        public ActionResult Cat(int? cat11,int? cat22,int? cat44,string order,string to,int? pg) { 
+           
+                if (pg == null) pg = 1;
+                string query = "select id,code,name,cat1_id,cat1,cat2_id,cat2,cat4_id,cat4,views,no from ";
+                       query +=    " (select id,code,name,cat1_id,cat2_id,cat4_id,views from documents) as A left join ";
+                       query +=" (select name as cat1,id as idcat1 from cat1) as B on A.cat1_id=B.idcat1 left join ";
+                       query +="(select name as cat2,id as idcat2,no from cat2) as C on A.cat2_id=C.idcat2 left join ";
+                       query +="(select name as cat4,id as idcat4 from cat4) as D on A.cat4_id=D.idcat4 where 1=1 ";
+                       if (cat11 != null) query += " and cat1_id=" + cat11;
+                       if (cat22 != null) query += " and cat2_id=" + cat22;
+                       if (cat44 != null) query += " and cat4_id=" + cat44;
+                if (order == null || order == "") order = "no";
+                query += " order by " + order;
+                if (to == null || to == "") to = "desc";
+                query += " " + to;
+               
+                try
+                {
+                    string query1 = Config.makeQueryCat("1", cat11,cat22,cat44);
+                    string query2 = Config.makeQueryCat("2", cat11, cat22, cat44);
+                    string query4 = Config.makeQueryCat("4", cat11, cat22, cat44);
+                    int jj = 0;
+                    string scat1 = "", scat2 = "", scat3 = "", scat4 = "";
+                    try
+                    {
+                        var cat1 = db.Database.SqlQuery<catitem>(query1).ToList();
+                        scat1 = "<b>Lĩnh vực:</b>";
+                        string color = "";
+                        for (jj = 0; jj < cat1.Count; jj++)
+                        {
+                            if (cat1[jj].total <= 0) continue;
+                            color = "";
+                            if (cat1[jj].catid == cat11) color = "color:red;font-weight:bold;";
+                            else if (cat1[jj].total > 0) color = "color:blue;";
+                            scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
+                        }
+                    }
+                    catch (Exception exc1)
+                    {
+                    }
+                    try
+                    {
+                        var cat2 = db.Database.SqlQuery<catitem>(query2).ToList();
+                        scat2 = "<b>Loại văn bản:</b>";
+                        string color = "";
+                        for (jj = 0; jj < cat2.Count; jj++)
+                        {
+                            if (cat2[jj].total <= 0) continue;
+                            color = "";
+                            if (cat2[jj].catid == cat22) color = "color:red;font-weight:bold;";
+                            else if (cat2[jj].total > 0) color = "color:blue;";
+                            scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "(" + cat2[jj].total + ")</a>,";
+                        }
+                    }
+                    catch (Exception exc2)
+                    {
+                    }
+                    
+                    try
+                    {
+                        var cat4 = db.Database.SqlQuery<catitem>(query4).ToList();
+                        scat4 = "<b>Cơ quan ban hành:</b>";
+                        string color = "";
+                        for (jj = 0; jj < cat4.Count; jj++)
+                        {
+                            if (cat4[jj].total <= 0) continue;
+                            color = "";
+                            if (cat4[jj].catid == cat44)
+                                color = "color:red;font-weight:bold;";
+                            else if (cat4[jj].total > 0) color = "color:blue;";
+
+                            scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "(" + cat4[jj].total + ")</a>,";
+                        }
+                    }
+                    catch (Exception exc4)
+                    {
+                    }
+
+                    ViewBag.cat1 = scat1;
+                    ViewBag.cat2 = scat2;
+                    ViewBag.cat3 = scat3;
+                    ViewBag.cat4 = scat4;
+                }
+                catch (Exception ex2)
+                {
+                }
+                ViewBag.f1 = cat11;
+                ViewBag.f2 = cat22;
+                ViewBag.f3 = "";      
+                ViewBag.f4 = cat44;
+
+                ViewBag.page = pg;
+                ViewBag.order = order;
+                ViewBag.to = to;
+                var p = db.Database.SqlQuery<catlist>(query);
+                int pageSize = 10;
+                int pageNumber = (pg ?? 1);
+                return View(p.ToPagedList(pageNumber, pageSize));
         }
         public class search
         {
