@@ -106,8 +106,20 @@
         <label class="label">Cơ quan ban hành *:</label><select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select> 
         <script>getCat(4, "@ViewBag.cat4");</script>   
         <label class="label">Năm ban hành *:</label><select id="year" name="year" class="form-control" onchange="chooseCat(4);"></select> 
-        <script>getYear(@ViewBag.year);</script>         
-        
+        <script>getYear(@ViewBag.year);</script>      
+            <div  id="pr">
+                <h4>QUẢN LÝ CHƯƠNG ĐIỀU</h4>
+                <div id="dvprice">
+                    <span style="float:left;"><a onclick="addIndex();" style="cursor:pointer;">+ Thêm</a></span>
+                    <table id="tblIndex" class="table table-striped table-bordered table-hover">
+                        <tr class="odd gradeX" id=rowsIndex1 style="display:block;">
+                            <td><select id="cbIndex1"></select></td>
+                            <td style="width:100%;"><textarea id="cbIndex1" placeholder="Nội dung" style="width:100%;"></textarea></td>
+                            <td><a onclick="delIndex(1);">Delete</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         <input type="hidden" id="keyword2" name="keyword2" value="@ViewBag.keyword2">
         <input type="hidden" id="link" name="link" value="@ViewBag.link">
         <input type="hidden" id="related_id" name="related_id" value="@ViewBag.related_id">  
@@ -121,6 +133,16 @@
 </div>
 <script>
     if (idDocument!=-1) $("#viewdoc").show();
+    var rowsIndex=1;
+    function addIndex(){
+        rowsIndex++;
+        var row='<tr class="odd gradeX" id=rowsIndex'+rowsIndex+' style="display:block;">';
+        row+="<td><select id=\"cbIndex"+rowsIndex+"\"></select></td><td style=\"width:100%;\"><textarea id=\"cbIndex"+rowsIndex+"\" placeholder=\"Nội dung\" style=\"width:100%;\"></textarea></td>";      
+        row+="<td><a onclick=\"delIndex('+rowsPrice+');\" style=\"cursor:pointer;\">Delete</a></td>";
+        row+="</tr>";
+        $("#tblIndex").append(row);
+        //alert(row);
+    }
     function uploadProcess() {
      
         var formdata = new FormData(); //FormData object

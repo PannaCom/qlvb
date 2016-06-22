@@ -4,23 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="qlvbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="qlvbModelStoreContainer">
-          <EntitySet Name="cat1" EntityType="qlvbModel.Store.cat1" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="cat2" EntityType="qlvbModel.Store.cat2" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="cat3" EntityType="qlvbModel.Store.cat3" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="cat4" EntityType="qlvbModel.Store.cat4" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="dic_ignore" EntityType="qlvbModel.Store.dic_ignore" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="dic_normal" EntityType="qlvbModel.Store.dic_normal" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="dic_pro" EntityType="qlvbModel.Store.dic_pro" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="documents" EntityType="qlvbModel.Store.documents" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="members" EntityType="qlvbModel.Store.members" store:Type="Tables" Schema="dbo" />
-        </EntityContainer>
+    <Schema Namespace="qlvbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cat1">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="no" Type="tinyint" />
         </EntityType>
@@ -28,7 +17,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="no" Type="tinyint" />
         </EntityType>
@@ -36,7 +25,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="no" Type="tinyint" />
         </EntityType>
@@ -44,7 +33,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="no" Type="tinyint" />
         </EntityType>
@@ -52,28 +41,37 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="word" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="dic_normal">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="word" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="dic_pro">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="word" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="document_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="document_id" Type="int" />
+          <Property Name="item_id" Type="int" />
+          <Property Name="item_content" Type="ntext" />
         </EntityType>
         <EntityType Name="documents">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="851" />
           <Property Name="auto_des" Type="ntext" />
           <Property Name="code" Type="nvarchar" MaxLength="150" />
@@ -96,14 +94,35 @@
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
         </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="word" Type="nvarchar" MaxLength="1505" />
+          <Property Name="count" Type="int" />
+        </EntityType>
         <EntityType Name="members">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
           <Property Name="pass" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityContainer Name="qlvbModelStoreContainer">
+          <EntitySet Name="cat1" EntityType="Self.cat1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat2" EntityType="Self.cat2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat3" EntityType="Self.cat3" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat4" EntityType="Self.cat4" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dic_ignore" EntityType="Self.dic_ignore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dic_normal" EntityType="Self.dic_normal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dic_pro" EntityType="Self.dic_pro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="document_items" EntityType="Self.document_items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="members" EntityType="Self.members" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -118,6 +137,8 @@
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
           <EntitySet Name="documents" EntityType="qlvbModel.document" />
+          <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
+          <EntitySet Name="logs" EntityType="qlvbModel.log" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -206,6 +227,23 @@
           <Property Type="String" Name="be_linked" MaxLength="152" FixedLength="false" Unicode="true" />
           <Property Type="Byte" Name="status" />
           <Property Type="Int32" Name="views" />
+        </EntityType>
+        <EntityType Name="document_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="document_id" Type="Int32" />
+          <Property Name="item_id" Type="Int32" />
+          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="word" Type="String" MaxLength="1505" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -310,6 +348,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="document_items">
+            <EntityTypeMapping TypeName="qlvbModel.document_items">
+              <MappingFragment StoreEntitySet="document_items">
+                <ScalarProperty Name="item_content" ColumnName="item_content" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="document_id" ColumnName="document_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="qlvbModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="word" ColumnName="word" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -327,6 +384,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
