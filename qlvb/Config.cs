@@ -27,6 +27,23 @@ namespace qlvb
                 }
             }
         }
+        public static string showQuote(string content,string keyword){
+            string[] sen = content.Split('.');
+            string rs = "";
+            for (int i = 0; i < sen.Length; i++) {
+                if (sen[i].Contains(keyword)) {
+                    sen[i] = sen[i].Replace(keyword, "<span style=\"background:yellow;color:black;\">" + keyword + "</span>");
+                    rs += "<blockquote>" + sen[i] + "<p></p></blockquote>” </p>";
+                }
+            }
+            return rs;
+        }
+        public static string showCHD(string content)
+        {
+            string[] sen = content.Split('_');
+
+            return "Chương " + sen[0] + ". Điều "+sen[1];
+        }
         public static string getPublish(string content)
         {
             try
@@ -513,6 +530,21 @@ namespace qlvb
                 query += ") as total left join (select id,no from cat" + cols + ") as total2 on total.catid=total2.id order by no desc, name";
             return query;
         }
+        public static string makeQueryCat(string col,int? cat1,int? cat2,int? cat4)
+        {
+            string query = " select catid,name,count(*) as total from ";
+                  query +="(";
+                  query += "select cat" + col + "_id as catid,cat" + col + " as name from ";
+                  query +="(select id,code,name,cat1_id,cat2_id,cat4_id,views from documents) as A left join ";
+                  query +="(select name as cat1,id as idcat1 from cat1) as B on A.cat1_id=B.idcat1 left join ";
+                  query +="(select name as cat2,id as idcat2,no from cat2) as C on A.cat2_id=C.idcat2 left join ";
+                  query +="(select name as cat4,id as idcat4 from cat4) as D on A.cat4_id=D.idcat4 where 1=1 ";
+                  if (cat1!=null) query +=" and cat1_id="+cat1;
+                  if (cat2!=null) query +=" and cat2_id="+cat2;
+                  if (cat4!=null) query +=" and cat4_id="+cat4;
+                  query += ") as total group by catid,name ";
+            return query;
+        }
         public static string hashtags(string f)
         {
             string val = "";
@@ -657,6 +689,35 @@ namespace qlvb
                 }
             }
            
+            return val;
+        }
+        public static string tagscat(int? f1, int? f2, int? f4)
+        {
+            string val = "";
+
+            if (f1 != null)
+            {
+                int? tf1 = f1;
+               
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(1,'');\">" + getCatNameById(1, tf1) + "</a>,";
+                
+            }
+            if (f2 != null)
+            {
+                int? tf2 = f2;
+                
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(2,'');\">" + getCatNameById(2, tf2) + "</a>,";
+                
+            }
+
+            if (f4 != null)
+            {
+                int? tf4 = f4;
+                
+                    val += "<a style=\"cursor:pointer;\" onclick=\"setCat(4,'');\">" + getCatNameById(4, tf4) + "</a>,";
+              
+            }
+
             return val;
         }
         public static string GetMd5Hash(MD5 md5Hash, string input)

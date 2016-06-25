@@ -7,9 +7,26 @@
 <style>
     table tr {
         border-bottom: 1px dotted #ccc;
-        height:auto;
+        height:auto;      
         
-        
+    }
+    blockquote {
+      background: #f9f9f9;
+      border-left: 10px solid #ccc;
+      margin: 1.5em 10px;
+      padding: 0.5em 10px;
+      quotes: "\201C""\201D""\2018""\2019";
+    }
+    blockquote:before {
+      color: #ccc;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote p {
+      display: inline;
     }
 </style>
 
@@ -18,57 +35,76 @@
     <div class="container">
         <div style="width:100%;text-align:center;padding-top:30px;">  
         
-        <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>      
-        <table style="width:100%;text-align:center;">
-            <tr>
-                <td class="label">Tiêu đề :</td><td >@Model.name</td>
-            </tr>
-            <tr>
-                <td class="label">Tải về :</td><td ><a href="/Files/@Model.link" style="text-decoration:underline;">Download</a></td>
-            </tr>
-            <tr>
-                <td class="label">Ký hiệu :</td><td >@Model.code</td>
-            </tr>
-            <tr>
-                <td class="label">Lĩnh vực :</td><td >@qlvb.Config.getCatNameById(1,@Model.cat1_id)</td>
-            </tr>
-            <tr>        
-                <td class="label">Loại văn bản :</td><td >@qlvb.Config.getCatNameById(2,@Model.cat2_id)</td>     
-            </tr>
-            <tr>       
-                <td class="label">Người ký :</td><td >@qlvb.Config.getCatNameById(3,@Model.cat3_id)</td>
-            </tr>
-            <tr>
-                <td class="label">Cơ quan ban hành :</td><td >@qlvb.Config.getCatNameById(4,@Model.cat4_id)</td>
-            </tr>
-            <tr>
-                <td class="label">Năm ban hành :</td><td >@Model.year</td>
-             </tr>
-             <tr>
-                <td class="label">Tập từ khóa từ tiêu đề văn bản :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
-             </tr>
-            <tr>
-                <td class="label">Tập từ khóa từ điều 1, điều 2... :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
-             </tr>
-            @*<tr>
-                <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
-             </tr>*@
-            <tr>
-                <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
-             </tr>
-            <tr>
-                <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td><td ><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5,@Model.code))</section></td>
-             </tr>
-            <tr>
-                <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td><td ><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
-             </tr>
-            <tr>
-                <td class="label">Văn bản căn cứ từ các văn bản:</td><td ><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
-             </tr>
-        </table> 
-        <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--Quay lại danh sách</a></div>
-        
-    </div>
+        @*<iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>*@      
+            <table style="width:100%;text-align:left;">
+                @foreach(var item in ViewBag.chd){
+                    <text><p style="width:100%;text-align:left;"><b>@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p></text>
+                }
+            </table>
+                <table style="width:100%;text-align:center;">
+                    <tr>
+                        <td class="label">Tiêu đề :</td>
+                        <td>@Model.name</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tải về :</td>
+                        <td><a href="/Files/@Model.link" style="text-decoration:underline;">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Ký hiệu :</td>
+                        <td>@Model.code</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Lĩnh vực :</td>
+                        <td>@qlvb.Config.getCatNameById(1, @Model.cat1_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Loại văn bản :</td>
+                        <td>@qlvb.Config.getCatNameById(2, @Model.cat2_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Người ký :</td>
+                        <td>@qlvb.Config.getCatNameById(3, @Model.cat3_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Cơ quan ban hành :</td>
+                        <td>@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Năm ban hành :</td>
+                        <td>@Model.year</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tập từ khóa từ tiêu đề văn bản :</td>
+                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tập từ khóa từ điều 1, điều 2... :</td>
+                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+                    </tr>
+                    @*<tr>
+                   <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+                </tr>*@
+                    <tr>
+                        <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>
+                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td>
+                        <td><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td>
+                        <td><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Văn bản căn cứ từ các văn bản:</td>
+                        <td><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
+                    </tr>
+                </table>
+                <div style="text-align:center;display:block;position:relative;float:left;width:100%;"><a href="/Document/Index" style="color:blue;"><--quay lại danh sách</a></div>
+
+</div>
 </div>
 </div>
 <script>

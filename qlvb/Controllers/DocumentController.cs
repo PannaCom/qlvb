@@ -399,7 +399,7 @@ namespace qlvb.Controllers
         //
         // GET: /Document/Details/5
 
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(int id,string keyword)
         {
             document document = db.documents.Find(id);
             if (document == null)
@@ -407,6 +407,14 @@ namespace qlvb.Controllers
                 return HttpNotFound();
             }
             db.Database.ExecuteSqlCommand("update documents set views=views+1 where id=" + id);
+            ViewBag.keyword = keyword;
+            if (keyword!="" && keyword!=null)
+            try
+            {
+                var p = (from q in db.document_items where q.item_content.Contains(keyword) select q).ToList();
+                ViewBag.chd = p;
+            }
+            catch (Exception ex) { }
             return View(document);
         }
 
@@ -681,7 +689,7 @@ namespace qlvb.Controllers
                     //        }
                     //    }
                     //}
-                    return "1";
+                    return doc.id.ToString();
                 }
                 else
                 {
@@ -714,13 +722,13 @@ namespace qlvb.Controllers
                     doc.link_to = link_to;
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
-                    return "1";
+                    return id.ToString();
                 }
             }
             catch (Exception ex) {
                     return "0";
             }
-            
+            return "0";
         }
         //
         // GET: /Document/Delete/5
@@ -766,6 +774,49 @@ namespace qlvb.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+        public string updateDI(int count, int id)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("delete from document_items where document_id=" + id);
+                if (id != 0)
+                {
+                    for (int i = 1; i <= count; i++)
+                    {
+                        string name = Request.Form["cbIndex" + i].ToString();
+                        string code = Request.Form["chIndex" + i].ToString() + "_"+Request.Form["dIndex" + i].ToString();
+                        if (name != "" && name != null)
+                        {
+                            document_items gi = new document_items();
+                            gi.document_id = id;
+                            gi.item_content = name;
+                            gi.item_id = code;
+                            db.document_items.Add(gi);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                return "1";
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
+        }
+        public string getGI(int id)
+        {
+            var p = (from q in db.document_items where q.document_id == id select q).ToList();
+            
+            try
+            {
+               
+                return JsonConvert.SerializeObject(p);
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
         }
     }
 }

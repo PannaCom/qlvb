@@ -110,20 +110,20 @@
             <div  id="pr">
                 <h4>QUẢN LÝ CHƯƠNG ĐIỀU</h4>
                 <div id="dvprice">
-                    <span style="float:left;"><a onclick="addIndex();" style="cursor:pointer;">+ Thêm</a></span>
                     <table id="tblIndex" class="table table-striped table-bordered table-hover">
                         <tr class="odd gradeX" id=rowsIndex1 style="display:block;">
-                            <td><select id="cbIndex1"></select></td>
-                            <td style="width:100%;"><textarea id="cbIndex1" placeholder="Nội dung" style="width:100%;"></textarea></td>
-                            <td><a onclick="delIndex(1);">Delete</a></td>
+                            <td>Chương :<input type="text" id="chIndex1" value="1">&nbsp;Điều :<input type="text" id="dIndex1" value="1"></td>
+                            <td style="width:100%;"><textarea id="cbIndex1" placeholder="Nội dung" style="width:100%;" rows="5"></textarea></td>
+                            <td><a onclick="delIndex(1);" style="cursor:pointer;">Delete</a></td>
                         </tr>
                     </table>
+                    <span style="float:left;"><a onclick="addIndex();" style="cursor:pointer;">+ Thêm</a></span>
                 </div>
             </div>
         <input type="hidden" id="keyword2" name="keyword2" value="@ViewBag.keyword2">
         <input type="hidden" id="link" name="link" value="@ViewBag.link">
         <input type="hidden" id="related_id" name="related_id" value="@ViewBag.related_id">  
-        <input type="button" id="btnAddNew" value="Save" onclick="addNewDocument();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>      
+        <input type="button" id="btnAddNew" value="Save All" onclick="addNewDocument();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;"/>      
         <a href="/Document/Index">&nbsp;Quay lại danh sách</a>
         @*<label class="label">Tập từ khóa quan trọng 2:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ nhì do phần mềm tự động nhận dạng" id="keyword2" name="keyword2" style="width:100%;display:block;float:left;position:relative;" ></textarea>
         <label class="label">Tập từ khóa quan trọng 3:</label><textarea  class="form-control" placeholder="Những từ khóa key có độ quan trọng cao thứ ba do phần mềm tự động nhận dạng" id="keyword3" name="keyword3" style="width:100%;display:block;float:left;position:relative;" ></textarea>*@
@@ -134,14 +134,80 @@
 <script>
     if (idDocument!=-1) $("#viewdoc").show();
     var rowsIndex=1;
+    var chIndex=1;
+    var dIndex=1;
     function addIndex(){
-        rowsIndex++;
+        chIndex=parseInt(document.getElementById("chIndex"+rowsIndex).value);
+        dIndex=parseInt(document.getElementById("dIndex"+rowsIndex).value)+1;
+        rowsIndex++;        
         var row='<tr class="odd gradeX" id=rowsIndex'+rowsIndex+' style="display:block;">';
-        row+="<td><select id=\"cbIndex"+rowsIndex+"\"></select></td><td style=\"width:100%;\"><textarea id=\"cbIndex"+rowsIndex+"\" placeholder=\"Nội dung\" style=\"width:100%;\"></textarea></td>";      
-        row+="<td><a onclick=\"delIndex('+rowsPrice+');\" style=\"cursor:pointer;\">Delete</a></td>";
+        row+="<td>Chương :<input type=\"text\" id=\"chIndex"+rowsIndex+"\" value=\""+chIndex+"\">&nbsp;Điều :<input type=\"text\" id=\"dIndex"+rowsIndex+"\" value=\""+dIndex+"\"></td><td style=\"width:100%;\"><textarea id=\"cbIndex"+rowsIndex+"\" placeholder=\"Nội dung\" style=\"width:100%;\" rows=\"5\"></textarea></td>";      
+        row+="<td><a onclick=\"delIndex("+rowsIndex+");\" style=\"cursor:pointer;\">Delete</a></td>";
         row+="</tr>";
         $("#tblIndex").append(row);
         //alert(row);
+    }
+    function delIndex(index){
+        document.getElementById("rowsIndex"+index).style.display='none';
+    }
+    function getDI(id) {
+        if ("-1"=="@ViewBag.id") return;
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Document/getGI');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {  
+                if (xhr.responseText=="0") return;
+                var news = '{"news":' + xhr.responseText + '}';
+                var json_parsed = $.parseJSON(news);       
+                rowsIndex=0;
+                $("#tblIndex").html("");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var name = json_parsed.news[i];
+                        var index=i+1;
+                        var arr=name.item_id.split("_");
+                        var ch=arr[0]; var d=arr[1];
+                        var row='<tr class="odd gradeX" id=rowsIndex'+index+' style="display:block;">';
+                        row+="<td>Chương :<input type=\"text\" id=\"chIndex"+index+"\" value=\""+ch+"\">&nbsp;Điều :<input type=\"text\" id=\"dIndex"+index+"\" value=\""+d+"\"></td><td style=\"width:100%;\"><textarea id=\"cbIndex"+index+"\" placeholder=\"Nội dung\" style=\"width:100%;\" rows=\"5\">"+name.item_content+"</textarea></td>";      
+                        row+="<td><a onclick=\"delIndex("+index+");\" style=\"cursor:pointer;\">Delete</a></td>";
+                        row+="</tr>";
+                        $("#tblIndex").append(row);
+                        rowsIndex++;
+                    }
+                }
+                //$("#provin").val(value);
+            }
+        }
+        return false;
+    }
+    getDI(@ViewBag.id);
+    function updateDI(id) {
+        //showLoadingImage();
+        var formdata = new FormData(); //FormData object    
+        var xhr = new XMLHttpRequest();
+        for (var i = 1; i <= rowsIndex; i++) {
+            //Appending each file to FormData object
+            formdata.append("cbIndex"+i, document.getElementById("cbIndex" + i).value);
+            formdata.append("chIndex"+i, document.getElementById("chIndex" + i).value);
+            formdata.append("dIndex"+i, document.getElementById("dIndex" + i).value);
+        }        
+        formdata.append("count",rowsIndex);
+        formdata.append("id",id);
+        xhr.open('POST', '/Document/updateDI');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="0"){
+                    alert("Cập nhật chương điều có lỗi xảy ra(đường truyền, phần mềm)! Bạn cập nhật lại sau!");
+                }
+                hideLoadingImage();
+                window.location.href = "/Document/index";
+            }
+        }
+        return false;
     }
     function uploadProcess() {
      
@@ -400,8 +466,9 @@
         xhr.send(formdata);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if (xhr.responseText=="1"){
-                    window.location.href="/Document/Index";
+                if (xhr.responseText!="0"){
+                    updateDI(xhr.responseText);
+                    //window.location.href="/Document/Index";
                 }else{
                     alert("Lỗi định dạng văn bản");
                 }
