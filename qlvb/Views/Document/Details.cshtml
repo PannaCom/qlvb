@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = Model.name+"-"+Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstindex="<p>Danh mục liên quan</p>";
 }
 <style>
     table tr {
@@ -15,18 +16,21 @@
       border-left: 10px solid #ccc;
       margin: 1.5em 10px;
       padding: 0.5em 10px;
-      quotes: "\201C""\201D""\2018""\2019";
+      /*quotes: "\201C""\201D""\2018""\2019";*/
+      text-align:left;
     }
     blockquote:before {
       color: #ccc;
-      content: open-quote;
+      /*content: open-quote;*/
       font-size: 4em;
       line-height: 0.1em;
       margin-right: 0.25em;
       vertical-align: -0.4em;
+      text-align:left;
     }
     blockquote p {
       display: inline;
+      text-align:left;
     }
 </style>
 
@@ -36,11 +40,19 @@
         <div style="width:100%;text-align:center;padding-top:30px;">  
         
         @*<iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>*@      
-            <table style="width:100%;text-align:left;">
-                @foreach(var item in ViewBag.chd){
-                    <text><p style="width:100%;text-align:left;"><b>@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p></text>
-                }
-            </table>
+                <table style="width:100%;text-align:left;">
+                    <tr><td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;"></td>
+                        <td class="col-lg-9" style="background:#00ffff;">
+                            @foreach (var item in ViewBag.chd)
+                            {
+                                <text>
+                                    <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                </text>
+                                lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                            }
+                            <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
+                        </td>
+                </table>
                 <table style="width:100%;text-align:center;">
                     <tr>
                         <td class="label">Tiêu đề :</td>
@@ -122,4 +134,24 @@
         url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
         window.location.href = url;
     }
+   
+            $(document).ready(function () {
+
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('.scrollup').fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                });
+
+                $('.scrollup').click(function () {
+                    $("html, body").animate({
+                        scrollTop: 0
+                    }, 600);
+                    return false;
+                });
+
+            });
+  
 </script>

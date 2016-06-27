@@ -33,7 +33,7 @@ namespace qlvb
             for (int i = 0; i < sen.Length; i++) {
                 if (sen[i].Contains(keyword)) {
                     sen[i] = sen[i].Replace(keyword, "<span style=\"background:yellow;color:black;\">" + keyword + "</span>");
-                    rs += "<blockquote>" + sen[i] + "<p></p></blockquote>” </p>";
+                    rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
                 }
             }
             return rs;
