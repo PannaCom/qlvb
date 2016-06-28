@@ -64,7 +64,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="document_id" Type="int" />
-          <Property Name="item_id" Type="int" />
+          <Property Name="item_id" Type="nvarchar" MaxLength="50" />
           <Property Name="item_content" Type="ntext" />
         </EntityType>
         <EntityType Name="documents">
@@ -137,8 +137,8 @@
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
           <EntitySet Name="documents" EntityType="qlvbModel.document" />
-          <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
           <EntitySet Name="logs" EntityType="qlvbModel.log" />
+          <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -228,15 +228,6 @@
           <Property Type="Byte" Name="status" />
           <Property Type="Int32" Name="views" />
         </EntityType>
-        <EntityType Name="document_items">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="document_id" Type="Int32" />
-          <Property Name="item_id" Type="Int32" />
-          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="log">
           <Key>
             <PropertyRef Name="id" />
@@ -244,6 +235,15 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="word" Type="String" MaxLength="1505" FixedLength="false" Unicode="true" />
           <Property Name="count" Type="Int32" />
+        </EntityType>
+        <EntityType Name="document_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="document_id" Type="Int32" />
+          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -348,21 +348,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="qlvbModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="word" ColumnName="word" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="document_items">
             <EntityTypeMapping TypeName="qlvbModel.document_items">
               <MappingFragment StoreEntitySet="document_items">
                 <ScalarProperty Name="item_content" ColumnName="item_content" />
                 <ScalarProperty Name="item_id" ColumnName="item_id" />
                 <ScalarProperty Name="document_id" ColumnName="document_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="logs">
-            <EntityTypeMapping TypeName="qlvbModel.log">
-              <MappingFragment StoreEntitySet="log">
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="word" ColumnName="word" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

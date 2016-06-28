@@ -35,25 +35,33 @@
 </style>
 
 
-<div id="tf-services" style="width:100%;padding-top:100px;">
+<div id="tf-services" style="width:100%;padding-top:30px;">
     <div class="container">
         <div style="width:100%;text-align:center;padding-top:30px;">  
-        
-        @*<iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>*@      
+               @if (ViewBag.chd!=null && ViewBag.chd.Count > 0)
+               {
                 <table style="width:100%;text-align:left;">
-                    <tr><td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;"></td>
+                    <tr><td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow: scroll;"></td>
                         <td class="col-lg-9" style="background:#00ffff;">
                             @foreach (var item in ViewBag.chd)
                             {
-                                <text>
-                                    <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
-                                </text>
-                                lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                                if (item.item_content.Contains(ViewBag.keyword)){
+                                    <text>
+                                        <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                    </text>
+                                    lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                                }
                             }
                             <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
                         </td>
                 </table>
+               }
                 <table style="width:100%;text-align:center;">
+                    @*<iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:400px;"></iframe>*@
+                    <tr>
+                        <td class="label">Toàn văn :</td>
+                        <td><a href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" target="_blank">xem toàn văn</a></td>
+                    </tr>
                     <tr>
                         <td class="label">Tiêu đề :</td>
                         <td>@Model.name</td>
@@ -87,19 +95,19 @@
                         <td>@Model.year</td>
                     </tr>
                     <tr>
-                        <td class="label">Tập từ khóa từ tiêu đề văn bản :</td>
-                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section></td>
+                        <td class="label">Trích xuất các từ khoá lưu ý@*Tập từ khóa từ tiêu đề văn bản :*@</td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td class="label">Tập từ khóa từ điều 1, điều 2... :</td>
-                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+                        @*<td class="label">Tập từ khóa từ điều 1, điều 2... :</td>*@
+                        <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
                     </tr>
                     @*<tr>
                    <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td><td ><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
                 </tr>*@
                     <tr>
-                        <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>
-                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
+                        @*<td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>*@
+                        <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
                     </tr>
                     <tr>
                         <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td>
@@ -140,8 +148,18 @@
                 $(window).scroll(function () {
                     if ($(this).scrollTop() > 100) {
                         $('.scrollup').fadeIn();
+                        $('#lstindex').css("position", "fixed");
+                        $('#lstindex').css("top", "0px");
+                        $('#lstindex').css("left", "50px");
+                        $('#lstindex').css("height", "400px");
+                        $('#lstindex').css("z-index", "1001");
                     } else {
                         $('.scrollup').fadeOut();
+                        $('#lstindex').css("position", "relative");
+                        $('#lstindex').css("top", "auto");
+                        $('#lstindex').css("left", "auto");
+                        $('#lstindex').css("z-index", "0");
+                        $('#lstindex').css("height", "auto");
                     }
                 });
 

@@ -1188,3 +1188,14 @@ ul.meta-tags li:last-child:after { content: ' ' }
     vertical-align: top;
     display:inline-block;
 }
+.scrollup {
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    display: none;
+    text-indent: -9999px;
+    background: url('/Images/top.png') no-repeat;
+    background-color: #ddd;
+}
