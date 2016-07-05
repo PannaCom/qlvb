@@ -678,8 +678,10 @@ namespace qlvb.Controllers
                     doc.views = 0;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
-                    doc.date_publish = date_publish;
-                    doc.date_start = date_start;
+                    doc.date_publish = date_publish;// Config.convertToDate(date_publish);
+                    doc.date_start = date_start;// Config.convertToDate(date_start);
+                    //if (doc.date_publish == DateTime.MinValue) doc.date_publish = null;
+                    //if (doc.date_start == DateTime.MinValue) doc.date_start = null;
                     doc.full_content = null;
                     db.documents.Add(doc);
                     db.SaveChanges();
@@ -723,8 +725,10 @@ namespace qlvb.Controllers
                     doc.year = year;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
-                    doc.date_publish = date_publish;
-                    doc.date_start = date_start;
+                    doc.date_publish = date_publish;// Config.convertToDate(date_publish);
+                    doc.date_start = date_start;// Config.convertToDate(date_start);
+                    //if (doc.date_publish == DateTime.MinValue) doc.date_publish = null;
+                    //if (doc.date_start == DateTime.MinValue) doc.date_start = null;
                     doc.full_content = null;
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();

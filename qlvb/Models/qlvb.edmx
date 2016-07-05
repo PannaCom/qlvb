@@ -93,6 +93,9 @@
           <Property Name="be_linked" Type="nvarchar" MaxLength="152" />
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
+          <Property Name="date_publish" Type="date" />
+          <Property Name="date_start" Type="date" />
+          <Property Name="full_content" Type="ntext" />
         </EntityType>
         <EntityType Name="log">
           <Key>
@@ -136,9 +139,9 @@
           <EntitySet Name="dic_normal" EntityType="qlvbModel.dic_normal" />
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
-          <EntitySet Name="documents" EntityType="qlvbModel.document" />
           <EntitySet Name="logs" EntityType="qlvbModel.log" />
           <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
+          <EntitySet Name="documents" EntityType="qlvbModel.document" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -201,33 +204,6 @@
           <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="pass" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="document">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="name" MaxLength="851" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="auto_des" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="code" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="keyword1" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="keyword2" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="keyword3" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="keyword4" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="keyword5" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="cat1_id" />
-          <Property Type="Int32" Name="cat2_id" />
-          <Property Type="Int32" Name="cat3_id" />
-          <Property Type="Int32" Name="cat4_id" />
-          <Property Type="Byte" Name="type" />
-          <Property Type="DateTime" Name="date_time" Precision="3" />
-          <Property Type="String" Name="related_id" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="year" />
-          <Property Type="String" Name="link" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="link_to" MaxLength="152" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="be_linked" MaxLength="152" FixedLength="false" Unicode="true" />
-          <Property Type="Byte" Name="status" />
-          <Property Type="Int32" Name="views" />
-        </EntityType>
         <EntityType Name="log">
           <Key>
             <PropertyRef Name="id" />
@@ -244,6 +220,36 @@
           <Property Name="document_id" Type="Int32" />
           <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="851" FixedLength="false" Unicode="true" />
+          <Property Name="auto_des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="keyword1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keyword2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keyword3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keyword4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keyword5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cat1_id" Type="Int32" />
+          <Property Name="cat2_id" Type="Int32" />
+          <Property Name="cat3_id" Type="Int32" />
+          <Property Name="cat4_id" Type="Int32" />
+          <Property Name="type" Type="Byte" />
+          <Property Name="date_time" Type="DateTime" Precision="3" />
+          <Property Name="related_id" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="link" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="link_to" Type="String" MaxLength="152" FixedLength="false" Unicode="true" />
+          <Property Name="be_linked" Type="String" MaxLength="152" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Byte" />
+          <Property Name="views" Type="Int32" />
+          <Property Name="date_publish" Type="DateTime" Precision="0" />
+          <Property Name="date_start" Type="DateTime" Precision="0" />
+          <Property Name="full_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -320,9 +326,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="qlvbModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="word" ColumnName="word" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="document_items">
+            <EntityTypeMapping TypeName="qlvbModel.document_items">
+              <MappingFragment StoreEntitySet="document_items">
+                <ScalarProperty Name="item_content" ColumnName="item_content" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="document_id" ColumnName="document_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="full_content" ColumnName="full_content" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="date_publish" ColumnName="date_publish" />
                 <ScalarProperty Name="views" ColumnName="views" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="be_linked" ColumnName="be_linked" />
@@ -344,25 +372,6 @@
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="logs">
-            <EntityTypeMapping TypeName="qlvbModel.log">
-              <MappingFragment StoreEntitySet="log">
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="word" ColumnName="word" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="document_items">
-            <EntityTypeMapping TypeName="qlvbModel.document_items">
-              <MappingFragment StoreEntitySet="document_items">
-                <ScalarProperty Name="item_content" ColumnName="item_content" />
-                <ScalarProperty Name="item_id" ColumnName="item_id" />
-                <ScalarProperty Name="document_id" ColumnName="document_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

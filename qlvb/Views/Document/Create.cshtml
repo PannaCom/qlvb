@@ -109,7 +109,7 @@
         <script>getYear(@ViewBag.year);</script>
         <label class="label">Ngày ban hành *:</label><input type="date" id="date_publish" name="date_publish" class="form-control">   
         <label class="label">Ngày có hiệu lực *:</label><input type="date" id="date_start" name="date_start" class="form-control">  
-        <label class="label">Còn hay hết hiệu lực *:</label><input type="checkbox" id="status" checked class="form-control">Còn hiệu lực 
+        <label class="label">Còn hay hết hiệu lực *:</label><input type="checkbox" id="status" name="status" checked class="form-control">Còn hiệu lực 
         @*<label class="label">Toàn văn *:</label><script src="/Scripts/ckeditor/ckeditor.js"></script>   
             <textarea name="full_content" id="full_content" rows="9"></textarea>
             <script>
@@ -397,8 +397,8 @@
         }
     }
     function addNewDocument() {
-        alert(document.getElementById("date_publish").value);
-        return;
+        //alert(document.getElementById("date_publish").value);
+        //return;
         if (idDocument==-1 && document.getElementById("imageFile").value == "") {
             alert("Chọn file văn bản");
             document.getElementById("imageFile").focus();
@@ -454,7 +454,7 @@
             document.getElementById("date_publish").focus();
             return;
         }
-        if (document.getElementById("date_publish").value =="") {
+        if (document.getElementById("date_start").value =="") {
             alert("Nhập ngày có hiệu lực");
             document.getElementById("date_start").focus();
             return;
@@ -495,7 +495,7 @@
         formdata.append("date_publish", document.getElementById("date_publish").value);
         formdata.append("date_start", document.getElementById("date_start").value);
         formdata.append("full_content", "");
-        formdata.append("status", document.getElementById("status").value);
+        formdata.append("status", status);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/Document/addNewDocument');
         xhr.send(formdata);

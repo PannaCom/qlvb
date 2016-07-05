@@ -36,5 +36,8 @@ namespace qlvb.Models
         public string be_linked { get; set; }
         public Nullable<byte> status { get; set; }
         public Nullable<int> views { get; set; }
+        public Nullable<System.DateTime> date_publish { get; set; }
+        public Nullable<System.DateTime> date_start { get; set; }
+        public string full_content { get; set; }
     }
 }
