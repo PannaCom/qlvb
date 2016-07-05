@@ -106,7 +106,15 @@
         <label class="label">Cơ quan ban hành *:</label><select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select> 
         <script>getCat(4, "@ViewBag.cat4");</script>   
         <label class="label">Năm ban hành *:</label><select id="year" name="year" class="form-control" onchange="chooseCat(4);"></select> 
-        <script>getYear(@ViewBag.year);</script>      
+        <script>getYear(@ViewBag.year);</script>
+        <label class="label">Ngày ban hành *:</label><input type="date" id="date_publish" name="date_publish" class="form-control">   
+        <label class="label">Ngày có hiệu lực *:</label><input type="date" id="date_start" name="date_start" class="form-control">  
+        <label class="label">Còn hay hết hiệu lực *:</label><input type="checkbox" id="status" checked class="form-control">Còn hiệu lực 
+        @*<label class="label">Toàn văn *:</label><script src="/Scripts/ckeditor/ckeditor.js"></script>   
+            <textarea name="full_content" id="full_content" rows="9"></textarea>
+            <script>
+                CKEDITOR.replace('full_content');
+            </script>*@      
             <div id="pr" style="position:relative; width:100%;">
                 <h4>QUẢN LÝ CHƯƠNG ĐIỀU</h4>
                 <div id="dvprice">
@@ -389,7 +397,8 @@
         }
     }
     function addNewDocument() {
-        
+        alert(document.getElementById("date_publish").value);
+        return;
         if (idDocument==-1 && document.getElementById("imageFile").value == "") {
             alert("Chọn file văn bản");
             document.getElementById("imageFile").focus();
@@ -440,6 +449,28 @@
             document.getElementById("year").focus();
             return;
         }
+        if (document.getElementById("date_publish").value =="") {
+            alert("Nhập ngày ban hành");
+            document.getElementById("date_publish").focus();
+            return;
+        }
+        if (document.getElementById("date_publish").value =="") {
+            alert("Nhập ngày có hiệu lực");
+            document.getElementById("date_start").focus();
+            return;
+        }
+        //if (CKEDITOR.instances.full_content.getData()=="") {
+        //    alert("Nhập toàn văn");
+        //    document.getElementById("full_content").focus();
+        //    return;
+        //}
+        if (document.getElementById("cbIndex1").value==""){
+            alert("Nhập các chương điều");
+            document.getElementById("cbIndex1").focus();
+            return;
+        }
+        var status=0;
+        if (document.getElementById("status").checked==false) status=1;
         document.getElementById("btnAddNew").value="Saving...";
         document.getElementById("btnAddNew").disabled=true;
         var formdata = new FormData(); //FormData object
@@ -461,8 +492,10 @@
         formdata.append("related_id", document.getElementById("related_id").value);
         formdata.append("be_linked", document.getElementById("be_linked").value);
         formdata.append("link_to", document.getElementById("link_to").value);
-        
-
+        formdata.append("date_publish", document.getElementById("date_publish").value);
+        formdata.append("date_start", document.getElementById("date_start").value);
+        formdata.append("full_content", "");
+        formdata.append("status", document.getElementById("status").value);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/Document/addNewDocument');
         xhr.send(formdata);

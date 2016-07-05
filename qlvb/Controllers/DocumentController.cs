@@ -644,7 +644,7 @@ namespace qlvb.Controllers
             }
             return "0";
         }
-        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked,string link_to)
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to, DateTime date_publish, DateTime date_start, string full_content, byte status)
         {
             try
             {
@@ -672,12 +672,15 @@ namespace qlvb.Controllers
                     doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
-                    doc.status = 0;
+                    doc.status = status;
                     doc.type = 0;
                     doc.year = year;
                     doc.views = 0;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
+                    doc.date_publish = date_publish;
+                    doc.date_start = date_start;
+                    doc.full_content = null;
                     db.documents.Add(doc);
                     db.SaveChanges();
                     ////Tự động chèn vào từ khóa có liên quan của văn bản bị điều chỉnh, sửa đổi
@@ -715,11 +718,14 @@ namespace qlvb.Controllers
                     doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
                     //doc.date_time = DateTime.Now;
                     doc.related_id = related_id;
-                    //doc.status = 0;
+                    doc.status = status;
                     //doc.type = 0;
                     doc.year = year;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
+                    doc.date_publish = date_publish;
+                    doc.date_start = date_start;
+                    doc.full_content = null;
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
                     return id.ToString();
@@ -780,11 +786,13 @@ namespace qlvb.Controllers
             try
             {
                 db.Database.ExecuteSqlCommand("delete from document_items where document_id=" + id);
+                string all_des = " ";
                 if (id != 0)
                 {
                     for (int i = 1; i <= count; i++)
                     {
                         string name = Request.Form["cbIndex" + i].ToString();
+                        all_des += name+" ";
                         string code = Request.Form["chIndex" + i].ToString() + "_"+Request.Form["dIndex" + i].ToString();
                         if (name != "" && name != null)
                         {
@@ -795,6 +803,7 @@ namespace qlvb.Controllers
                             db.document_items.Add(gi);
                             db.SaveChanges();
                         }
+                        db.Database.ExecuteSqlCommand("update document set auto_des=name+N'" + all_des + "' where id=" + id);
                     }
                 }
                 return "1";
