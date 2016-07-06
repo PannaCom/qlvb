@@ -434,6 +434,9 @@ namespace qlvb.Controllers
                 ViewBag.cat3 = "-2";
                 ViewBag.cat4 = "-2";
                 ViewBag.year = "-2";
+                ViewBag.date_publish = "";
+                ViewBag.date_start = "";
+                ViewBag.status = 0;
                 return View(document);
             }
             else {
@@ -459,7 +462,11 @@ namespace qlvb.Controllers
                 ViewBag.link = document.link;
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
-
+                DateTime? date_publish = document.date_publish;
+                ViewBag.date_publish = date_publish == null ? "" : date_publish.Value.ToShortDateString();//.ToString("MM/dd/yyyy")
+                DateTime? date_start = document.date_start;
+                ViewBag.date_start = date_start == null ? "" : date_start.Value.ToShortDateString();//.ToString("MM/dd/yyyy")
+                ViewBag.status = document.status;
                 return View(document);
             }
         }
@@ -785,7 +792,7 @@ namespace qlvb.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
-        public string updateDI(int count, int id)
+        public string updateDI(int count, int id, string codevb)
         {
             try
             {
@@ -807,7 +814,7 @@ namespace qlvb.Controllers
                             db.document_items.Add(gi);
                             db.SaveChanges();
                         }
-                        db.Database.ExecuteSqlCommand("update document set auto_des=name+N'" + all_des + "' where id=" + id);
+                        db.Database.ExecuteSqlCommand("update documents set auto_des=name+N'" + " " + codevb + " " + all_des + "' where id=" + id);
                     }
                 }
                 return "1";
