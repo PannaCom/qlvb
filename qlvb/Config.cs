@@ -810,5 +810,18 @@ namespace qlvb
             input = input.Replace("-", "").Replace(":", "").Replace(",", "").Replace("'", "").Replace("\"", "").Replace(";", "").Replace("”", "").Replace("%", "");//Replace(".", "").Replace("_", "").
             return input;
         }
+        public static DateTime convertToDate(string d)
+        {
+            DateTime d1;
+            try
+            {
+               
+                DateTime.TryParse(d,out d1);
+                return d1;
+            }
+            catch (Exception ex) {
+                return DateTime.MinValue;
+            }
+        }
     }
 }
