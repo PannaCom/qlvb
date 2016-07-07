@@ -231,7 +231,8 @@ namespace qlvb
             try
             {
                 content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
-                int lengthWord = 4;
+                content = content.Replace("  ", " ");
+                int lengthWord = 8;
                 string result = "";
                 string[] arrContent = content.Split(' ');
                 while (lengthWord >= 2)
@@ -244,12 +245,15 @@ namespace qlvb
                             tempword += arrContent[l1] + " ";
                         }
                         tempword = tempword.ToLowerInvariant().Trim();
-                        if (allword.ContainsKey(tempword) && !result.Contains(tempword) && tempword.Split(' ').Length >= 2)
+                        int wordCount = Regex.Matches(content, "\\b" + Regex.Escape(tempword) + "\\b", RegexOptions.IgnoreCase).Count;
+                        if ((allword.ContainsKey(tempword) && !result.Contains(tempword) && tempword.Split(' ').Length >= 2) || wordCount>=4)
                         {
                             result += tempword + " , ";
                         }
+                        if (result.Split(' ').Length >= 80) break;
                     }
                     lengthWord--;
+                    if (result.Split(' ').Length >= 80) break;
                 }
                 return result;
             }
@@ -258,29 +262,43 @@ namespace qlvb
                 return "";
             }
         }
+        public static bool hasNormalWord(string content)
+        {
+            string[] no = new string[] { "quy định tại khoản","các khoản","trước ngày", "tại các khoản", "quy định tại các", "bộ tài nguyên và môi trường", "tỉnh  thành phố trực thuộc trung ương", "được cơ quan có thẩm quyền" };
+            for (int i = 0; i < no.Length; i++)
+            {
+                if (content.Contains(no[i])) return true;
+            }
+            return false;
+        }
         public static string getTopKeyword(string content)
         {
             try
             {
                 content = content.Replace("\n", " ").ToLowerInvariant().Replace(".", " ").Replace(",", " ").Trim();
-                int lengthWord = 4;
+                int lengthWord = 8;
                 string result = "";
                 string[] arrContent = content.Split(' ');
                 int tempcount = 0;
+                int l1 = 0;
                 Dictionary<String, int> top = new Dictionary<String, int>();
-                while (lengthWord >= 2)
+                while (lengthWord >= 4)
                 {
-                    for (int l = 0; l <= arrContent.Length - lengthWord; l++)
+                    int l = 0;
+                    while(l <= arrContent.Length - lengthWord)
                     {
-                        string tempword = "";
-                        for (int l1 = l; l1 < l + lengthWord; l1++)
+                        StringBuilder atempword = new StringBuilder();
+                        for (l1 = l; l1 < l + lengthWord; l1++)
                         {
-                            tempword += arrContent[l1] + " ";
+                            atempword.Append(arrContent[l1] + " ");
                         }
-                        tempword = tempword.ToLowerInvariant().Trim();
-                        if (allword.ContainsKey(tempword) && tempword.Split(' ').Length >= 2)
+                        string tempword = atempword.ToString().ToLowerInvariant().Trim();
+                        if (hasNormalWord(tempword) || result.Contains(tempword))
+                        { l++; continue; }
+                        int wordCount = Regex.Matches(content, "\\b" + Regex.Escape(tempword) + "\\b", RegexOptions.IgnoreCase).Count;
+                        if ((allword.ContainsKey(tempword) && tempword.Split(' ').Length >= 2) || wordCount>=4)
                         {
-                            //result += tempword + " , ";
+                            result += tempword + " , ";
                             if (top.ContainsKey(tempword))
                             {
                                 tempcount = top[tempword] + 1;
@@ -291,17 +309,22 @@ namespace qlvb
                             {
                                 top.Add(tempword, 1);
                             }
+                            l = l1;
                         }
+                        if (top.Count >= 24) break;
+                        l++;
                     }
                     lengthWord--;
+                    if (top.Count >= 24) break;
                 }
                 var sortedDict = from entry in top orderby entry.Value descending select entry;
                 tempcount = 0;
+                result = "";
                 foreach (var entry in sortedDict)
                 {
                     tempcount++;
                     result += entry.Key + " , ";
-                    if (tempcount >= 4) break;
+                    if (tempcount >= 24) break;
                 }
                 return result;
             }
