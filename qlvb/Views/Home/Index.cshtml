@@ -260,6 +260,12 @@
     }).done(function( html ) {
         $( "#allcat2").html("<b>Loại văn bản: </b>"+html);
     });
+    $.ajax({
+        url: "/Home/Log?keyword=@ViewBag.keyword",
+        cache: false
+    }).done(function( html ) {
+        
+    });
     function searchkw(keyword) {
         var url = "/Home/Index?";
         var k = keyword;

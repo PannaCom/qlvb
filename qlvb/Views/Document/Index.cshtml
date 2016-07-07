@@ -240,4 +240,10 @@
         $("#loginli").hide();
         $("#logoutli").show();
     }
+    $.ajax({
+        url: "/Home/Log?keyword=@ViewBag.keyword",
+        cache: false
+    }).done(function( html ) {
+        
+    });
 </script>

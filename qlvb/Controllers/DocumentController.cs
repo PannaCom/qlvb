@@ -463,9 +463,9 @@ namespace qlvb.Controllers
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
                 DateTime? date_publish = document.date_publish;
-                ViewBag.date_publish = date_publish == null ? "" : date_publish.Value.ToShortDateString();//.ToString("MM/dd/yyyy")
+                ViewBag.date_publish = date_publish == null ? "" : String.Format("{0:yyyy-MM-dd}", date_publish);//.ToString("MM/dd/yyyy");//.ToShortDateString()
                 DateTime? date_start = document.date_start;
-                ViewBag.date_start = date_start == null ? "" : date_start.Value.ToShortDateString();//.ToString("MM/dd/yyyy")
+                ViewBag.date_start = date_start == null ? "" : String.Format("{0:yyyy-MM-dd}", date_start);//.ToString("MM/dd/yyyy")//.ToShortDateString();
                 ViewBag.status = document.status;
                 return View(document);
             }

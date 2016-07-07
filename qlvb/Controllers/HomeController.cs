@@ -229,6 +229,31 @@ namespace qlvb.Controllers
             public byte? no { get; set; }
             public int total { get; set; }
         }
+        public string Log(string keyword)
+        {
+            if (keyword == "" || keyword==null) return "1";
+            try
+            {
+                bool any = db.logs.Any(o => o.word==keyword);
+                if (!any)
+                {
+                    log lg = new log();
+                    lg.count = 1;
+                    lg.word = keyword;
+                    db.logs.Add(lg);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.Database.ExecuteSqlCommand("update log set count=count+1 where word=N'" + keyword + "'");
+                }
+                return "1";
+            }
+            catch (Exception ex) {
+                return "0";
+            }
+
+        }
         public string getAllCat(int id) {
             try
             {
