@@ -16,7 +16,7 @@ namespace qlvb
         private static qlvbEntities db=new qlvbEntities();
         public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
         public static Hashtable allword=null;
-        public static int minRank = 100;
+        public static int minRank = -1;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
             if (allword == null || allword.Count <= 0) allword = new Hashtable(); 

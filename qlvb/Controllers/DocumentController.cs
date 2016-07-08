@@ -76,7 +76,7 @@ namespace qlvb.Controllers
 
                 ViewBag.keyword = k;
                 if (pg == null) pg = 1;
-                string query = "SELECT top 100 ";
+                string query = "SELECT top 10 ";
                 query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                 query +="WHEN 7 THEN KEY_TBL.RANK*7 ";
                 query +="WHEN 18 THEN KEY_TBL.RANK*6 ";
@@ -651,7 +651,7 @@ namespace qlvb.Controllers
             }
             return "0";
         }
-        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to, DateTime date_publish, DateTime date_start, string full_content, byte status)
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to, DateTime? date_publish, DateTime? date_start, string full_content, byte status)
         {
             try
             {
