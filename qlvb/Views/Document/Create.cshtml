@@ -142,7 +142,8 @@
 </div>
 <script>
     if (idDocument!=-1) $("#viewdoc").show();
-    if ("@ViewBag.status"=="0") document.getElementById("status").checked=true;
+    if ("@ViewBag.status"=="0") 
+    {document.getElementById("status").checked=true;} else {document.getElementById("status").checked=false;}
     var rowsIndex=1;
     var chIndex=1;
     var dIndex=1;
@@ -460,11 +461,11 @@
             document.getElementById("date_publish").focus();
             return;
         }
-        if (document.getElementById("date_start").value =="") {
-            alert("Nhập ngày có hiệu lực");
-            document.getElementById("date_start").focus();
-            return;
-        }
+        //if (document.getElementById("date_start").value =="") {
+        //    alert("Nhập ngày có hiệu lực");
+        //    document.getElementById("date_start").focus();
+        //    return;
+        //}
         //if (CKEDITOR.instances.full_content.getData()=="") {
         //    alert("Nhập toàn văn");
         //    document.getElementById("full_content").focus();
