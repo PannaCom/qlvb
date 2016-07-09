@@ -116,7 +116,7 @@
                 CKEDITOR.replace('full_content');
             </script>*@      
             <div id="pr" style="position:relative; width:100%;">
-                <h4>QUẢN LÝ CHƯƠNG ĐIỀU</h4>
+                <h4>QUẢN LÝ CHƯƠNG ĐIỀU</h4>                
                 <div id="dvprice">
                     <table id="tblIndex" class="table table-striped table-bordered table-hover">
                         <tr class="odd gradeX" id=rowsIndex1 style="display:block;">
@@ -170,13 +170,14 @@
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/Document/getGI');
         xhr.send(formdata);
+        $("#tblIndex").html("<img src='/Images/loading.gif'>");
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {  
                 if (xhr.responseText=="0") return;
                 var news = '{"news":' + xhr.responseText + '}';
-                var json_parsed = $.parseJSON(news);       
-                rowsIndex=0;
-                $("#tblIndex").html("");
+                var json_parsed = $.parseJSON(news);     
+                var contentAll="";
+                rowsIndex=0;               
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {
                         var name = json_parsed.news[i];
@@ -187,10 +188,12 @@
                         row+="<td>Chương :<input type=\"text\" id=\"chIndex"+index+"\" value=\""+ch+"\">&nbsp;Điều :<input type=\"text\" id=\"dIndex"+index+"\" value=\""+d+"\"></td><td style=\"width:100%;\"><textarea id=\"cbIndex"+index+"\" placeholder=\"Nội dung\" style=\"width:100%;\" rows=\"5\">"+name.item_content+"</textarea></td>";      
                         row+="<td><a onclick=\"delIndex("+index+");\" style=\"cursor:pointer;\">Delete</a></td>";
                         row+="</tr>";
-                        $("#tblIndex").append(row);
+                        contentAll+=row;
+                        //$("#tblIndex").append(row);
                         rowsIndex++;
-                    }
+                    }                   
                 }
+                $("#tblIndex").html(contentAll);
                 //$("#provin").val(value);
             }
         }
@@ -515,8 +518,8 @@
                 }else{
                     alert("Lỗi định dạng văn bản");
                 }
-                document.getElementById("btnAddNew").disabled=false;
-                document.getElementById("btnAddNew").value="Save";
+                //document.getElementById("btnAddNew").disabled=false;
+                //document.getElementById("btnAddNew").value="Save";
             }
         }
     }

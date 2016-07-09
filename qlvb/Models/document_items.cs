@@ -18,5 +18,7 @@ namespace qlvb.Models
         public Nullable<int> document_id { get; set; }
         public string item_id { get; set; }
         public string item_content { get; set; }
+        public Nullable<int> ch { get; set; }
+        public Nullable<int> d { get; set; }
     }
 }

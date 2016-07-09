@@ -45,14 +45,14 @@ namespace qlvb.Controllers
 
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
-                    string query = "SELECT top 10 ";
+                    string query = "select * from (SELECT top 10 ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
-                    query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
-                    query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
-                    query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
-                    query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
-                    query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
-                    query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                    query += "WHEN 7 THEN KEY_TBL.RANK*"+Config.heso1+" ";
+                    query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                    query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                    query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                    query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                    query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                     query += "ELSE KEY_TBL.RANK ";
                     query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                     query += " where (RANK>"+Config.minRank+") ";
@@ -67,11 +67,16 @@ namespace qlvb.Controllers
                             query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
                         }
                     }
+                    query += ") as A ";
+                    if (k != null && (k.Contains("/") || k.Contains("-")))
+                    {
+                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%'";
+                    }
                     if (order == null || order == "") order = "RANK";
                     query += " order by " + order;
                     if (to == null || to == "") to = "Desc";
                     query += " " + to;
-
+                    
                     ViewBag.f1 = f1;
                     ViewBag.f2 = f2;
                     ViewBag.f3 = f3;
@@ -215,6 +220,33 @@ namespace qlvb.Controllers
             //    return View();
             //}
         }
+        public class document_itemscs
+        {
+            public int id { get; set; }
+            public string item_id { get; set; }
+            public int? ch { get; set; }
+            public int? d { get; set; }
+        }
+        public string updateDatabase()
+        {
+            List<document_itemscs> ldi=new List<document_itemscs>();            
+            string[] temp=null;
+            var di = (from q in db.document_items select q).Where(o => o.ch == null && o.d == null).ToList();
+            for (int i = 0; i < di.Count; i++) {
+                document_itemscs dics = new document_itemscs();
+                dics.id=di[i].id;
+                dics.item_id=di[i].item_id;
+                temp = di[i].item_id.Split('_');
+                dics.ch=int.Parse(temp[0]);
+                dics.d = int.Parse(temp[1]); 
+                ldi.Add(dics);
+            }
+            foreach(var item in ldi){
+                db.Database.ExecuteSqlCommand("update document_items set ch="+item.ch+",d="+item.d+" where id="+item.id);
+            }
+            return "ok";
+        }
+
         public string getAllHotKeyWord() {
             var p = (from q in db.documents select q).OrderByDescending(o => o.views).Take(20).ToList();
             string all = "";

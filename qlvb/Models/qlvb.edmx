@@ -66,6 +66,8 @@
           <Property Name="document_id" Type="int" />
           <Property Name="item_id" Type="nvarchar" MaxLength="50" />
           <Property Name="item_content" Type="ntext" />
+          <Property Name="ch" Type="int" />
+          <Property Name="d" Type="int" />
         </EntityType>
         <EntityType Name="documents">
           <Key>
@@ -140,8 +142,8 @@
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
           <EntitySet Name="logs" EntityType="qlvbModel.log" />
-          <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
           <EntitySet Name="documents" EntityType="qlvbModel.document" />
+          <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -212,15 +214,6 @@
           <Property Name="word" Type="String" MaxLength="1505" FixedLength="false" Unicode="true" />
           <Property Name="count" Type="Int32" />
         </EntityType>
-        <EntityType Name="document_items">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="document_id" Type="Int32" />
-          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="document">
           <Key>
             <PropertyRef Name="id" />
@@ -250,6 +243,17 @@
           <Property Name="date_publish" Type="DateTime" Precision="0" />
           <Property Name="date_start" Type="DateTime" Precision="0" />
           <Property Name="full_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="document_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="document_id" Type="Int32" />
+          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ch" Type="Int32" />
+          <Property Name="d" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -335,16 +339,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="document_items">
-            <EntityTypeMapping TypeName="qlvbModel.document_items">
-              <MappingFragment StoreEntitySet="document_items">
-                <ScalarProperty Name="item_content" ColumnName="item_content" />
-                <ScalarProperty Name="item_id" ColumnName="item_id" />
-                <ScalarProperty Name="document_id" ColumnName="document_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
@@ -372,6 +366,18 @@
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="document_items">
+            <EntityTypeMapping TypeName="qlvbModel.document_items">
+              <MappingFragment StoreEntitySet="document_items">
+                <ScalarProperty Name="d" ColumnName="d" />
+                <ScalarProperty Name="ch" ColumnName="ch" />
+                <ScalarProperty Name="item_content" ColumnName="item_content" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="document_id" ColumnName="document_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

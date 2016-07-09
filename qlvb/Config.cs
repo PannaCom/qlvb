@@ -17,6 +17,12 @@ namespace qlvb
         public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
         public static Hashtable allword=null;
         public static int minRank = -1;
+        public static int heso1 = 1000;
+        public static int heso2 = 500;
+        public static int heso3 = 50;
+        public static int heso4 = 10;
+        public static int heso5 = 5;
+        public static int heso6 = 2;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
             if (allword == null || allword.Count <= 0) allword = new Hashtable(); 

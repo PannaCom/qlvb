@@ -76,14 +76,14 @@ namespace qlvb.Controllers
 
                 ViewBag.keyword = k;
                 if (pg == null) pg = 1;
-                string query = "SELECT top 10 ";
+                string query = "select * from (SELECT top 10 ";
                 query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
-                query +="WHEN 7 THEN KEY_TBL.RANK*7 ";
-                query +="WHEN 18 THEN KEY_TBL.RANK*6 ";
-                query +="WHEN 15 THEN KEY_TBL.RANK*5 ";
-		        query +="WHEN 5 THEN KEY_TBL.RANK*4 ";
-                query +="WHEN 23 THEN KEY_TBL.RANK*3 ";
-		        query +="WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                 query +="ELSE KEY_TBL.RANK ";
                 query +="END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += " where (RANK>" + Config.minRank + ") ";
@@ -97,6 +97,11 @@ namespace qlvb.Controllers
                     {
                         query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
                     }
+                }
+                query += ") as A ";
+                if (k != null && (k.Contains("/") || k.Contains("-")))
+                {
+                    query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%'";
                 }
                 if (order == null || order == "") order = "RANK";
                 query += " order by " + order;
@@ -355,17 +360,18 @@ namespace qlvb.Controllers
             if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
             {
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
-                string query="SELECT top 10 ";
+                string query = "select * from (SELECT top 10 ";
                 query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
-                query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
-                query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
-                query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
-                query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
-                query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
-                query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                 query += "ELSE KEY_TBL.RANK ";
                 query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-			     query+=" where RANK>0 order by Rank Desc";
+                query += " where RANK>0) as A order by Rank Desc";
+                query = "select code+name as value,id from documents where code like N'" + keyword + "%'";
                  var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
@@ -374,17 +380,17 @@ namespace qlvb.Controllers
                 //Sẽ thay bằng search fulltext
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
                 //return JsonConvert.SerializeObject(p.ToList());
-                string query = "SELECT top 10 ";
+                string query = "select * from (SELECT top 10 ";
                 query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
-                query += "WHEN 7 THEN KEY_TBL.RANK*7 ";
-                query += "WHEN 18 THEN KEY_TBL.RANK*6 ";
-                query += "WHEN 15 THEN KEY_TBL.RANK*5 ";
-                query += "WHEN 5 THEN KEY_TBL.RANK*4 ";
-                query += "WHEN 23 THEN KEY_TBL.RANK*3 ";
-                query += "WHEN 6 THEN KEY_TBL.RANK*2 ";
+                query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                 query += "ELSE KEY_TBL.RANK ";
                 query += "END  FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += " where RANK>0 order by Rank Desc";
+                query += " where RANK>0) as A order by Rank Desc";
                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             }
@@ -811,6 +817,8 @@ namespace qlvb.Controllers
                             gi.document_id = id;
                             gi.item_content = name;
                             gi.item_id = code;
+                            gi.ch = int.Parse(Request.Form["chIndex" + i].ToString());
+                            gi.d = int.Parse(Request.Form["dIndex" + i].ToString());
                             db.document_items.Add(gi);
                             db.SaveChanges();
                         }
@@ -826,7 +834,7 @@ namespace qlvb.Controllers
         }
         public string getGI(int id)
         {
-            var p = (from q in db.document_items where q.document_id == id select q).ToList();
+            var p = (from q in db.document_items where q.document_id == id select q).OrderBy(o=>o.ch).ThenBy(o=>o.d).ToList();
             
             try
             {
