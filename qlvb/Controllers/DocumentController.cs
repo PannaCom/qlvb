@@ -808,22 +808,26 @@ namespace qlvb.Controllers
                 {
                     for (int i = 1; i <= count; i++)
                     {
-                        string name = Request.Form["cbIndex" + i].ToString();
-                        all_des += name+" ";
-                        string code = Request.Form["chIndex" + i].ToString() + "_"+Request.Form["dIndex" + i].ToString();
-                        if (name != "" && name != null)
-                        {
-                            document_items gi = new document_items();
-                            gi.document_id = id;
-                            gi.item_content = name;
-                            gi.item_id = code;
-                            gi.ch = int.Parse(Request.Form["chIndex" + i].ToString());
-                            gi.d = int.Parse(Request.Form["dIndex" + i].ToString());
-                            db.document_items.Add(gi);
-                            db.SaveChanges();
+                        try { 
+                            string name = Request.Form["cbIndex" + i].ToString();
+                            all_des += name+" ";
+                            string code = Request.Form["chIndex" + i].ToString() + "_"+Request.Form["dIndex" + i].ToString();
+                            if (name != "" && name != null)
+                            {
+                                document_items gi = new document_items();
+                                gi.document_id = id;
+                                gi.item_content = name;
+                                gi.item_id = code;
+                                gi.ch = int.Parse(Request.Form["chIndex" + i].ToString());
+                                gi.d = int.Parse(Request.Form["dIndex" + i].ToString());
+                                db.document_items.Add(gi);
+                                db.SaveChanges();
+                            }
                         }
-                        db.Database.ExecuteSqlCommand("update documents set auto_des=name+N'" + " " + codevb + " " + all_des + "' where id=" + id);
+                        catch (Exception ex2) { 
+                        }                        
                     }
+                    db.Database.ExecuteSqlCommand("update documents set auto_des=name+N'" + " " + codevb + " " + all_des + "' where id=" + id);
                 }
                 return "1";
             }

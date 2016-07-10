@@ -205,6 +205,7 @@
         var formdata = new FormData(); //FormData object    
         var xhr = new XMLHttpRequest();
         for (var i = 1; i <= rowsIndex; i++) {
+            if (document.getElementById("rowsIndex"+i).style.display=='none') continue;
             //Appending each file to FormData object
             formdata.append("cbIndex"+i, document.getElementById("cbIndex" + i).value);
             formdata.append("chIndex"+i, document.getElementById("chIndex" + i).value);
