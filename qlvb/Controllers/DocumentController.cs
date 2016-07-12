@@ -404,7 +404,10 @@ namespace qlvb.Controllers
         }
         //
         // GET: /Document/Details/5
-
+        public ActionResult test()
+        {
+            return View();
+        }
         public ActionResult Details(int id,string keyword)
         {
             document document = db.documents.Find(id);
