@@ -917,6 +917,7 @@
     <Content Include="Views\members\Logout.cshtml" />
     <Content Include="Views\Document\Cat.cshtml" />
     <Content Include="Views\_Items.cshtml" />
+    <Content Include="Views\Document\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
