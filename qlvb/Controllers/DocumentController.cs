@@ -76,7 +76,7 @@ namespace qlvb.Controllers
 
                 ViewBag.keyword = k;
                 if (pg == null) pg = 1;
-                string query = "select * from (SELECT top 10 ";
+                string query = "select * from (SELECT top 30 ";
                 query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                 query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                 query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -416,11 +416,12 @@ namespace qlvb.Controllers
                 return HttpNotFound();
             }
             db.Database.ExecuteSqlCommand("update documents set views=views+1 where id=" + id);
+            if (keyword == null) keyword = "";
             ViewBag.keyword = keyword;
-            if (keyword!="" && keyword!=null)
+            //if (keyword!="" && keyword!=null)
             try
             {
-                var p = (from q in db.document_items where q.item_content.Contains(keyword) select q).ToList();
+                var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
                 ViewBag.chd = p;
             }
             catch (Exception ex) { }

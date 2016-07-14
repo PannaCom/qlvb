@@ -75,10 +75,10 @@
                                 <td class="col-lg-9" style="background:#00ffff;">
                                     @foreach (var item in ViewBag.chd)
                                     {
-                                        if (item.item_content.Contains(ViewBag.keyword))
+                                        if (item.item_content.Contains(ViewBag.keyword) || ViewBag.keyword=="")
                                         {
                                             <text>
-                                                <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                                <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
                                             </text>
                                             lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
                                         }
@@ -125,7 +125,7 @@
             </table>
         </div>
         <div class="tab-pane fade" id="pro">
-            <h1>@Model.name</h1>
+            <h4>@Model.name</h4>
             <table style="width:100%;text-align:center;">
                 <tr>
                     <td class="label">Ký hiệu :</td>

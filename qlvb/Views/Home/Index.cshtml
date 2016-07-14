@@ -11,9 +11,12 @@
 
 <div id="tf-services">
 <div class="container">
-    <div style="width:100%;padding-top:30px;">
+    <div style="width:100%;padding-top:30px;float:left;position:relative;">
         <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
+    </div>
+    <div style="width:100%;padding-top:30px;float:left;position:relative;">
+        <div style="float:left;position:relative;">Tìm trong: <input type="radio" name="st" value="0" checked>Tất cả <input type="radio" name="st" value="1">Tiêu đề <input type="radio" name="st" value="2">Chương, Điều <input type="radio" name="st" value="3">Ký hiệu/Số</div>
     </div>
     <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat1)        
@@ -40,7 +43,7 @@
        <div style="width:100%;padding-top:30px;"><div class="span9">
            @if (ViewBag.keyword != "")
            {
-                <text> <h2>Tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></h2></text>
+                <text> <h2>Tìm thấy các văn bản</h2></text>
            }
            else
            {

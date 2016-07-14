@@ -45,7 +45,7 @@ namespace qlvb.Controllers
 
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
-                    string query = "select * from (SELECT top 10 ";
+                    string query = "select * from (SELECT top 30 ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*"+Config.heso1+" ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -70,7 +70,7 @@ namespace qlvb.Controllers
                     query += ") as A ";
                     if (k != null && (k.Contains("/") || k.Contains("-")))
                     {
-                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%'";
+                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%' or code=N'" + k + "'";
                     }
                     if (order == null || order == "") order = "RANK";
                     query += " order by " + order;
