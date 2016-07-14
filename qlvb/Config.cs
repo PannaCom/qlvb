@@ -34,11 +34,12 @@ namespace qlvb
             }
         }
         public static string showQuote(string content,string keyword){
+            if (keyword == "") return content;
             string[] sen = content.Split('.');
             string rs = "";
             for (int i = 0; i < sen.Length; i++) {
                 if (sen[i].Contains(keyword)) {
-                    sen[i] = sen[i].Replace(keyword, "<span style=\"background:yellow;color:black;\">" + keyword + "</span>");
+                    sen[i] = keyword != "" ? sen[i].Replace(keyword, "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
                     rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
                 }
             }
