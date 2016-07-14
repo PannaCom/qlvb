@@ -16,7 +16,7 @@
         <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
     </div>
     <div style="width:100%;padding-top:30px;float:left;position:relative;">
-        <div style="float:left;position:relative;">Tìm trong: <input type="radio" name="st" value="0" checked>Tất cả <input type="radio" name="st" value="1">Tiêu đề <input type="radio" name="st" value="2">Chương, Điều <input type="radio" name="st" value="3">Ký hiệu/Số</div>
+        <div style="float:left;position:relative;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề @*<input type="radio" name="st" id="st2" value="2">Chương, Điều*@ <input type="radio" name="st" id="st3" value="3">Ký hiệu/Số</div>
     </div>
     <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
         @Html.Raw(@ViewBag.cat1)        
@@ -132,6 +132,7 @@
     var currentCat2="@ViewBag.f2";
     var currentCat3="@ViewBag.f3";
     var currentCat4="@ViewBag.f4";
+    var st=@ViewBag.st;
     if (order.toString().indexOf("RANK")>=0){
         $("#order").val(1);
     }
@@ -144,6 +145,7 @@
     if (order.toString().indexOf("views")>=0){
         $("#order").val(2);
     }
+    document.getElementById("st"+@ViewBag.st).checked=true;
     function resetCat(){
         currentCat1="";
         currentCat2="";
@@ -172,18 +174,18 @@
         if ($("#order").val()=="1"){
             setorder('RANK','Desc');
         }
-        //else
-        //    if ($("#order").val()=="2"){
-        //        setorder('code','Desc');
-        //    }
-        //    else
-        //        if ($("#order").val()=="3"){
-        //            setorder('code','Asc');
-        //        }
-                else
-                    if ($("#order").val()=="2"){
-                        setorder('views','Desc');
-                    }
+            //else
+            //    if ($("#order").val()=="2"){
+            //        setorder('code','Desc');
+            //    }
+            //    else
+            //        if ($("#order").val()=="3"){
+            //            setorder('code','Asc');
+            //        }
+        else
+            if ($("#order").val()=="2"){
+                setorder('views','Desc');
+            }
     }
     function setorder(field,t) {
         order=field;
@@ -209,7 +211,9 @@
         f2=currentCat2;
         f3=currentCat3;
         f4=currentCat4;
-        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&order="+order+"&to="+to+"&pg="+pg;
+        st=$('input[name="st"]:checked').val();
+        //alert(st);
+        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&order="+order+"&to="+to+"&pg="+pg;
         window.location.href = url;
     }
     //function search() {
@@ -231,7 +235,7 @@
             minLength: 1
         });
         var keyCode = e.keyCode || e.which;//('which' in event) ? event.which : event.keyCode;
-        
+
         //alert(keyCode);
         if (keyCode == 13) {
             if (keyword == "") {
@@ -242,14 +246,14 @@
             }
         }
     }
-    //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {            
+    //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {
     //    alert(data);
     //});
     $.ajax({
         url: "/Home/getAllHotKeyWord",
         cache: false
     }).done(function( html ) {
-          $( "#allhotkeyword").html(html);
+        $( "#allhotkeyword").html(html);
     });
     $.ajax({
         url: "/Home/getAllCat?id=1",
@@ -267,7 +271,7 @@
         url: "/Home/Log?keyword=@ViewBag.keyword",
         cache: false
     }).done(function( html ) {
-        
+
     });
     function searchkw(keyword) {
         var url = "/Home/Index?";
@@ -279,7 +283,7 @@
         var f2 = "";
         var f3 = "";
         var f4 = "";
-        
+
         url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
         window.location.href = url;
     }

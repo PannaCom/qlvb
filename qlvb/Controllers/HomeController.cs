@@ -32,7 +32,7 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
-        public ActionResult Index(string k, string f1, string f2, string f3, string f4, string order, string to, int? pg)
+        public ActionResult Index(string k, string f1, string f2, string f3, string f4,int? st,string order, string to, int? pg)
         {
             //try
             //{
@@ -42,6 +42,7 @@ namespace qlvb.Controllers
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
+                    if (st == null) st = 0;
 
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
@@ -68,19 +69,26 @@ namespace qlvb.Controllers
                         }
                     }
                     query += ") as A ";
-                    if (k != null && (k.Contains("/") || k.Contains("-")))
+                    if (k != null && st==3)
                     {
                         query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                    } else
+                    {
+                        if (k != null && (st==1))
+                        {
+                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                        }
                     }
                     if (order == null || order == "") order = "RANK";
                     query += " order by " + order;
                     if (to == null || to == "") to = "Desc";
                     query += " " + to;
-                    
+                   
                     ViewBag.f1 = f1;
                     ViewBag.f2 = f2;
                     ViewBag.f3 = f3;
                     ViewBag.f4 = f4;
+                    ViewBag.st = st;
                     try
                     {
                         string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
@@ -181,7 +189,7 @@ namespace qlvb.Controllers
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
-
+                    if (st == null) st = 0;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
