@@ -24,6 +24,7 @@ namespace qlvb.Controllers
             public int cat4_id { get; set; }
             public int views { get; set; }
             public int RANK { get; set; }
+            public byte? status { get; set; }
 
         }
         public class catitem
@@ -32,7 +33,7 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
-        public ActionResult Index(string k, string f1, string f2, string f3, string f4,int? st,string order, string to, int? pg)
+        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to, int? pg)
         {
             //try
             //{
@@ -43,6 +44,7 @@ namespace qlvb.Controllers
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
+                    if (status == null) status = 2;
 
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
@@ -55,7 +57,7 @@ namespace qlvb.Controllers
                     query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
                     query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                     query += "ELSE KEY_TBL.RANK ";
-                    query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                     query += " where (RANK>"+Config.minRank+") ";
 
                     string[] item = new string[10];
@@ -68,16 +70,73 @@ namespace qlvb.Controllers
                             query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
                         }
                     }
+                    if (status == 2) {
+                        query += " and (status=0 or status=1) ";
+                    }else
+                        if (status == 1)
+                        {
+                            query += " and (status=1) ";
+                        }
+                        else
+                            if (status == 0)
+                            {
+                                query += " and (status=0) ";
+                            }
                     query += ") as A ";
-                    if (k != null && st==3)
+                    if (k != null && st==2)
                     {
-                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query += "WHEN 7 THEN " + Config.heso1 + " ";
+                        query += "WHEN 18 THEN " + Config.heso2 + " ";
+                        query += "WHEN 15 THEN " + Config.heso3 + " ";
+                        query += "WHEN 5 THEN " + Config.heso4 + " ";
+                        query += "WHEN 23 THEN " + Config.heso5 + " ";
+                        query += "WHEN 6 THEN " + Config.heso6 + " ";
+                        query += "ELSE 0 ";
+                        query += "END,status from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                        if (status == 2)
+                        {
+                            query += " and (status=0 or status=1) ";
+                        }
+                        else
+                            if (status == 1)
+                            {
+                                query += " and (status=1) ";
+                            }
+                            else
+                                if (status == 0)
+                                {
+                                    query += " and (status=0) ";
+                                }
                     } else
                     {
                         if (k != null && (st==1))
                         {
-                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,0 as rank from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
                         }
+
                     }
                     if (order == null || order == "") order = "RANK";
                     query += " order by " + order;
@@ -89,6 +148,7 @@ namespace qlvb.Controllers
                     ViewBag.f3 = f3;
                     ViewBag.f4 = f4;
                     ViewBag.st = st;
+                    ViewBag.status = status;
                     try
                     {
                         string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
@@ -189,11 +249,16 @@ namespace qlvb.Controllers
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
-                    if (st == null) st = 0;
+                    if (st == null) st = 0;                   
+                    if (status == null) status = 2;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
-                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views, 0 as Rank FROM documents ";
+                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views, 0 as rank FROM documents ";
+                    //if (order == null || order == "") order = "rank";
+                    //query += " order by " + order;
+                    //if (to == null || to == "") to = "Desc";
+                    //query += " " + to;
                     query += " order by  views desc";
                     //string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
                     //for (int f = 0; f < filter.Length; f++)
@@ -214,6 +279,8 @@ namespace qlvb.Controllers
                     ViewBag.f2 = f2;
                     ViewBag.f3 = f3;
                     ViewBag.f4 = f4;
+                    ViewBag.st = st;
+                    ViewBag.status = status;
 
                     ViewBag.page = pg;
                     ViewBag.order = order;

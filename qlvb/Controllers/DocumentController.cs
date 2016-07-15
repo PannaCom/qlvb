@@ -408,7 +408,7 @@ namespace qlvb.Controllers
         {
             return View();
         }
-        public ActionResult Details(int id,string keyword)
+        public ActionResult Details(int id,string keyword,string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to)
         {
             document document = db.documents.Find(id);
             if (document == null)
@@ -418,11 +418,20 @@ namespace qlvb.Controllers
             db.Database.ExecuteSqlCommand("update documents set views=views+1 where id=" + id);
             if (keyword == null) keyword = "";
             ViewBag.keyword = keyword;
+            ViewBag.f1 = f1;
+            ViewBag.f2 = f2;
+            ViewBag.f3 = f3;
+            ViewBag.f4 = f4;
+            ViewBag.st = st;
+            ViewBag.status = status;
+            ViewBag.order = order;
+            ViewBag.to = to;
             //if (keyword!="" && keyword!=null)
             try
             {
                 var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
                 ViewBag.chd = p;
+                ViewBag.tree = Config.showTree(id, keyword, f1, f2, f3, f4, st, status, order, to);
             }
             catch (Exception ex) { }
             return View(document);

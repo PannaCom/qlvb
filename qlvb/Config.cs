@@ -853,5 +853,145 @@ namespace qlvb
                 return DateTime.MinValue;
             }
         }
+        public class searchitem2
+        {
+            //FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id, FT_TBL.views, KEY_TBL.RANK
+            public int id { get; set; }
+            public string name { get; set; }
+            public string code { get; set; }
+            public int cat1_id { get; set; }
+            public int cat2_id { get; set; }
+            public int cat3_id { get; set; }
+            public int cat4_id { get; set; }
+            public int views { get; set; }
+            public int RANK { get; set; }
+            public byte? status { get; set; }
+
+        }
+        public static string showTree(int id,string k, string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to)
+        {
+            string rs = "";
+            try
+            {
+                if (k != null && k != "")
+                {
+                    k = k.Replace("%20", " ");
+                    f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
+                    f4 = f4 != null ? f4 : "";
+                    if (st == null) st = 0;
+                    if (status == null) status = 2;
+
+                    string query = "select * from (SELECT top 10 ";
+                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
+                    query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                    query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                    query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                    query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                    query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                    query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
+                    query += "ELSE KEY_TBL.RANK ";
+                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += " where (RANK>" + Config.minRank + ") ";
+
+                    string[] item = new string[10];
+                    int i = 0;
+                    string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
+                    for (int f = 0; f < filter.Length; f++)
+                    {
+                        if (filter[f] != null && filter[f] != "")
+                        {
+                            query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                        }
+                    }
+                    if (status == 2)
+                    {
+                        query += " and (status=0 or status=1) ";
+                    }
+                    else
+                        if (status == 1)
+                        {
+                            query += " and (status=1) ";
+                        }
+                        else
+                            if (status == 0)
+                            {
+                                query += " and (status=0) ";
+                            }
+                    query += ") as A ";
+                    if (k != null && st == 2)
+                    {
+                        query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query += "WHEN 7 THEN " + Config.heso1 + " ";
+                        query += "WHEN 18 THEN " + Config.heso2 + " ";
+                        query += "WHEN 15 THEN " + Config.heso3 + " ";
+                        query += "WHEN 5 THEN " + Config.heso4 + " ";
+                        query += "WHEN 23 THEN " + Config.heso5 + " ";
+                        query += "WHEN 6 THEN " + Config.heso6 + " ";
+                        query += "ELSE 0 ";
+                        query += "END,status from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                        if (status == 2)
+                        {
+                            query += " and (status=0 or status=1) ";
+                        }
+                        else
+                            if (status == 1)
+                            {
+                                query += " and (status=1) ";
+                            }
+                            else
+                                if (status == 0)
+                                {
+                                    query += " and (status=0) ";
+                                }
+                    }
+                    else
+                    {
+                        if (k != null && (st == 1))
+                        {
+                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
+                        }
+
+                    }
+                    if (order == null || order == "") order = "RANK";
+                    query += " order by " + order;
+                    if (to == null || to == "") to = "Desc";
+                    query += " " + to;
+                    rs="<ul id=\"treemenu2\" class=\"treeview\">";
+                    var p = db.Database.SqlQuery<searchitem2>(query).ToList();
+                    for (int j = 0; j < p.Count; j++)
+                    {
+                        rs += "<li>" + p[j].name + "-" + p[j].code + "</li>";
+                    }
+                    rs += "</ul>";
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return rs;
+        }
     }
 }
