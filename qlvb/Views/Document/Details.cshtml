@@ -7,8 +7,8 @@
     var activieTab = "in active";
     var activieCs = "class=active";
 }
-<script type="text/javascript" src="/Content/tree/simpletreemenu.js"></script>
-<link rel="stylesheet" type="text/css" href="/Content/tree/simpletree.css" />
+@*<script type="text/javascript" src="/Content/tree/simpletreemenu.js"></script>
+<link rel="stylesheet" type="text/css" href="/Content/tree/simpletree.css" />*@
 <style>
     table tr {
         border-bottom: 1px dotted #ccc;
@@ -72,9 +72,9 @@
     <div class="tab-content">
             <div class="tab-pane fade" id="tree">
                 @Html.Raw(@ViewBag.tree)
-                <script type="text/javascript">
+                @*<script type="text/javascript">
                     ddtreemenu.createTree("treemenu2", true);
-                </script>
+                </script>*@
             </div>
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
@@ -86,13 +86,13 @@
                                 <td class="col-lg-9" style="background:#00ffff;">
                                     @foreach (var item in ViewBag.chd)
                                     {
-                                        if (item.item_content.Contains(ViewBag.keyword) || ViewBag.keyword=="")
-                                        {
+                                        //if (ViewBag.keyword=="")
+                                        //{
                                             <text>
                                                 <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
                                             </text>
                                             lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
-                                        }
+                                        //}
                                     }
                                     <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
                                 </td>

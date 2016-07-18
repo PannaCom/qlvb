@@ -34,12 +34,13 @@ namespace qlvb
             }
         }
         public static string showQuote(string content,string keyword){
-            if (keyword == "") return content;
+            if (keyword.Trim() == "") return content;
             string[] sen = content.Split('.');
             string rs = "";
             for (int i = 0; i < sen.Length; i++) {
-                if (sen[i].Contains(keyword)) {
-                    sen[i] = keyword != "" ? sen[i].Replace(keyword, "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
+                if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
+                {
+                    sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
                     rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
                 }
             }
@@ -978,13 +979,24 @@ namespace qlvb
                     query += " order by " + order;
                     if (to == null || to == "") to = "Desc";
                     query += " " + to;
-                    rs="<ul id=\"treemenu2\" class=\"treeview\">";
+                    rs = "";// "<ul id=\"treemenu2\" class=\"treeview\">";
                     var p = db.Database.SqlQuery<searchitem2>(query).ToList();
                     for (int j = 0; j < p.Count; j++)
                     {
-                        rs += "<li>" + p[j].name + "-" + p[j].code + "</li>";
+                        string spacer = getSpacer(p[j].cat2_id);
+                        if (p[j].id!=id){
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></div>";
+                        }
+                        else {
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></div>";
+                        }
                     }
                     rs += "</ul>";
+                }
+                else
+                {
+                    //Neu ma khong co tu khoa thi lay theo linh vuc van ban do, sap xep tu Luat--> Nghi dinh-->giam dan
+
                 }
             }
             catch (Exception ex)
@@ -993,5 +1005,27 @@ namespace qlvb
             }
             return rs;
         }
+        public static string getSpacer(int depth){
+            if (depth==7) depth=1;
+            else
+                if (depth==18) depth=2;
+            else
+                if (depth==15) depth=3;
+            else
+                if (depth==5) depth=4;
+            else
+                if (depth==23) depth=5;
+            else
+                if (depth==6) depth=6;
+            else
+                depth=7;
+           
+            string spacer="<img src=\"/Images/spacer.gif\" width=16>";
+            for (var j = 0; j <depth; j++) {
+                            spacer+="<img src=\"/Images/spacer.gif\" width=16>";
+            }
+            return spacer;
+        }
     }
+    
 }
