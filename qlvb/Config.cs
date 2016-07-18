@@ -980,10 +980,17 @@ namespace qlvb
                     if (to == null || to == "") to = "Desc";
                     query += " " + to;
                     rs = "";// "<ul id=\"treemenu2\" class=\"treeview\">";
+                    int? preCatId = -1;
                     var p = db.Database.SqlQuery<searchitem2>(query).ToList();
                     for (int j = 0; j < p.Count; j++)
                     {
                         string spacer = getSpacer(p[j].cat2_id);
+                        if (p[j].cat2_id != preCatId)
+                        {
+                            //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id) + "</div>";
+                            preCatId = p[j].cat2_id;
+                        }
                         if (p[j].id!=id){
                             rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></div>";
                         }
@@ -991,12 +998,44 @@ namespace qlvb
                             rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></div>";
                         }
                     }
-                    rs += "</ul>";
+                    //rs += "</ul>";
                 }
                 else
                 {
                     //Neu ma khong co tu khoa thi lay theo linh vuc van ban do, sap xep tu Luat--> Nghi dinh-->giam dan
-
+                    int? cat1_id = db.documents.Find(id).cat1_id;
+                    string query2 = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK,status from ";
+                    query2 += " (select id,code,name,cat1_id,cat2_id,cat3_id,cat4_id,views,status from documents) as A left join ";
+                    query2 += " (select name as cat1,id as idcat1 from cat1) as B on A.cat1_id=B.idcat1 left join ";
+                    query2 += "(select name as cat2,id as idcat2,no as RANK  from cat2) as C on A.cat2_id=C.idcat2 left join ";
+                    query2 += "(select name as cat4,id as idcat4 from cat4) as D on A.cat4_id=D.idcat4 where 1=1 ";
+                    if (cat1_id != null) query2 += " and cat1_id=" + cat1_id;
+                    if (order == null || order == "") order = "Rank";
+                    query2 += " order by " + order;
+                    if (to == null || to == "") to = "desc";
+                    query2 += " " + to;
+                    rs = "";// "<ul id=\"treemenu2\" class=\"treeview\">";
+                    int? preCatId = -1;
+                    var p2 = db.Database.SqlQuery<searchitem2>(query2).ToList();
+                    for (int j = 0; j < p2.Count; j++)
+                    {
+                        string spacer = getSpacer(p2[j].cat2_id);
+                        if (p2[j].cat2_id != preCatId)
+                        {
+                            //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p2[j].cat2_id) + "</div>";
+                            preCatId = p2[j].cat2_id;
+                        }
+                        if (p2[j].id != id)
+                        {
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></div>";
+                        }
+                        else
+                        {
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></div>";
+                        }
+                    }
+                    //rs += "</ul>";
                 }
             }
             catch (Exception ex)
