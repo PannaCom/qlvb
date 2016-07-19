@@ -864,7 +864,7 @@ namespace qlvb
             public int cat2_id { get; set; }
             public int cat3_id { get; set; }
             public int cat4_id { get; set; }
-            public int views { get; set; }
+            public int? views { get; set; }
             public int RANK { get; set; }
             public byte? status { get; set; }
 
@@ -988,7 +988,7 @@ namespace qlvb
                         if (p[j].cat2_id != preCatId)
                         {
                             //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id) + "</div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p[j].cat2_id) + "</b></div>";
                             preCatId = p[j].cat2_id;
                         }
                         if (p[j].id!=id){
@@ -1004,11 +1004,15 @@ namespace qlvb
                 {
                     //Neu ma khong co tu khoa thi lay theo linh vuc van ban do, sap xep tu Luat--> Nghi dinh-->giam dan
                     int? cat1_id = db.documents.Find(id).cat1_id;
-                    string query2 = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK,status from ";
-                    query2 += " (select id,code,name,cat1_id,cat2_id,cat3_id,cat4_id,views,status from documents) as A left join ";
-                    query2 += " (select name as cat1,id as idcat1 from cat1) as B on A.cat1_id=B.idcat1 left join ";
-                    query2 += "(select name as cat2,id as idcat2,no as RANK  from cat2) as C on A.cat2_id=C.idcat2 left join ";
-                    query2 += "(select name as cat4,id as idcat4 from cat4) as D on A.cat4_id=D.idcat4 where 1=1 ";
+                    string query2 = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query2 += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query2 += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query2 += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query2 += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query2 += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query2 += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query2 += "ELSE 0 ";
+                            query2 += "END,status from documents where 1=1 ";
                     if (cat1_id != null) query2 += " and cat1_id=" + cat1_id;
                     if (order == null || order == "") order = "Rank";
                     query2 += " order by " + order;
@@ -1023,7 +1027,7 @@ namespace qlvb
                         if (p2[j].cat2_id != preCatId)
                         {
                             //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p2[j].cat2_id) + "</div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p2[j].cat2_id) + "</b></div>";
                             preCatId = p2[j].cat2_id;
                         }
                         if (p2[j].id != id)
