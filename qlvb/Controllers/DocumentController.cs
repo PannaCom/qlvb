@@ -436,10 +436,18 @@ namespace qlvb.Controllers
             catch (Exception ex) { }
             return View(document);
         }
-
+        public ActionResult Items(int id)
+        {
+            document_items chd = db.document_items.Find(id);
+            return View(chd);
+        }
         //
         // GET: /Document/Create
-
+        public string getCHD(int id)
+        {
+            document_items chd = db.document_items.Find(id);
+            return chd.item_content;
+        }
         public ActionResult Create(int? id)
         {
             if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");

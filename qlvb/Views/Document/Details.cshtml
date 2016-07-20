@@ -89,9 +89,12 @@
                                         //if (ViewBag.keyword=="")
                                         //{
                                             <text>
-                                                <p style="width:100%;text-align:left;" id="@item.item_id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                                <p style="width:100%;text-align:left;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                                @if (ViewBag.keyword != "") { 
+                                                    <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
+                                                }
                                             </text>
-                                            lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                                        lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
                                         //}
                                     }
                                     <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
@@ -166,7 +169,10 @@
         </div>
     </div>
 </div>
-            
+<div id=dvchditems style="width:100%;display:block;float:left;position:fixed;top:10px;left:0px;background-color:#8f873b;color:#ffd800;z-index:2001;text-align:center;display:none;">
+        <div id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></div>
+        <input type="button" value="Đóng lại" onclick="$('#dvchditems').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;" />
+</div>             
             <script>
                 function show(id) {
                     $("#" + id).show();
@@ -214,5 +220,14 @@
                     });
 
                 });
-
+                function viewchd(id) {
+                    $('#dvchditems').show();
+                    $("#chditems").html("<img src='/images/loading.gif'>");
+                    $.ajax({
+                        url: "/Document/getCHD?id="+id,
+                        cache: false
+                    }).done(function (html) {
+                        $( "#chditems").html(html);
+                    });
+                }
             </script>
