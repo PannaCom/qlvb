@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Items";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
 }
-
+<div id="tf-services" style="width:100%;padding:0 0 0 0;margin:0 0 0 0;">
+    <div class="container">
+        @Html.Raw(@Model.item_content)
+    </div>
+</div>
