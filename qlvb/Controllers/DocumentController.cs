@@ -446,7 +446,7 @@ namespace qlvb.Controllers
         public string getCHD(int id)
         {
             document_items chd = db.document_items.Find(id);
-            return chd.item_content;
+            return chd.item_content.Replace("\t", " ").Replace("\r\n", "<br>");
         }
         public ActionResult Create(int? id)
         {

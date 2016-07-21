@@ -82,7 +82,7 @@
            
                         <table style="width:100%;text-align:left;">
                             <tr>
-                                <td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow: scroll;"></td>
+                                <td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow:scroll;"></td>
                                 <td class="col-lg-9" style="background:#00ffff;">
                                     @foreach (var item in ViewBag.chd)
                                     {
@@ -169,8 +169,8 @@
         </div>
     </div>
 </div>
-<div id=dvchditems style="width:100%;display:block;float:left;position:fixed;top:10px;left:0;background-color:#8f873b;color:#ffd800;z-index:2001;text-align:center;display:none;">
-        <div id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></div>
+<div id=dvchditems style="width:50%;display:block;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
+        <div id=chditems class="col-lg-3" valign="top" style="width:100%;height:500px;background:#ffffff;color:#000000;text-align:left;overflow:scroll;border:2px solid #0094ff;"></div>
         @*<iframe id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></iframe>*@
         <input type="button" value="Đóng lại" onclick="$('#dvchditems').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;" />
 </div>             
@@ -222,18 +222,20 @@
 
                 });
                 function viewchd(id) {
-                    $('#dvchditems').show();
+                     $('#dvchditems').show();
                     //$("#chditems").attr("src","/Document/Items/"+id);
-                    $("#chditems").html("<img src='/images/loading.gif'>");
+                     $("#chditems").html("<img src='/images/loading.gif'>");
                     $.ajax({
                         url: "/Document/getCHD?id="+id,
                         cache: false
                     }).done(function (html) {
                         //html = html.replace(/\s\s/g, " ");
-                        //html = html.replace(/  /g, " ");
-                        html = html.replace('\r\n', "<br>");
+                        //html = html.replace(/	/g, "");
+                        //html = html.replace('\r\n', "<br>");
+                        //$('#dvchditems').hide();
                         //alert(html);
                         $( "#chditems").html(html);
+                       
                     });
                 }
             </script>
