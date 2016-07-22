@@ -6,6 +6,11 @@ using System.Web.Mvc;
 using qlvb.Models;
 using PagedList;
 using Newtonsoft.Json;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using System.Text;
+using System.IO;
+using System.Data;
 
 namespace qlvb.Controllers
 {
@@ -301,6 +306,62 @@ namespace qlvb.Controllers
             public string item_id { get; set; }
             public int? ch { get; set; }
             public int? d { get; set; }
+        }
+        public string readAll() {
+            if (Config.isRunning) return "Running";
+            Config.isRunning = true;
+            string content = "";
+            StringBuilder sb = new StringBuilder();
+            WordprocessingDocument wordprocessingDocument = null;
+            int minId=int.MinValue;
+            if (System.IO.File.Exists(HttpContext.Server.MapPath("../") + "/minId.txt"))
+            {
+                StreamReader sr = new StreamReader(HttpContext.Server.MapPath("../") + "/minId.txt");
+                minId=int.Parse(sr.ReadLine());
+                sr.Close();
+            }
+            var p = db.documents.Where(o => o.id > minId).ToList();
+            for (int i = 0; i < p.Count;i++){
+                content = "";
+                string fullPath = HttpContext.Server.MapPath("../Files/" + p[i].link);
+                try { 
+                    wordprocessingDocument = WordprocessingDocument.Open(fullPath, true);
+                    sb = new StringBuilder();
+                    OpenXmlElement element = wordprocessingDocument.MainDocumentPart.Document.Body;
+                    if (element == null)
+                    {
+                        content = string.Empty;
+                    }
+                    sb.Append(Config.GetPlainText(element));
+                    content = sb.ToString();
+                    content = content.Replace("\t", "\r\n");
+                    content = content.Replace("\r\n\r\n", "\r\n");
+                }
+                catch (Exception ex2222)
+                {
+
+                }
+                wordprocessingDocument = null;
+                if (content == "") continue;
+                try { 
+                    //db.Database.ExecuteSqlCommand("update documents set full_content=N'" + content + "' where id=" + p[i].id);
+                    document dt = db.documents.Find(p[i].id);
+                    dt.full_content = content;
+                    db.Entry(dt).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception exqss)
+                {
+                    StreamWriter sw2 = new StreamWriter(HttpContext.Server.MapPath("../") + "/error.txt");
+                    sw2.WriteLine(content);
+                    sw2.Close();
+                }
+                StreamWriter sw = new StreamWriter(HttpContext.Server.MapPath("../") + "/minId.txt");
+                sw.WriteLine(p[i].id.ToString());
+                sw.Close();
+            }
+            Config.isRunning = false;
+            return "ok";
         }
         public string updateDatabase()
         {

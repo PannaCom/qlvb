@@ -550,6 +550,7 @@ namespace qlvb.Controllers
         {
             //Array test = Config.getCat2();
             //return "";
+
             string physicalPath = HttpContext.Server.MapPath("../Files/");
             string nameFile = String.Format("{0}", Config.removeSpecialChar(Request.Files[0].FileName.Replace(" ", "_")));//Guid.NewGuid().ToString()
             int countFile = Request.Files.Count;
