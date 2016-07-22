@@ -23,6 +23,7 @@ namespace qlvb
         public static int heso4 = 10;
         public static int heso5 = 5;
         public static int heso6 = 2;
+        public static bool isRunning = false;
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
             if (allword == null || allword.Count <= 0) allword = new Hashtable(); 
