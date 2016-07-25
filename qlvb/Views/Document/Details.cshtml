@@ -94,7 +94,7 @@
                                                     <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
                                                 }
                                             </text>
-                                        lstindex += "<p>-<a href=\"#" + item.item_id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                                        lstindex += "<p>-<a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
                                         //}
                                     }
                                     <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
