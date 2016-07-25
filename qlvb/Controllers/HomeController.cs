@@ -98,7 +98,7 @@ namespace qlvb.Controllers
                         query += "WHEN 23 THEN " + Config.heso5 + " ";
                         query += "WHEN 6 THEN " + Config.heso6 + " ";
                         query += "ELSE 0 ";
-                        query += "END,status from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                        query += "END,status from documents where (code like N'" + k + "%' or code=N'" + k + "') ";
                         if (status == 2)
                         {
                             query += " and (status=0 or status=1) ";
@@ -113,6 +113,13 @@ namespace qlvb.Controllers
                                 {
                                     query += " and (status=0) ";
                                 }
+                        for (int f = 0; f < filter.Length; f++)
+                        {
+                            if (filter[f] != null && filter[f] != "")
+                            {
+                                query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                            }
+                        }
                     } else
                     {
                         if (k != null && (st==1))
@@ -125,7 +132,7 @@ namespace qlvb.Controllers
                             query += "WHEN 23 THEN " + Config.heso5 + " ";
                             query += "WHEN 6 THEN " + Config.heso6 + " ";
                             query += "ELSE 0 ";
-                            query += "END,status from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                            query += "END,status from documents where (name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%') ";
                             if (status == 2)
                             {
                                 query += " and (status=0 or status=1) ";
@@ -140,6 +147,46 @@ namespace qlvb.Controllers
                                     {
                                         query += " and (status=0) ";
                                     }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
+                        }
+                        if (k != null && (st == 4))
+                        {
+                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where (full_content like N'" + k + "%' or  full_content like N'%" + k + "%') ";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
                         }
 
                     }
@@ -173,7 +220,7 @@ namespace qlvb.Controllers
                                 color = "";
                                 if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
                                 else if (cat1[jj].total > 0) color = "color:blue;";
-                                scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
+                                scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name+"</a>,";// + "(" + cat1[jj].total + ")
                             }
                         }
                         catch (Exception exc1) { 
@@ -189,7 +236,7 @@ namespace qlvb.Controllers
                                 color = "";
                                 if (cat2[jj].catid.ToString() == f2) color = "color:red;font-weight:bold;";
                                 else if (cat2[jj].total > 0) color = "color:blue;";
-                                scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "(" + cat2[jj].total + ")</a>,";
+                                scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "</a>,";//"(" + cat2[jj].total + 
                             }
                         }
                         catch (Exception exc2)
@@ -224,8 +271,8 @@ namespace qlvb.Controllers
                                 if (cat4[jj].catid.ToString() == f4)
                                     color = "color:red;font-weight:bold;";
                                 else if (cat4[jj].total > 0) color = "color:blue;";
-                                
-                                scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "(" + cat4[jj].total + ")</a>,";
+
+                                scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "</a>,";//"(" + cat4[jj].total + 
                             }
                         }
                         catch (Exception exc4)
@@ -307,6 +354,7 @@ namespace qlvb.Controllers
             public int? ch { get; set; }
             public int? d { get; set; }
         }
+        
         public string readAll() {
             if (Config.isRunning) return "Running";
             Config.isRunning = true;

@@ -564,6 +564,7 @@ namespace qlvb.Controllers
             string type_document="";
             string publish = "";
             string people_sign = "";//trả về người ký văn bản
+            string full_content = "";
             for (int i = 0; i < countFile; i++)
             {
                 if (System.IO.File.Exists(fullPath))
@@ -597,7 +598,8 @@ namespace qlvb.Controllers
                     sb.Append(Config.GetPlainText(element));
                     content=sb.ToString();
                     content = content.Replace("\t", "\r\n");
-                    content = content.Replace("\r\n\r\n", "\r\n");                    
+                    content = content.Replace("\r\n\r\n", "\r\n");
+                    full_content = content;
                     Config.loadDic();
                     title = Config.getTitle(content).Replace("\n"," ").Trim();
                     p1 = Config.getP1(title);
@@ -729,6 +731,7 @@ namespace qlvb.Controllers
                     //        }
                     //    }
                     //}
+                    readFull(link, doc.id);
                     return doc.id.ToString();
                 }
                 else
@@ -767,6 +770,7 @@ namespace qlvb.Controllers
                     doc.full_content = null;
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
+                    readFull(link, id);
                     return id.ToString();
                 }
             }
@@ -774,6 +778,47 @@ namespace qlvb.Controllers
                     return "0";
             }
             return "0";
+        }
+        public void readFull(string link,int id)
+        {
+
+            string content = "";
+            StringBuilder sb = new StringBuilder();
+            WordprocessingDocument wordprocessingDocument = null;
+                content = "";
+                string fullPath = HttpContext.Server.MapPath("../Files/" + link);
+                try
+                {
+                    wordprocessingDocument = WordprocessingDocument.Open(fullPath, true);
+                    sb = new StringBuilder();
+                    OpenXmlElement element = wordprocessingDocument.MainDocumentPart.Document.Body;
+                    if (element == null)
+                    {
+                        content = string.Empty;
+                    }
+                    sb.Append(Config.GetPlainText(element));
+                    content = sb.ToString();
+                    content = content.Replace("\t", "\r\n");
+                    content = content.Replace("\r\n\r\n", "\r\n");
+                }
+                catch (Exception ex2222)
+                {
+
+                }
+                wordprocessingDocument = null;
+                if (content == "") return;
+                try
+                {
+                    //db.Database.ExecuteSqlCommand("update documents set full_content=N'" + content + "' where id=" + p[i].id);
+                    document dt = db.documents.Find(id);
+                    dt.full_content = content;
+                    db.Entry(dt).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception exqss)
+                {
+                }
+            
         }
         //
         // GET: /Document/Delete/5
