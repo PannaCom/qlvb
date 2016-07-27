@@ -38,10 +38,14 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
-        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to, int? pg)
+        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status,byte? tps,string order, string to, int? pg)
         {
             //try
             //{
+                if (tps == 2) { 
+                    string tempf1 = Config.getMaxCat1(k);
+                    if (tempf1 != "" && tps == 2) f1 = tempf1;
+                }
                 if (k != null && k.Trim() != "")
                 {
                     k = k.Replace("%20", " ");
@@ -50,7 +54,7 @@ namespace qlvb.Controllers
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
                     if (status == null) status = 2;
-
+                    if (tps == null) tps = 2;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "select * from (SELECT top 30 ";
@@ -90,7 +94,7 @@ namespace qlvb.Controllers
                     query += ") as A ";
                     if (k != null && st==2)
                     {
-                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -98,7 +102,7 @@ namespace qlvb.Controllers
                         query += "WHEN 23 THEN " + Config.heso5 + " ";
                         query += "WHEN 6 THEN " + Config.heso6 + " ";
                         query += "ELSE 0 ";
-                        query += "END,status from documents where (code like N'" + k + "%' or code=N'" + k + "') ";
+                        query += "END,status from documents where (code like N'" + k + "%' or code=N'" + k + "' or code like N'%" + k + "' or code like N'%" + k + "%') ";
                         if (status == 2)
                         {
                             query += " and (status=0 or status=1) ";
@@ -124,7 +128,7 @@ namespace qlvb.Controllers
                     {
                         if (k != null && (st==1))
                         {
-                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -132,7 +136,7 @@ namespace qlvb.Controllers
                             query += "WHEN 23 THEN " + Config.heso5 + " ";
                             query += "WHEN 6 THEN " + Config.heso6 + " ";
                             query += "ELSE 0 ";
-                            query += "END,status from documents where (name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%') ";
+                            query += "END,status from documents where (name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%') ";
                             if (status == 2)
                             {
                                 query += " and (status=0 or status=1) ";
@@ -157,7 +161,7 @@ namespace qlvb.Controllers
                         }
                         if (k != null && (st == 4))
                         {
-                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -165,7 +169,7 @@ namespace qlvb.Controllers
                             query += "WHEN 23 THEN " + Config.heso5 + " ";
                             query += "WHEN 6 THEN " + Config.heso6 + " ";
                             query += "ELSE 0 ";
-                            query += "END,status from documents where (full_content like N'" + k + "%' or  full_content like N'%" + k + "%') ";
+                            query += "END,status from documents where (full_content like N'" + k + "%' or  full_content like N'%" + k.Replace(" ","%") + "%') ";
                             if (status == 2)
                             {
                                 query += " and (status=0 or status=1) ";
@@ -201,6 +205,7 @@ namespace qlvb.Controllers
                     ViewBag.f4 = f4;
                     ViewBag.st = st;
                     ViewBag.status = status;
+                    ViewBag.tps = tps;
                     try
                     {
                         string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
@@ -303,6 +308,7 @@ namespace qlvb.Controllers
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;                   
                     if (status == null) status = 2;
+                    if (tps == null) tps = 2;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
@@ -333,7 +339,7 @@ namespace qlvb.Controllers
                     ViewBag.f4 = f4;
                     ViewBag.st = st;
                     ViewBag.status = status;
-
+                    ViewBag.tps = tps;
                     ViewBag.page = pg;
                     ViewBag.order = order;
                     ViewBag.to = to;

@@ -878,12 +878,13 @@ namespace qlvb
                 if (k != null && k != "")
                 {
                     k = k.Replace("%20", " ");
+
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
                     if (status == null) status = 2;
-
-                    string query = "select * from (SELECT top 10 ";
+                   
+                    string query = "select * from (SELECT top 30 ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -930,7 +931,7 @@ namespace qlvb
                         query += "WHEN 23 THEN " + Config.heso5 + " ";
                         query += "WHEN 6 THEN " + Config.heso6 + " ";
                         query += "ELSE 0 ";
-                        query += "END,status from documents where code like N'" + k + "%' or code=N'" + k + "'";
+                        query += "END,status from documents where (code like N'" + k + "%' or code=N'" + k + "' or code=N'%" + k + "' or code like N'%" + k + "%') ";
                         if (status == 2)
                         {
                             query += " and (status=0 or status=1) ";
@@ -945,6 +946,13 @@ namespace qlvb
                                 {
                                     query += " and (status=0) ";
                                 }
+                        for (int f = 0; f < filter.Length; f++)
+                        {
+                            if (filter[f] != null && filter[f] != "")
+                            {
+                                query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                            }
+                        }
                     }
                     else
                     {
@@ -958,7 +966,7 @@ namespace qlvb
                             query += "WHEN 23 THEN " + Config.heso5 + " ";
                             query += "WHEN 6 THEN " + Config.heso6 + " ";
                             query += "ELSE 0 ";
-                            query += "END,status from documents where name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "%'";
+                            query += "END,status from documents where (name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%') ";
                             if (status == 2)
                             {
                                 query += " and (status=0 or status=1) ";
@@ -973,6 +981,46 @@ namespace qlvb
                                     {
                                         query += " and (status=0) ";
                                     }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
+                        }
+                        if (k != null && (st == 4))
+                        {
+                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where (full_content like N'" + k + "%' or  full_content like N'%" + k.Replace(" ", "%") + "%') ";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
                         }
 
                     }
@@ -1069,6 +1117,26 @@ namespace qlvb
                             spacer+="<img src=\"/Images/spacer.gif\" width=16>";
             }
             return spacer;
+        }
+        public class getMaxCat
+        {
+            public int name { get; set; }
+            public int count{get;set;}
+        }
+        public static string getMaxCat1(string k)
+        {
+            try
+            {
+                string query = "select cat1_id as name,count(*) as count from documents where ";
+                query += " (code like N'" + k + "%' or code=N'" + k + "' or code like N'%" + k + "' or code like N'%" + k + "%' or auto_des like N'" + k + "%' or auto_des like N'%" + k + "' or auto_des like N'%" + k + "%' or name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%' or full_content like N'" + k + "%' or  full_content like N'%" + k + "%') ";
+                query += " group by cat1_id order by count desc";
+                var p = db.Database.SqlQuery<getMaxCat>(query).FirstOrDefault();
+                if (p.count > 0) return p.name.ToString();
+            }
+            catch (Exception ex) { 
+
+            }
+            return "";
         }
     }
     
