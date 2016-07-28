@@ -157,11 +157,11 @@
                     <td class="label">Cơ quan ban hành :</td>
                     <td>@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
                     <td class="label">Ngày ban hành :</td>
-                    <td>@Model.date_publish</td>
+                    <td>@qlvb.Config.formatDDMMYYYY(@Model.date_publish)</td>
                 </tr>
                 <tr>
                     <td class="label">Ngày có hiệu lực :</td>
-                    <td>@Model.date_start</td>
+                    <td>@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
                     <td class="label">Còn hiệu lực? :</td>
                     <td>@Model.year</td>
                 </tr>

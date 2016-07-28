@@ -486,43 +486,45 @@ namespace qlvb.Controllers
             public int id { get; set; }
         }
         public string getDoc(string keyword) {
-            if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
-            {
+            //if (keyword != null && (keyword.Contains("/") || keyword.Contains("-")))
+            //{
                 //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.code).Take(20);
                 string query = "select * from (SELECT top 10 ";
-                query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
-                query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
-                query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
-                query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
-                query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
-                query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
-                query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
-                query += "ELSE KEY_TBL.RANK ";
-                query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += " where RANK>0) as A order by Rank Desc";
-                query = "select code+name as value,id from documents where code like N'" + keyword + "%'";
-                 var p = db.Database.SqlQuery<search>(query);
-                return JsonConvert.SerializeObject(p.ToList());
-            }
-            else
-            {
-                //Sẽ thay bằng search fulltext
-                //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
-                //return JsonConvert.SerializeObject(p.ToList());
-                string query = "select * from (SELECT top 10 ";
-                query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
-                query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
-                query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
-                query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
-                query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
-                query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
-                query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
-                query += "ELSE KEY_TBL.RANK ";
-                query += "END  FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
-                query += " where RANK>0) as A order by Rank Desc";
+                //query += "FT_TBL.code+' '+ FT_TBL.name as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
+                //query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                //query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                //query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                //query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                //query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                //query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
+                //query += "ELSE KEY_TBL.RANK ";
+                //query += "END FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                //query += " where RANK>0) as A order by Rank Desc";
+                //query = "select code+name as value,id from documents where code like N'" + keyword + "%'";
+                // var p = db.Database.SqlQuery<search>(query);
+                query = "select top 10 FT_TBL.word as value,KEY_TBL.RANK as id from log AS FT_TBL INNER JOIN FREETEXTTABLE(log, word,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] order by Rank Desc";
                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
-            }
+            //}
+            //else
+            //{
+            //    //Sẽ thay bằng search fulltext
+            //    //var p = (from q in db.documents where q.auto_des.Contains(keyword) select q.name).Take(20);
+            //    //return JsonConvert.SerializeObject(p.ToList());
+            //    string query = "select * from (SELECT top 10 ";
+            //    query += "FT_TBL.name +' ' +FT_TBL.code as value,FT_TBL.id,RANK=CASE FT_TBL.cat2_id ";
+            //    query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+            //    query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+            //    query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+            //    query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+            //    query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+            //    query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
+            //    query += "ELSE KEY_TBL.RANK ";
+            //    query += "END  FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+            //    query += " where RANK>0) as A order by Rank Desc";
+            //    var p = db.Database.SqlQuery<search>(query);
+            //    return JsonConvert.SerializeObject(p.ToList());
+            //}
         }
         public string getDocByCode(string code) {
             var p = (from q in db.documents where q.code.Contains(code) select q.code).ToList();

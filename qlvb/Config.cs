@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Collections;
 using DocumentFormat.OpenXml;
+using System.Globalization;
 namespace qlvb
 {
     public class Config
@@ -1128,7 +1129,7 @@ namespace qlvb
             try
             {
                 string query = "select cat1_id as name,count(*) as count from documents where ";
-                query += " (code like N'" + k + "%' or code=N'" + k + "' or code like N'%" + k + "' or code like N'%" + k + "%' or auto_des like N'" + k + "%' or auto_des like N'%" + k + "' or auto_des like N'%" + k + "%' or name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%' or full_content like N'" + k + "%' or  full_content like N'%" + k + "%') ";
+                query += " (code like N'" + k + "%' or code=N'" + k + "' or code like N'%" + k + "' or code like N'%" + k + "%' or auto_des like N'" + k + "%' or auto_des like N'%" + k + "' or auto_des like N'%" + k + "%' or name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%' or full_content like N'" + k + "%' or  full_content like N'%" + k + "%' or  full_content like N'%" + k.Replace(" ","%") + "%') ";
                 query += " group by cat1_id order by count desc";
                 var p = db.Database.SqlQuery<getMaxCat>(query).FirstOrDefault();
                 if (p.count > 0) return p.name.ToString();
@@ -1137,6 +1138,11 @@ namespace qlvb
 
             }
             return "";
+        }
+        public static string formatDDMMYYYY(DateTime? d)
+        {
+            if (d == null) return "";
+            return String.Format("{0:dd-MM-yyyy}", d);
         }
     }
     
