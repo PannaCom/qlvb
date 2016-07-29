@@ -11,11 +11,11 @@
 
 <div id="tf-services">
     <div class="container">
-        <div style="width:100%;padding-top:30px;float:left;position:relative;">
+        <div style="width:100%;padding-top:3px;float:left;position:relative;">
             <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
             <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
         </div>
-        <div style="width:100%;padding-top:30px;float:left;position:relative;">
+        <div style="width:100%;padding-top:3px;float:left;position:relative;">
             <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Kiểu tìm: <input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</div>
             <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</div>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
             <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Còn hiệu lực: <input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</div>
@@ -42,8 +42,8 @@
                 }
             </section>
         </div>
-        <div style="width:100%;padding-top:30px;">
-            <div style="width:100%;padding-top:30px;">
+        <div style="width:100%;padding-top:3px;">
+            <div style="width:100%;padding-top:3px;">
                 <div class="span9">
                     @if (ViewBag.keyword != "")
                     {
@@ -53,7 +53,7 @@
                     {
                         <text> <h2>Xem nhiều nhất</h2></text>
                     }
-
+                    &nbsp;<a href="/Document/Create">Thêm Mới Văn Bản<img src="~/Images/create.png"/></a>
                 </div><div class="span4">
                     @if (ViewBag.keyword != "")
                     {

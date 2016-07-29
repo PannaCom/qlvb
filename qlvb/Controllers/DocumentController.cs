@@ -502,7 +502,7 @@ namespace qlvb.Controllers
                 //query += " where RANK>0) as A order by Rank Desc";
                 //query = "select code+name as value,id from documents where code like N'" + keyword + "%'";
                 // var p = db.Database.SqlQuery<search>(query);
-                query = "select top 10 FT_TBL.word as value,KEY_TBL.RANK as id from log AS FT_TBL INNER JOIN FREETEXTTABLE(log, word,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] order by Rank Desc";
+                query = "select top 10 FT_TBL.word as value,KEY_TBL.RANK as id from log AS FT_TBL INNER JOIN FREETEXTTABLE(log, word,'" + keyword + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] order by Rank Desc,value";
                 var p = db.Database.SqlQuery<search>(query);
                 return JsonConvert.SerializeObject(p.ToList());
             //}
