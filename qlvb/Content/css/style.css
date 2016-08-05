@@ -1202,3 +1202,12 @@ ul.meta-tags li:last-child:after { content: ' ' }
 .scroll::-webkit-scrollbar {
     width: 12px;
 }
+ul > li {
+    margin: 1px 0 0;
+}
+ul > li {
+    position: relative;
+    display: block;
+    color:#ffffff;
+    font-size: 0;
+}

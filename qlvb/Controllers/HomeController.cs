@@ -491,8 +491,8 @@ namespace qlvb.Controllers
                     color = "";
                     //if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
                     //else if (cat1[jj].total > 0) 
-                        color = "color:blue;";
-                        scat1 += "<a class='filteritem' onclick='gotoCat(" + id + "," + cat1[jj].id + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "(" + cat1[jj].total + ")</a>,";
+                        color = "color:#ffffff;";
+                        scat1 += "<li><a class='filteritem' onclick='gotoCat(" + id + "," + cat1[jj].id + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + " (" + cat1[jj].total + ")</a></li>";
                 }
                 return scat1;
             }

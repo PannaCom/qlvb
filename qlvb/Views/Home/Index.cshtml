@@ -9,298 +9,323 @@
     string allHotKeyword = "";
 }
 
-<div id="tf-services">
-<div class="container">
-    <div style="width:100%;padding-top:30px;float:left;position:relative;">
-        <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
-        <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
+    <div class="col-sm-3">
+        <div style="background-color: #74b709;margin-top:10px;">
+                    <ul id="allcat1" style="text-align:left;padding-top:30px;"></ul>
+                    <ul id="allcat2" style="text-align:left;"></ul>
+        </div>
     </div>
-    <div style="width:100%;padding-top:30px;float:left;position:relative;">
-        <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Kiểu tìm: <input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</div>
-        <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</div>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@ 
-        <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Còn hiệu lực: <input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</div>
-    </div>
-    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-        @Html.Raw(@ViewBag.cat1)        
-    </div>
-    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-        @Html.Raw(@ViewBag.cat2)        
-    </div>
-    @*<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-        @Html.Raw(@ViewBag.cat3)        
-    </div>*@
-    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-        @Html.Raw(@ViewBag.cat4)        
-    </div>
-    <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-        <section class="refinements-summary">
-            @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != ""){
-             <b>Bộ lọc: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1,@ViewBag.f2,@ViewBag.f3,@ViewBag.f4))
-                                    
-                                    <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
-            }
-        </section>
-    </div>
-    <div style="width:100%;padding-top:30px;">
-       <div style="width:100%;padding-top:30px;"><div class="span9">
-           @if (ViewBag.keyword != "")
-           {
-                <text> <h2>Tìm thấy các văn bản</h2></text>
-           }
-           else
-           {
-               <text> <h2>Xem nhiều nhất</h2></text>
-           }
-               
-           </div><div class="span4">
-               @if (ViewBag.keyword != "")
-               {
-                    <text>Sắp xếp theo:
-                            <select id="order" onchange="chooseOder();">
-                              <option value="-1">Chọn</option>  
-                              <option value="1">Phù hợp nhất</option>
-                             @* <option value="2">Mới nhất</option>
-                              <option value="3">Cũ nhất</option>*@
-                              <option value="2">Xem nhiều nhất</option>
-                            </select>
-                    </text>
-               }
-       </div></div> 
-       <table class="table">
-        <tr>
-            <th>
-                Ký hiệu
-            </th>
-            <th>
-                Tên văn bản
-            </th>
-            <th>
-                Lĩnh vực
-            </th>
-            <th>Loại văn bản</th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td align="left">
-                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.code</a>
-                </td>
-                <td align="left" style="width:55%;">
-                    @if (item.RANK > 0 && count <= 2)
+    <div class="col-sm-9">
+            <div style="background-color:#ebee9d;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;">
+                <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ebee9d;">
+                    <h3 style="text-align:left;">Tìm kiếm văn bản</h3>
+                    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
+                    <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
+                </div>
+                <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#ebee9d;">
+                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Kiểu tìm: <input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</div>
+                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</div>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Còn hiệu lực: <input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</div>
+                </div>
+            </div>
+            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                @Html.Raw(@ViewBag.cat1)
+            </div>
+            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                @Html.Raw(@ViewBag.cat2)
+            </div>
+            @*<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                @Html.Raw(@ViewBag.cat3)
+            </div>*@
+            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                @Html.Raw(@ViewBag.cat4)
+            </div>
+            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                <section class="refinements-summary">
+                    @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
                     {
-                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                        <b>Bộ lọc: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1, @ViewBag.f2, @ViewBag.f3, @ViewBag.f4))
+
+                        <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
                     }
-                    else
-                    {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>}
-                </td>
-                <td align="left">
-                    @qlvb.Config.getCatNameById(1, @item.cat1_id)
-                </td>
-                <td align="left">
-                     @qlvb.Config.getCatNameById(2, @item.cat2_id)
-                </td>
-            </tr>
-            count++;
-            //allHotKeyword+=@item.ke
-        }
-        </table>
- <div>Trang:
-    @for (int i = 1; i <= Model.PageCount; i++)
-    {
-           <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
-    }
-</div>
-    </div>
-</div>
-</div>
-<section class="refinements-summary" style="text-align:left;"><h2>Thống kê</h2>
-    <div id="allcat1" style="text-align:left;">
-    </div>
-    <div id="allcat2" style="text-align:left;">
+                </section>
+            </div>
+            <div style="width:100%;padding-top:30px;">
+                <div style="width:100%;padding-top:30px;">
+                    <div class="span9">
+                        @if (ViewBag.keyword != "")
+                        {
+                            <text> <h2>Tìm thấy các văn bản</h2></text>
+                        }
+                        else
+                        {
+                            <text> <h2>Xem nhiều nhất</h2></text>
+                        }
 
-    </div>
-</section>
-<section class="refinements-summary" style="text-align:left;"><h2>Từ khóa nóng nhất</h2>
-<div id="allhotkeyword" style="text-align:left;">
+                    </div><div class="span4">
+                        @if (ViewBag.keyword != "")
+                        {
+                            <text>
+                                Sắp xếp theo:
+                                <select id="order" onchange="chooseOder();">
+                                    <option value="-1">Chọn</option>
+                                    <option value="1">Phù hợp nhất</option>
+                                    @* <option value="2">Mới nhất</option>
+                                    <option value="3">Cũ nhất</option>*@
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="2">Xem nhiều nhất</option>
+                                </select>
+                            </text>
+                        }
+                    </div>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Ký hiệu
+                        </th>
+                        <th>
+                            Tên văn bản
+                        </th>
+                        <th>
+                            Lĩnh vực
+                        </th>
+                        <th>Loại văn bản</th>
+                    </tr>
 
-</div>
-</section>
-<script>
-    var pg=@ViewBag.page;
-    var order="@ViewBag.order";
-    var to="@ViewBag.to";
-    var currentCat1="@ViewBag.f1";
-    var currentCat2="@ViewBag.f2";
-    var currentCat3="@ViewBag.f3";
-    var currentCat4="@ViewBag.f4";
-    var st=@ViewBag.st;
-    var status=@ViewBag.status;
-    var tps=@ViewBag.tps;
-    if (order.toString().indexOf("RANK")>=0){
-        $("#order").val(1);
-    }
-    //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Desc")>=0){
-    //    $("#order").val(2);
-    //}
-    //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Asc")>=0){
-    //    $("#order").val(3);
-    //}
-    if (order.toString().indexOf("views")>=0){
-        $("#order").val(2);
-    }
-    document.getElementById("st"+@ViewBag.st).checked=true;
-    document.getElementById("status"+@ViewBag.status).checked=true;
-    document.getElementById("tps"+@ViewBag.tps).checked=true;
-    function resetCat(){
-        currentCat1="";
-        currentCat2="";
-        currentCat3="";
-        currentCat4="";
-        search();
-    }
-    function setCat(type,val){
-        switch(type){
-            case 1:
-                currentCat1=val;
-                break;
-            case 2:
-                currentCat2=val;
-                break;
-            case 3:
-                currentCat3=val;
-                break;
-            case 4:
-                currentCat4=val;
-                break;
-        }
-        search();
-    }
-    function chooseOder(){
-        if ($("#order").val()=="1"){
-            setorder('RANK','Desc');
-        }
-            //else
-            //    if ($("#order").val()=="2"){
-            //        setorder('code','Desc');
-            //    }
-            //    else
-            //        if ($("#order").val()=="3"){
-            //            setorder('code','Asc');
-            //        }
-        else
-            if ($("#order").val()=="2"){
-                setorder('views','Desc');
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td align="left">
+                                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.code</a>
+                            </td>
+                            <td align="left" style="width:55%;">
+                                @if (item.RANK > 0 && count <= 2)
+                                {
+                                    <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                                }
+                                else
+                                {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>}
+                            </td>
+                            <td align="left">
+                                @qlvb.Config.getCatNameById(1, @item.cat1_id)
+                            </td>
+                            <td align="left">
+                                @qlvb.Config.getCatNameById(2, @item.cat2_id)
+                            </td>
+                        </tr>
+                                count++;
+                        //allHotKeyword+=@item.ke
+                    }
+                </table>
+                <div>
+                    Trang:
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
+                    }
+                </div>
+
+            </div>
+            <section class="refinements-summary" style="text-align:left;"></section>
+            <section class="refinements-summary" style="text-align:left;">
+                <h2>Từ khóa nóng nhất</h2>
+                <div id="allhotkeyword" style="text-align:left;">
+
+                </div>
+            </section>
+        </div>
+
+
+
+
+
+
+
+
+
+        <script>
+            var pg=@ViewBag.page;
+            var order="@ViewBag.order";
+            var to="@ViewBag.to";
+            var currentCat1="@ViewBag.f1";
+            var currentCat2="@ViewBag.f2";
+            var currentCat3="@ViewBag.f3";
+            var currentCat4="@ViewBag.f4";
+            var st=@ViewBag.st;
+            var status=@ViewBag.status;
+            var tps=@ViewBag.tps;
+            if (order.toString().indexOf("RANK")>=0){
+                $("#order").val(1);
             }
-    }
-    function setorder(field,t) {
-        order=field;
-        to=t;
-        pg=1;
-        search();
-    }
-    function setpage(page) {
-        pg=page;
-        search();
-    }
-    function search() {
-        var url = "/?";
-        var k = $("#word").val();
-        //if (k == "") {
-        //    return;
-        //}
-        var f1="";
-        var f2="";
-        var f3="";
-        var f4="";
-        f1=currentCat1;
-        f2=currentCat2;
-        f3=currentCat3;
-        f4=currentCat4;
-        st=$('input[name="st"]:checked').val();
-        status=$('input[name="status"]:checked').val();
-        tps=$('input[name="tps"]:checked').val();
-        //alert(st);
-        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&order="+order+"&to="+to+"&pg="+pg;
-        window.location.href = url;
-    }
-    //function search() {
-    //    var word = document.getElementById("word").value;
-    //    window.location.href = "/Document/Index?page=1&word=" + word;
-    //}
-    function autosearch(e) {
-        var keyword = document.getElementById("word").value;
-        urlSearch = '/Document/getDoc?keyword=';
-        $('#word').autocomplete({
-            source: urlSearch + keyword,
-            select: function (event, ui) {
-                $(event.target).val(ui.item.value);
-                //search();
-                //alert(ui.item.id);
-                //window.open("/Document/Details?id="+ui.item.id+"&keyword="+keyword,"_blank");
-                return false;
-            },
-            minLength: 1
-        });
-        var keyCode = e.keyCode || e.which;//('which' in event) ? event.which : event.keyCode;
-
-        //alert(keyCode);
-        if (keyCode == 13) {
-            if (keyword == "") {
-                alert("Bạn phải nhập từ khóa");
-                return;
-            }else{
+            //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Desc")>=0){
+            //    $("#order").val(2);
+            //}
+            //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Asc")>=0){
+            //    $("#order").val(3);
+            //}
+            if (order.toString().indexOf("views")>=0){
+                $("#order").val(2);
+            }
+            document.getElementById("st"+@ViewBag.st).checked=true;
+            document.getElementById("status"+@ViewBag.status).checked=true;
+            document.getElementById("tps"+@ViewBag.tps).checked=true;
+            function resetCat(){
+                currentCat1="";
+                currentCat2="";
+                currentCat3="";
+                currentCat4="";
                 search();
             }
-        }
-    }
-    //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {
-    //    alert(data);
-    //});
-    $.ajax({
-        url: "/Home/getAllHotKeyWord",
-        cache: false
-    }).done(function( html ) {
-        $( "#allhotkeyword").html(html);
-    });
-    $.ajax({
-        url: "/Home/getAllCat?id=1",
-        cache: false
-    }).done(function( html ) {
-        $( "#allcat1").html("<b>Lĩnh vực: </b>"+html);
-    });
-    $.ajax({
-        url: "/Home/getAllCat?id=2",
-        cache: false
-    }).done(function( html ) {
-        $( "#allcat2").html("<b>Loại văn bản: </b>"+html);
-    });
-    $.ajax({
-        url: "/Home/Log?keyword=@ViewBag.keyword",
-        cache: false
-    }).done(function( html ) {
+            function setCat(type,val){
+                switch(type){
+                    case 1:
+                        currentCat1=val;
+                        break;
+                    case 2:
+                        currentCat2=val;
+                        break;
+                    case 3:
+                        currentCat3=val;
+                        break;
+                    case 4:
+                        currentCat4=val;
+                        break;
+                }
+                search();
+            }
+            function chooseOder(){
+                if ($("#order").val()=="1"){
+                    setorder('RANK','Desc');
+                }
+                    //else
+                    //    if ($("#order").val()=="2"){
+                    //        setorder('code','Desc');
+                    //    }
+                    //    else
+                    //        if ($("#order").val()=="3"){
+                    //            setorder('code','Asc');
+                    //        }
+                else
+                    if ($("#order").val()=="2"){
+                        setorder('views','Desc');
+                    }
+            }
+            function setorder(field,t) {
+                order=field;
+                to=t;
+                pg=1;
+                search();
+            }
+            function setpage(page) {
+                pg=page;
+                search();
+            }
+            function search() {
+                var url = "/?";
+                var k = $("#word").val();
+                //if (k == "") {
+                //    return;
+                //}
+                var f1="";
+                var f2="";
+                var f3="";
+                var f4="";
+                f1=currentCat1;
+                f2=currentCat2;
+                f3=currentCat3;
+                f4=currentCat4;
+                st=$('input[name="st"]:checked').val();
+                status=$('input[name="status"]:checked').val();
+                tps=$('input[name="tps"]:checked').val();
+                //alert(st);
+                url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&order="+order+"&to="+to+"&pg="+pg;
+                window.location.href = url;
+            }
+            //function search() {
+            //    var word = document.getElementById("word").value;
+            //    window.location.href = "/Document/Index?page=1&word=" + word;
+            //}
+            function autosearch(e) {
+                var keyword = document.getElementById("word").value;
+                urlSearch = '/Document/getDoc?keyword=';
+                $('#word').autocomplete({
+                    source: urlSearch + keyword,
+                    select: function (event, ui) {
+                        $(event.target).val(ui.item.value);
+                        //search();
+                        //alert(ui.item.id);
+                        //window.open("/Document/Details?id="+ui.item.id+"&keyword="+keyword,"_blank");
+                        return false;
+                    },
+                    minLength: 1
+                });
+                var keyCode = e.keyCode || e.which;//('which' in event) ? event.which : event.keyCode;
 
-    });
-    function searchkw(keyword) {
-        var url = "/Home/Index?";
-        var k = keyword;
-        //if (k == "") {
-        //    return;
-        //}
-        var f1 = "";
-        var f2 = "";
-        var f3 = "";
-        var f4 = "";
+                //alert(keyCode);
+                if (keyCode == 13) {
+                    if (keyword == "") {
+                        alert("Bạn phải nhập từ khóa");
+                        return;
+                    }else{
+                        search();
+                    }
+                }
+            }
+            //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {
+            //    alert(data);
+            //});
+            $.ajax({
+                url: "/Home/getAllHotKeyWord",
+                cache: false
+            }).done(function( html ) {
+                $( "#allhotkeyword").html(html);
+            });
+            $.ajax({
+                url: "/Home/getAllCat?id=1",
+                cache: false
+            }).done(function( html ) {
+                $( "#allcat1").html("<b style='color:#ffffff;'>Lĩnh vực: </b>"+html);
+            });
+            $.ajax({
+                url: "/Home/getAllCat?id=2",
+                cache: false
+            }).done(function( html ) {
+                $( "#allcat2").html("<b style='color:#ffffff;'>Loại văn bản: </b>"+html);
+            });
+            $.ajax({
+                url: "/Home/Log?keyword=@ViewBag.keyword",
+                cache: false
+            }).done(function( html ) {
 
-        url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
-        window.location.href = url;
-    }
-    function gotoCat(type,id){
-        if (type==1){
-            window.location.href ="/Document/Cat?cat11="+id;
-        }
-        if (type==2){
-            window.location.href ="/Document/Cat?cat22="+id;
-        }
-    }
-</script>
+            });
+            function searchkw(keyword) {
+                var url = "/Home/Index?";
+                var k = keyword;
+                //if (k == "") {
+                //    return;
+                //}
+                var f1 = "";
+                var f2 = "";
+                var f3 = "";
+                var f4 = "";
+
+                url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
+                window.location.href = url;
+            }
+            function gotoCat(type,id){
+                if (type==1){
+                    window.location.href ="/Document/Cat?cat11="+id;
+                }
+                if (type==2){
+                    window.location.href ="/Document/Cat?cat22="+id;
+                }
+            }
+        </script>
