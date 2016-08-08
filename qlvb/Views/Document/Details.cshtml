@@ -39,203 +39,212 @@
             text-align: left;
         }
 </style>
-<div class="panel-body">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
-        <li>
-            <a href="#" data-toggle="tab">Home</a>
-        </li>
-        <li >
-            <a href="#tree" data-toggle="tab">Cây thư mục</a>
-        </li>
-        @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
-        {
-            <li @activieCs>
-                <a href="#keyword" data-toggle="tab">Danh mục</a>
+<ul class="nav nav-tabs">
+    <li>
+        <a href="#" data-toggle="tab">Home</a>
+    </li>
+    <li>
+        <a href="#tree" data-toggle="tab">Cây thư mục</a>
+    </li>
+</ul>
+    <div class="panel-body" style="position: relative; display: block; float: left;width:100%;margin-top:10px;">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="#" data-toggle="tab">Home</a>
             </li>
-            activieCs = "";
-        }
-        <li @activieCs>
-            <a href="#full" data-toggle="tab">Toàn văn</a>
-        </li>
-        <li>
-            <a href="#pro" data-toggle="tab">Thuộc tính</a> 
-        </li>
-        <li>
-            <a href="#rel" data-toggle="tab">Văn bản liên quan</a>
-        </li>
-        <li>
-            <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
-        </li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
+            <li>
+                <a href="#tree" data-toggle="tab">Cây thư mục</a>
+            </li>
+            @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
+            {
+                <li @activieCs>
+                    <a href="#keyword" data-toggle="tab">Danh mục</a>
+                </li>
+                activieCs = "";
+            }
+            <li @activieCs>
+                <a href="#full" data-toggle="tab">Toàn văn</a>
+            </li>
+            <li>
+                <a href="#pro" data-toggle="tab">Thuộc tính</a>
+            </li>
+            <li>
+                <a href="#rel" data-toggle="tab">Văn bản liên quan</a>
+            </li>
+            <li>
+                <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
             <div class="tab-pane fade" id="tree">
                 @Html.Raw(@ViewBag.tree)
                 @*<script type="text/javascript">
-                    ddtreemenu.createTree("treemenu2", true);
-                </script>*@
+                        ddtreemenu.createTree("treemenu2", true);
+                    </script>*@
             </div>
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
                 <div class="tab-pane fade @activieTab" id="keyword">
-           
-                        <table style="width:100%;text-align:left;">
-                            <tr>
-                                <td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow:scroll;"></td>
-                                <td class="col-lg-9" style="background:#00ffff;">
-                                    @foreach (var item in ViewBag.chd)
-                                    {
-                                        //if (ViewBag.keyword=="")
-                                        //{
-                                            <text>
-                                                <p style="width:100%;text-align:left;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
-                                                @if (ViewBag.keyword != "") { 
-                                                    <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
-                                                }
-                                            </text>
+
+                    <table style="width:100%;text-align:left;">
+                        <tr>
+                            <td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow:scroll;"></td>
+                            <td class="col-lg-9" style="background:#00ffff;">
+                                @foreach (var item in ViewBag.chd)
+                                {
+                                    //if (ViewBag.keyword=="")
+                                    //{
+                                    <text>
+                                        <p style="width:100%;text-align:left;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                        @if (ViewBag.keyword != "")
+                                        {
+                                            <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
+                                        }
+                                    </text>
                                         lstindex += "<p>-<a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
-                                        //}
-                                    }
-                                    <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
-                                </td>
-                        </table>
+                                    //}
+                                }
+                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
+                            </td>
+                    </table>
                 </div>
-                activieTab="";
+                                activieTab = "";
             }
-        <div class="tab-pane fade @activieTab" id="full">
-            <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:600px;"></iframe>
-        </div>
-        <div class="tab-pane fade" id="key">
-            <table style="width:100%;text-align:center;">
-                <tr>
-                    <td class="label">Tập từ khóa từ điều 1, điều 2... :</td>
-                    <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
-                </tr>
-                <tr>
-                    <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td>
-                    <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
-                </tr>
-                <tr>
-                    <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>
-                    <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
-                </tr>
-                <tr>
-                    <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td>
-                    <td><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section></td>
-                </tr>
-            </table>
-        </div>
-        <div class="tab-pane fade" id="rel">
-            <table style="width:100%;text-align:center;">
-                <tr>
-                    <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td>
-                    <td><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
-                </tr>
-                <tr>
-                    <td class="label">Văn bản căn cứ từ các văn bản:</td>
-                    <td><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
-                </tr>
-            </table>
-        </div>
-        <div class="tab-pane fade" id="pro">
-            <h4>@Model.name</h4>
-            <table style="width:100%;text-align:center;">
-                <tr>
-                    <td class="label">Ký hiệu :</td>
-                    <td>@Model.code</td>
-                    <td class="label">Lĩnh vực :</td>
-                    <td>@qlvb.Config.getCatNameById(1, @Model.cat1_id)</td>
-                </tr>
-                <tr>
-                    <td class="label">Loại văn bản :</td>
-                    <td>@qlvb.Config.getCatNameById(2, @Model.cat2_id)</td>
-                    <td class="label">Người ký :</td>
-                    <td>@qlvb.Config.getCatNameById(3, @Model.cat3_id)</td>
-                </tr>
-                <tr>
-                    <td class="label">Cơ quan ban hành :</td>
-                    <td>@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
-                    <td class="label">Ngày ban hành :</td>
-                    <td>@qlvb.Config.formatDDMMYYYY(@Model.date_publish)</td>
-                </tr>
-                <tr>
-                    <td class="label">Ngày có hiệu lực :</td>
-                    <td>@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
-                    <td class="label">Còn hiệu lực? :</td>
-                    <td>@Model.year</td>
-                </tr>
-            </table>
+            <div class="tab-pane fade @activieTab" id="full">
+                <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:600px;"></iframe>
+            </div>
+            <div class="tab-pane fade" id="key">
+                <table style="width:100%;text-align:center;">
+                    <tr>
+                        <td class="label">Tập từ khóa từ điều 1, điều 2... :</td>
+                        <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td>
+                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>
+                        <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td>
+                        <td><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="rel">
+                <table style="width:100%;text-align:center;">
+                    <tr>
+                        <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td>
+                        <td><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Văn bản căn cứ từ các văn bản:</td>
+                        <td><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pro">
+                <h4>@Model.name</h4>
+                <table style="width:100%;text-align:center;">
+                    <tr>
+                        <td class="label">Ký hiệu :</td>
+                        <td>@Model.code</td>
+                        <td class="label">Lĩnh vực :</td>
+                        <td>@qlvb.Config.getCatNameById(1, @Model.cat1_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Loại văn bản :</td>
+                        <td>@qlvb.Config.getCatNameById(2, @Model.cat2_id)</td>
+                        <td class="label">Người ký :</td>
+                        <td>@qlvb.Config.getCatNameById(3, @Model.cat3_id)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Cơ quan ban hành :</td>
+                        <td>@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
+                        <td class="label">Ngày ban hành :</td>
+                        <td>@qlvb.Config.formatDDMMYYYY(@Model.date_publish)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Ngày có hiệu lực :</td>
+                        <td>@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
+                        <td class="label">Còn hiệu lực? :</td>
+                        <td>@Model.year</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-<div id=dvchditems style="width:50%;display:block;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
+    <div id=dvchditems style="width:50%;display:block;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
         <div id=chditems class="col-lg-3" valign="top" style="width:100%;height:500px;background:#ffffff;color:#000000;text-align:left;overflow:scroll;border:2px solid #0094ff;"></div>
         @*<iframe id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></iframe>*@
         <input type="button" value="Đóng lại" onclick="$('#dvchditems').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;" />
-</div>             
-            <script>
-                function show(id) {
-                    $("#" + id).show();
+    </div>
+    <script>
+        function show(id) {
+            $("#" + id).show();
+        }
+        function searchkw(keyword) {
+            var url = "/Home/Index?";
+            var k = keyword;
+            //if (k == "") {
+            //    return;
+            //}
+            var f1 = "";
+            var f2 = "";
+            var f3 = "";
+            var f4 = "";
+
+            url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
+            window.location.href = url;
+        }
+
+        $(document).ready(function () {
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                    $('#lstindex').css("position", "fixed");
+                    $('#lstindex').css("top", "0px");
+                    $('#lstindex').css("left", "50px");
+                    $('#lstindex').css("height", "400px");
+                    $('#lstindex').css("z-index", "1001");
+                } else {
+                    $('.scrollup').fadeOut();
+                    $('#lstindex').css("position", "relative");
+                    $('#lstindex').css("top", "auto");
+                    $('#lstindex').css("left", "auto");
+                    $('#lstindex').css("z-index", "0");
+                    $('#lstindex').css("height", "auto");
                 }
-                function searchkw(keyword) {
-                    var url = "/Home/Index?";
-                    var k = keyword;
-                    //if (k == "") {
-                    //    return;
-                    //}
-                    var f1 = "";
-                    var f2 = "";
-                    var f3 = "";
-                    var f4 = "";
+            });
 
-                    url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4;// + "&order=" + order + "&to=" + to + "&pg=" + pg
-                    window.location.href = url;
-                }
+            $('.scrollup').click(function () {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
 
-                $(document).ready(function () {
+        });
+        function viewchd(id) {
+            $('#dvchditems').show();
+            //$("#chditems").attr("src","/Document/Items/"+id);
+            $("#chditems").html("<img src='/images/loading.gif'>");
+            $.ajax({
+                url: "/Document/getCHD?id=" + id,
+                cache: false
+            }).done(function (html) {
+                //html = html.replace(/\s\s/g, " ");
+                //html = html.replace(/	/g, "");
+                //html = html.replace('\r\n', "<br>");
+                //$('#dvchditems').hide();
+                //alert(html);
+                $("#chditems").html(html);
 
-                    $(window).scroll(function () {
-                        if ($(this).scrollTop() > 100) {
-                            $('.scrollup').fadeIn();
-                            $('#lstindex').css("position", "fixed");
-                            $('#lstindex').css("top", "0px");
-                            $('#lstindex').css("left", "50px");
-                            $('#lstindex').css("height", "400px");
-                            $('#lstindex').css("z-index", "1001");
-                        } else {
-                            $('.scrollup').fadeOut();
-                            $('#lstindex').css("position", "relative");
-                            $('#lstindex').css("top", "auto");
-                            $('#lstindex').css("left", "auto");
-                            $('#lstindex').css("z-index", "0");
-                            $('#lstindex').css("height", "auto");
-                        }
-                    });
-
-                    $('.scrollup').click(function () {
-                        $("html, body").animate({
-                            scrollTop: 0
-                        }, 600);
-                        return false;
-                    });
-
-                });
-                function viewchd(id) {
-                     $('#dvchditems').show();
-                    //$("#chditems").attr("src","/Document/Items/"+id);
-                     $("#chditems").html("<img src='/images/loading.gif'>");
-                    $.ajax({
-                        url: "/Document/getCHD?id="+id,
-                        cache: false
-                    }).done(function (html) {
-                        //html = html.replace(/\s\s/g, " ");
-                        //html = html.replace(/	/g, "");
-                        //html = html.replace('\r\n', "<br>");
-                        //$('#dvchditems').hide();
-                        //alert(html);
-                        $( "#chditems").html(html);
-                       
-                    });
-                }
-            </script>
+            });
+        }
+    </script>

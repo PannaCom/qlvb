@@ -7,6 +7,8 @@
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
     int count = 0;
     string allHotKeyword = "";
+    
+    
 }
 
     <div class="col-sm-3">
@@ -23,35 +25,50 @@
                     <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
                 </div>
                 <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#ebee9d;">
-                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Kiểu tìm: <input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</div>
-                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</div>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
-                    <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Còn hiệu lực: <input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</div>
+                    <table>
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
+                            <td width="100px;">Sắp xếp theo:</td>  
+                            <td>
+                                <select id="order" >
+                                    <option value="-1">Chọn</option>
+                                    <option value="1">Phù hợp nhất</option>
+                                    <option value="2">Xem nhiều nhất</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat1)
-            </div>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat2)
-            </div>
-            @*<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat3)
-            </div>*@
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat4)
-            </div>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                <section class="refinements-summary">
-                    @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
-                    {
-                        <b>Bộ lọc: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1, @ViewBag.f2, @ViewBag.f3, @ViewBag.f4))
+            <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
+                <h4>Bộ lọc tìm kiếm</h4>
+                <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                    <section class="refinements-summary">
+                        @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
+                        {
+                            <b>Đang lọc theo: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1, @ViewBag.f2, @ViewBag.f3, @ViewBag.f4))
 
-                        <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
-                    }
-                </section>
+                            <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
+                        }
+                    </section>
+                </div>
+                <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                    @Html.Raw(@ViewBag.cat1)
+                </div>
+                <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                    @Html.Raw(@ViewBag.cat2)
+                </div>
+                @*<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                    @Html.Raw(@ViewBag.cat3)
+                </div>*@
+                <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+                    @Html.Raw(@ViewBag.cat4)
+                </div>
             </div>
-            <div style="width:100%;padding-top:30px;">
-                <div style="width:100%;padding-top:30px;">
+            <div style="width:100%;float:left;position:relative;">
+                <div style="width:100%;margin-top:5px;">
                     <div class="span9">
                         @if (ViewBag.keyword != "")
                         {
@@ -66,28 +83,13 @@
                         @if (ViewBag.keyword != "")
                         {
                             <text>
-                                Sắp xếp theo:
-                                <select id="order" onchange="chooseOder();">
-                                    <option value="-1">Chọn</option>
-                                    <option value="1">Phù hợp nhất</option>
-                                    @* <option value="2">Mới nhất</option>
-                                    <option value="3">Cũ nhất</option>*@
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="2">Xem nhiều nhất</option>
-                                </select>
+                                
                             </text>
                         }
                     </div>
                 </div>
-                <table class="table">
-                    <tr>
+                <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
+                    @*<tr>
                         <th>
                             Ký hiệu
                         </th>
@@ -98,28 +100,45 @@
                             Lĩnh vực
                         </th>
                         <th>Loại văn bản</th>
-                    </tr>
+                    </tr>*@
 
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td align="left">
-                                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.code</a>
+                            <td>
+                                <div class="col-lg-12" style="background:#00ff90;width:100%;"><b style="float:left;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</b></div>
+                                <div class="col-lg-8" style="border-right:1px solid #808080;text-align:left;">
+                                    @*@if (item.RANK > 0 && count <= 2)
+                                    {
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                                    }
+                                    else
+                                    {*@   
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>
+                                    @*}*@
+                                </div>
+                                <div class="col-lg-4">
+                                    <p style="font-size:12px;">Lĩnh vực: @qlvb.Config.getCatNameById(1, @item.cat1_id)</p>
+                                </div>
                             </td>
-                            <td align="left" style="width:55%;">
-                                @if (item.RANK > 0 && count <= 2)
-                                {
-                                    <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
-                                }
-                                else
-                                {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>}
-                            </td>
-                            <td align="left">
-                                @qlvb.Config.getCatNameById(1, @item.cat1_id)
-                            </td>
-                            <td align="left">
-                                @qlvb.Config.getCatNameById(2, @item.cat2_id)
-                            </td>
+
+    @*<td align="left">
+        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.code</a>
+    </td>
+    <td align="left" style="width:55%;">
+        @if (item.RANK > 0 && count <= 2)
+        {
+            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+        }
+        else
+        {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>}
+    </td>
+    <td align="left">
+        @qlvb.Config.getCatNameById(1, @item.cat1_id)
+    </td>
+    <td align="left">
+        @qlvb.Config.getCatNameById(2, @item.cat2_id)
+    </td>*@
                         </tr>
                                 count++;
                         //allHotKeyword+=@item.ke
@@ -142,14 +161,6 @@
                 </div>
             </section>
         </div>
-
-
-
-
-
-
-
-
 
         <script>
             var pg=@ViewBag.page;
@@ -174,6 +185,8 @@
             if (order.toString().indexOf("views")>=0){
                 $("#order").val(2);
             }
+            if ("@ViewBag.keyword"!="") $("#filterdiv").show();
+
             document.getElementById("st"+@ViewBag.st).checked=true;
             document.getElementById("status"+@ViewBag.status).checked=true;
             document.getElementById("tps"+@ViewBag.tps).checked=true;
