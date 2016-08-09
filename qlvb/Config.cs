@@ -1144,6 +1144,10 @@ namespace qlvb
             if (d == null) return "";
             return String.Format("{0:dd-MM-yyyy}", d);
         }
+        public static string statusStr(byte? status)
+        {
+            if (status == null || status == 1) return "hết/chưa hiệu lực"; else return "có hiệu lực";
+        }
     }
     
 }

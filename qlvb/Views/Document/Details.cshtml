@@ -39,22 +39,15 @@
             text-align: left;
         }
 </style>
-<ul class="nav nav-tabs">
-    <li>
-        <a href="#" data-toggle="tab">Home</a>
-    </li>
-    <li>
-        <a href="#tree" data-toggle="tab">Cây thư mục</a>
-    </li>
-</ul>
+
     <div class="panel-body" style="position: relative; display: block; float: left;width:100%;margin-top:10px;">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-            <li>
-                <a href="#" data-toggle="tab">Home</a>
+            <li style="color:black;">
+                <a href="#" data-toggle="tab" style="color:black;">Home</a>
             </li>
-            <li>
-                <a href="#tree" data-toggle="tab">Cây thư mục</a>
+            <li style="color:black;">
+                <a href="#tree" data-toggle="tab" style="color:black;">Cây thư mục</a>
             </li>
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
@@ -172,7 +165,7 @@
                         <td class="label">Ngày có hiệu lực :</td>
                         <td>@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
                         <td class="label">Còn hiệu lực? :</td>
-                        <td>@Model.year</td>
+                        <td>@qlvb.Config.statusStr(@Model.status)</td>
                     </tr>
                 </table>
             </div>

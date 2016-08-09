@@ -28,6 +28,8 @@ namespace qlvb.Controllers
             public int cat3_id { get; set; }
             public int cat4_id { get; set; }
             public int views { get; set; }
+            public DateTime? date_publish { get; set; }
+            public DateTime? date_start { get; set; }
             public int RANK { get; set; }
             public byte? status { get; set; }
 
@@ -58,7 +60,7 @@ namespace qlvb.Controllers
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "select * from (SELECT top 30 ";
-                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
+                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*"+Config.heso1+" ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
                     query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
@@ -94,7 +96,7 @@ namespace qlvb.Controllers
                     query += ") as A ";
                     if (k != null && st==2)
                     {
-                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -128,7 +130,7 @@ namespace qlvb.Controllers
                     {
                         if (k != null && (st==1))
                         {
-                            query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -161,7 +163,7 @@ namespace qlvb.Controllers
                         }
                         if (k != null && (st == 4))
                         {
-                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -217,7 +219,7 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat1 = db.Database.SqlQuery<catitem>(query1).ToList();
-                            scat1 = "<b>Lĩnh vực:</b>";
+                            scat1 = "<b>Lĩnh vực:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat1.Count; jj++)
                             {
@@ -233,7 +235,7 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat2 = db.Database.SqlQuery<catitem>(query2).ToList();
-                            scat2 = "<b>Loại văn bản:</b>";
+                            scat2 = "<b>Loại văn bản:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat2.Count; jj++)
                             {
@@ -267,7 +269,7 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat4 = db.Database.SqlQuery<catitem>(query4).ToList();
-                            scat4 = "<b>Cơ quan ban hành:</b>";
+                            scat4 = "<b>Cơ quan ban hành:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat4.Count; jj++)
                             {
@@ -491,7 +493,7 @@ namespace qlvb.Controllers
                     color = "";
                     //if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
                     //else if (cat1[jj].total > 0) 
-                        color = "color:#ffffff;";
+                        color = "color:#000000;";
                         scat1 += "<li><a class='filteritem' onclick='gotoCat(" + id + "," + cat1[jj].id + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + " (" + cat1[jj].total + ")</a></li>";
                 }
                 return scat1;

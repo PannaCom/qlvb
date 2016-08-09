@@ -12,9 +12,15 @@
 }
 
     <div class="col-sm-3">
-        <div style="background-color: #74b709;margin-top:10px;">
-                    <ul id="allcat1" style="text-align:left;padding-top:30px;"></ul>
-                    <ul id="allcat2" style="text-align:left;"></ul>
+        <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
+            <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+                Lĩnh vực
+            </div>
+            <ul id="allcat1" style="text-align:left;float:left;position:relative;"></ul>
+            <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+                Loại văn bản
+            </div>
+            <ul id="allcat2" style="text-align:left;float:left;position:relative;"></ul>
         </div>
     </div>
     <div class="col-sm-9">
@@ -105,20 +111,32 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>
-                                <div class="col-lg-12" style="background:#00ff90;width:100%;"><b style="float:left;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</b></div>
-                                <div class="col-lg-8" style="border-right:1px solid #808080;text-align:left;">
-                                    @*@if (item.RANK > 0 && count <= 2)
-                                    {
-                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
-                                    }
-                                    else
-                                    {*@   
+                            <td valign="top">
+                                <div class="col-sm-12" style="background:#00ff90;width:100%;"><b style="float:left;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</b></div>
+                                <div class="row">
+                                    <div class="col-sm-8" style="height:80px;float: left;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:20px;">
+                                        @*@if (item.RANK > 0 && count <= 2)
+                                        {
+                                            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                                        }
+                                        else
+                                        {*@
                                         <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>
-                                    @*}*@
-                                </div>
-                                <div class="col-lg-4">
-                                    <p style="font-size:12px;">Lĩnh vực: @qlvb.Config.getCatNameById(1, @item.cat1_id)</p>
+                                        @*}*@
+                                    </div>
+                                    <div class="col-sm-4" style="float:right;height:80px;">
+                                        <table>
+                                            <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
+                                            @if (item.date_publish != null)
+                                            {
+                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Ban hành: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_publish)</p></td></tr>
+                                            }
+                                            @if (item.date_start != null)
+                                            {
+                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
+                                            }
+                                        </table>
+                                    </div>
                                 </div>
                             </td>
 
@@ -305,13 +323,13 @@
                 url: "/Home/getAllCat?id=1",
                 cache: false
             }).done(function( html ) {
-                $( "#allcat1").html("<b style='color:#ffffff;'>Lĩnh vực: </b>"+html);
+                $( "#allcat1").html(""+html);
             });
             $.ajax({
                 url: "/Home/getAllCat?id=2",
                 cache: false
             }).done(function( html ) {
-                $( "#allcat2").html("<b style='color:#ffffff;'>Loại văn bản: </b>"+html);
+                $( "#allcat2").html(""+html);
             });
             $.ajax({
                 url: "/Home/Log?keyword=@ViewBag.keyword",
