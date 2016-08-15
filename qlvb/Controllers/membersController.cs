@@ -161,5 +161,25 @@ namespace qlvb.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+        public bool ValidateUser(string userName, string password)
+        {
+            bool validation;
+            try
+            {
+                //LdapConnection ldc = new LdapConnection(new LdapDirectoryIdentifier((string)null, false, false));
+                //NetworkCredential nc = new NetworkCredential(userName, password, "DOMAIN NAME HERE");
+                //ldc.Credential = nc;
+                //ldc.AuthType = AuthType.Negotiate;
+                //ldc.Bind(nc); // user has authenticated at this point, as the credentials were used to login to the dc.
+                //validation = true;
+                LdapAuthentication la = new LdapAuthentication(null);
+                validation = la.IsAuthenticated("", userName, password);
+            }
+            catch (Exception ex)
+            {
+                validation = false;
+            }
+            return validation;
+        }
     }
 }

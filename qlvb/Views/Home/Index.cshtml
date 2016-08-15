@@ -21,6 +21,14 @@
                 Loại văn bản
             </div>
             <ul id="allcat2" style="text-align:left;float:left;position:relative;"></ul>
+            <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+                Từ khóa gợi ý
+            </div>
+            <section class="refinements-summary" style="text-align:left;">
+                <ul id="allhotkeyword" style="text-align:left;float:left;position:relative;">
+                    Đang tải...
+                </ul>
+            </section>
         </div>
     </div>
     <div class="col-sm-9">
@@ -40,8 +48,8 @@
                             <td>
                                 <select id="order" >
                                     <option value="-1">Chọn</option>
-                                    <option value="1">Phù hợp nhất</option>
-                                    <option value="2">Xem nhiều nhất</option>
+                                    <option value="RANK">Phù hợp nhất</option>
+                                    <option value="views">Xem nhiều nhất</option>
                                 </select>
                             </td>
                         </tr>
@@ -75,7 +83,7 @@
             </div>
             <div style="width:100%;float:left;position:relative;">
                 <div style="width:100%;margin-top:5px;">
-                    <div class="span9">
+                    <div class="span12">
                         @if (ViewBag.keyword != "")
                         {
                             <text> <h2>Tìm thấy các văn bản</h2></text>
@@ -85,13 +93,6 @@
                             <text> <h2>Xem nhiều nhất</h2></text>
                         }
 
-                    </div><div class="span4">
-                        @if (ViewBag.keyword != "")
-                        {
-                            <text>
-                                
-                            </text>
-                        }
                     </div>
                 </div>
                 <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
@@ -114,7 +115,7 @@
                             <td valign="top">
                                 <div class="col-sm-12" style="background:#00ff90;width:100%;"><b style="float:left;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</b></div>
                                 <div class="row">
-                                    <div class="col-sm-8" style="height:80px;float: left;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:20px;">
+                                    <div class="col-sm-8" style="height:80px;float: left;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;">
                                         @*@if (item.RANK > 0 && count <= 2)
                                         {
                                             <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
@@ -171,13 +172,13 @@
                 </div>
 
             </div>
-            <section class="refinements-summary" style="text-align:left;"></section>
+            @*<section class="refinements-summary" style="text-align:left;"></section>
             <section class="refinements-summary" style="text-align:left;">
                 <h2>Từ khóa nóng nhất</h2>
                 <div id="allhotkeyword" style="text-align:left;">
 
                 </div>
-            </section>
+            </section>*@
         </div>
 
         <script>
@@ -191,23 +192,24 @@
             var st=@ViewBag.st;
             var status=@ViewBag.status;
             var tps=@ViewBag.tps;
-            if (order.toString().indexOf("RANK")>=0){
-                $("#order").val(1);
-            }
+            //if (order.toString().indexOf("RANK")>=0){
+            //    $("#order").val("RANK");
+            //}
             //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Desc")>=0){
             //    $("#order").val(2);
             //}
             //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Asc")>=0){
             //    $("#order").val(3);
             //}
-            if (order.toString().indexOf("views")>=0){
-                $("#order").val(2);
-            }
+            //if (order.toString().indexOf("views")>=0){
+            //    $("#order").val("views");
+            //}
             if ("@ViewBag.keyword"!="") $("#filterdiv").show();
 
             document.getElementById("st"+@ViewBag.st).checked=true;
             document.getElementById("status"+@ViewBag.status).checked=true;
             document.getElementById("tps"+@ViewBag.tps).checked=true;
+            $("#order").val(order);
             function resetCat(){
                 currentCat1="";
                 currentCat2="";
@@ -276,6 +278,7 @@
                 st=$('input[name="st"]:checked').val();
                 status=$('input[name="status"]:checked').val();
                 tps=$('input[name="tps"]:checked').val();
+                order=$('#order').val();
                 //alert(st);
                 url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&order="+order+"&to="+to+"&pg="+pg;
                 window.location.href = url;

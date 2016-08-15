@@ -3,22 +3,47 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Tìm Kiếm Văn Bản Quy Phạm";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
     int count = 0;
     string allHotKeyword = "";
 }
 
-<div id="tf-services">
-    <div class="container">
-        <div style="width:100%;padding-top:3px;float:left;position:relative;">
+<div class="col-sm-12" style="margin-top:60px;float:left;position:relative;display:block;" >
+    <div style="background-color:#ebee9d;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;">
+        <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ebee9d;">
+            <h3 style="text-align:left;">Tìm kiếm văn bản</h3>
             <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
             <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
         </div>
-        <div style="width:100%;padding-top:3px;float:left;position:relative;">
-            <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Kiểu tìm: <input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</div>
-            <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Tìm trong: <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</div>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
-            <div style="float:left;position:relative;width:100%;display:block;text-align:left;">Còn hiệu lực: <input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</div>
+        <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#ebee9d;">
+            <table>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</td></tr>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</td></tr>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
+                    <td width="100px;">Sắp xếp theo:</td>
+                    <td>
+                        <select id="order">
+                            <option value="-1">Chọn</option>
+                            <option value="RANK">Phù hợp nhất</option>
+                            <option value="views">Xem nhiều nhất</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
+        <h4>Bộ lọc tìm kiếm</h4>
+        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+            <section class="refinements-summary">
+                @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
+                {
+                    <b>Đang lọc theo: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1, @ViewBag.f2, @ViewBag.f3, @ViewBag.f4))
+                    <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
+                }
+            </section>
         </div>
         <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
             @Html.Raw(@ViewBag.cat1)
@@ -28,93 +53,74 @@
         </div>
         @*<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
                 @Html.Raw(@ViewBag.cat3)
-            </div>*@
+            </div>*@<div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+        </div>
         <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
             @Html.Raw(@ViewBag.cat4)
         </div>
-        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-            <section class="refinements-summary">
-                @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
-                {
-                    <b>Bộ lọc: </b>@Html.Raw(qlvb.Config.tags(@ViewBag.f1, @ViewBag.f2, @ViewBag.f3, @ViewBag.f4))
+    </div>
 
-                    <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
+    <div style="width:100%;margin-top:130px;">
+        <div style="width:100%;">
+            <div class="span12">
+                @if (ViewBag.keyword != "")
+                {
+                    <text> <h2 style="padding-top:20px;margin-top:20px;">Tìm thấy các văn bản</h2></text>
                 }
-            </section>
+                else
+                {
+                    <text> <h2>Xem nhiều nhất</h2></text>
+                }
+                &nbsp;<a href="/Document/Create">Thêm Mới Văn Bản<img src="~/Images/create.png" /></a>
+            </div>
         </div>
-        <div style="width:100%;padding-top:3px;">
-            <div style="width:100%;padding-top:3px;">
-                <div class="span9">
-                    @if (ViewBag.keyword != "")
-                    {
-                        <text> <h2>Tìm thấy các văn bản</h2></text>
-                    }
-                    else
-                    {
-                        <text> <h2>Xem nhiều nhất</h2></text>
-                    }
-                    &nbsp;<a href="/Document/Create">Thêm Mới Văn Bản<img src="~/Images/create.png"/></a>
-                </div><div class="span4">
-                    @if (ViewBag.keyword != "")
-                    {
-                        <text>Sắp xếp theo:
-                            <select id="order" onchange="chooseOder();">
-                                <option value="-1">Chọn</option>
-                                <option value="1">Phù hợp nhất</option>
-                                @* <option value="2">Mới nhất</option>
-                                    <option value="3">Cũ nhất</option>*@
-                                <option value="2">Xem nhiều nhất</option>
-                            </select>
-                        </text>
-                    }
-                </div>
-            </div>
-            <table class="table">
-                <tr>                    
-                    <th>
-                        Tên văn bản
-                    </th>
-                    <th>
-                        Lĩnh vực
-                    </th>
-                    <th>Loại văn bản</th>
-                    <th>
-                        
-                    </th>
-                </tr>
+        <table class="table">
+            <tr>
+                <th>
+                    Tên văn bản
+                </th>
+                <th>
+                    Lĩnh vực
+                </th>
+                <th>Loại văn bản</th>
+                <th>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td align="left" style="width:55%;">
-                            @if (item.RANK > 0 && count <= 2)
-                            {
-                                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name-@item.code</b></a>
-                            }
-                            else
-                            {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name-@item.code </a>}
-                        </td>
-                        <td align="left">
-                            @qlvb.Config.getCatNameById(1, @item.cat1_id)
-                        </td>
-                        <td align="left">
-                            @qlvb.Config.getCatNameById(2, @item.cat2_id)
-                        </td>
-                        <td><a href="/Document/Create?id=@item.id">Sửa</a>- <a href="/Document/Delete/@item.id">Xóa</a></td>
-                    </tr>
-                            count++;
-                    //allHotKeyword+=@item.ke
-                }
-            </table>
-            <div>
-                Trang:
-                @for (int i = 1; i <= Model.PageCount; i++)
-                {
-                    <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
-                }
-            </div>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td align="left" style="width:55%;">
+                        @if (item.RANK > 0 && count <= 2)
+                        {
+                            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name-@item.code</b></a>
+                        }
+                        else
+                        {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name-@item.code </a>}
+                    </td>
+                    <td align="left">
+                        @qlvb.Config.getCatNameById(1, @item.cat1_id)
+                    </td>
+                    <td align="left">
+                        @qlvb.Config.getCatNameById(2, @item.cat2_id)
+                    </td>
+                    <td><a href="/Document/Create?id=@item.id">Sửa</a>- <a href="/Document/Delete/@item.id">Xóa</a></td>
+                </tr>
+                        count++;
+                //allHotKeyword+=@item.ke
+            }
+        </table>
+        <div>
+            Trang:
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
+            }
         </div>
     </div>
+</div>
+
 </div>
 @*<section class="refinements-summary" style="text-align:left;">
     <h2>Thống kê</h2>
@@ -141,21 +147,23 @@
     var st=@ViewBag.st;
     var status=@ViewBag.status;
     var tps=@ViewBag.tps;
-    if (order.toString().indexOf("RANK")>=0){
-        $("#order").val(1);
-    }
+    //if (order.toString().indexOf("RANK")>=0){
+    //    $("#order").val(1);
+    //}
     //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Desc")>=0){
     //    $("#order").val(2);
     //}
     //if (order.toString().indexOf("code")>=0 && to.toString().indexOf("Asc")>=0){
     //    $("#order").val(3);
     //}
-    if (order.toString().indexOf("views")>=0){
-        $("#order").val(2);
-    }
+    //if (order.toString().indexOf("views")>=0){
+    //    $("#order").val(2);
+    //}
+    if ("@ViewBag.keyword"!="") $("#filterdiv").show();
     document.getElementById("st"+@ViewBag.st).checked=true;
     document.getElementById("status"+@ViewBag.status).checked=true;
     document.getElementById("tps"+@ViewBag.tps).checked=true;
+    $("#order").val(order);
     function resetCat(){
         currentCat1="";
         currentCat2="";
@@ -224,6 +232,7 @@
         st=$('input[name="st"]:checked').val();
         status=$('input[name="status"]:checked').val();
         tps=$('input[name="tps"]:checked').val();
+        order=$('#order').val();
         //alert(st);
         url += "/Document/?k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&order="+order+"&to="+to+"&pg="+pg;
         window.location.href = url;

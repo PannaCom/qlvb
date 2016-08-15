@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
 }
-<div id="tf-services" style="width:100%;padding-top:100px;">
+<div id="tf-services" style="width:100%;padding-top:200px;">
 <div class="container">
 <h2>Đăng nhập</h2>
 
@@ -62,7 +62,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if (xhr.responseText != "0") {
-                    window.location.href = "/Document/index";
+                    window.location.href = "/Document/Admin";
                 } else {
                     document.getElementById("btnSA").disabled = false;
                     alert("Không tìm thấy user và pass này! Kiểm tra lại pass và tên truy cập!");

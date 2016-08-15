@@ -385,7 +385,7 @@ namespace qlvb
                     
                     //result += entry.Key + " , ";
                     if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
-                    if (tempcount >= 50) break;
+                    if (tempcount >= 20) break;
                 }
                 return result;
             }

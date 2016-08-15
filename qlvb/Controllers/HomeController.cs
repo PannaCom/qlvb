@@ -314,7 +314,7 @@ namespace qlvb.Controllers
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
-                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views, 0 as rank FROM documents ";
+                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as rank FROM documents ";
                     //if (order == null || order == "") order = "rank";
                     //query += " order by " + order;
                     //if (to == null || to == "") to = "Desc";
@@ -440,7 +440,7 @@ namespace qlvb.Controllers
         }
 
         public string getAllHotKeyWord() {
-            var p = (from q in db.documents select q).OrderByDescending(o => o.views).Take(20).ToList();
+            var p = (from q in db.documents select q).OrderByDescending(o => o.views).Take(10).ToList();
             string all = "";
             for (int i = 0; i < p.Count; i++) {
                 all += p[i].keyword1 + "," + p[i].keyword2;

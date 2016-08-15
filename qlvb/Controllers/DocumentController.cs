@@ -52,6 +52,8 @@ namespace qlvb.Controllers
             public int cat4_id { get; set; }
             public string cat4 { get; set; }
             public int? views { get; set; }
+            public DateTime? date_publish { get; set; }
+            public DateTime? date_start { get; set; }
             public byte? no { get; set; }
 
         }
@@ -381,11 +383,15 @@ namespace qlvb.Controllers
             //    return View();
             //}
         }
+        public ActionResult Admin()
+        {
+            return View();
+        }
         public ActionResult Cat(int? cat11,int? cat22,int? cat44,string order,string to,int? pg) { 
            
                 if (pg == null) pg = 1;
-                string query = "select id,code,name,cat1_id,cat1,cat2_id,cat2,cat4_id,cat4,views,no from ";
-                       query +=    " (select id,code,name,cat1_id,cat2_id,cat4_id,views from documents) as A left join ";
+                string query = "select id,code,name,cat1_id,cat1,cat2_id,cat2,cat4_id,cat4,views,date_publish,date_start,no from ";
+                query += " (select id,code,name,cat1_id,cat2_id,cat4_id,views,date_publish,date_start from documents) as A left join ";
                        query +=" (select name as cat1,id as idcat1 from cat1) as B on A.cat1_id=B.idcat1 left join ";
                        query +="(select name as cat2,id as idcat2,no from cat2) as C on A.cat2_id=C.idcat2 left join ";
                        query +="(select name as cat4,id as idcat4 from cat4) as D on A.cat4_id=D.idcat4 where 1=1 ";
@@ -479,6 +485,10 @@ namespace qlvb.Controllers
                 int pageSize = 10;
                 int pageNumber = (pg ?? 1);
                 return View(p.ToPagedList(pageNumber, pageSize));
+        }
+        public ViewResult ListCat()
+        {
+            return View();
         }
         public class search
         {
