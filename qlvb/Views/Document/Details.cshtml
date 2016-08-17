@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p>Danh mục liên quan</p>";
+    var lstindex = "<p style=\"background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
     var activieTab = "in active";
     var activieCs = "class=active";
 }
@@ -52,7 +52,7 @@
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
                 <li @activieCs>
-                    <a href="#keyword" data-toggle="tab">Danh mục</a>
+                    <a href="#keyword" data-toggle="tab">Mục lục văn bản</a>
                 </li>
                 activieCs = "";
             }
@@ -67,6 +67,9 @@
             </li>
             <li>
                 <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
+            </li>
+            <li>
+                <a href="#download" data-toggle="tab">Tải về</a>
             </li>
         </ul>
         <!-- Tab panes -->
@@ -83,23 +86,23 @@
 
                     <table style="width:100%;text-align:left;">
                         <tr>
-                            <td id="lstindex" class="col-lg-3" valign="top" style="background:#ccc;color:#000000;overflow:scroll;"></td>
-                            <td class="col-lg-9" style="background:#00ffff;">
+                            <td id="lstindex" class="col-lg-3" valign="top" style="background:#ffd800;color:#000000;overflow:scroll;border-right:1px solid #ddd;" draggable="true"></td>
+                            <td class="col-lg-9" style="background:#ffffff;border-right:1px solid #ddd;">
                                 @foreach (var item in ViewBag.chd)
                                 {
                                     //if (ViewBag.keyword=="")
                                     //{
                                     <text>
-                                        <p style="width:100%;text-align:left;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                        <p style="width:100%;text-align:left;color:black;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
                                         @if (ViewBag.keyword != "")
                                         {
                                             <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
                                         }
                                     </text>
-                                        lstindex += "<p>-<a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></p>";
+                                        lstindex += "<li><a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></li>";
                                     //}
                                 }
-                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)';</script>
+                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)'+'</ul>';</script>
                             </td>
                     </table>
                 </div>
@@ -109,7 +112,7 @@
                 <iframe id="namelabel" src="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@Model.link&embedded=true" class="form-control" style="width:100%;float:left;position:relative;height:600px;"></iframe>
             </div>
             <div class="tab-pane fade" id="key">
-                <table style="width:100%;text-align:center;">
+                <table style="width:100%;text-align:left;">
                     <tr>
                         @*<td class="label">Tập từ khóa từ điều 1, điều 2... :</td>*@
                         <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
@@ -122,22 +125,43 @@
                         @*<td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>*@
                         <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
                     </tr>
-                    <tr>
-                        <td class="label">Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này :</td>
-                        <td><section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section></td>
-                    </tr>
+                    
                 </table>
             </div>
             <div class="tab-pane fade" id="rel">
-                <table style="width:100%;text-align:center;">
+                <table style="width:100%;text-align:left;">
+                    @if (Model.link_to != null && Model.link_to != "") { 
                     <tr>
-                        <td class="label">Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến :</td>
-                        <td><section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section></td>
+                        <td colspan="2">
+                            <p><b>Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến</b></p>
+                            <section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
+                        </td>
                     </tr>
+                    }
+                    @if (Model.be_linked != null && Model.be_linked != "")
+                    {
                     <tr>
-                        <td class="label">Văn bản căn cứ từ các văn bản:</td>
-                        <td><section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section></td>
+                        <td colspan="2">
+                            <p><b>Văn bản căn cứ từ các văn bản:</b></p>
+                            <section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
+                        </td>
                     </tr>
+                    }
+                    <tr>
+                        <td colspan="2">
+                            <p><b>Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này</b></p>
+                            <section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="download">
+                <table style="width:100%;text-align:center;margin-top:10px;">
+                    <tr>
+                        <td class="label"><a href="@qlvb.Config.domain/Files/@Model.link">@Model.link</a></td>
+                        <td>Lượt xem: @Model.views</td>
+                    </tr>
+                    
                 </table>
             </div>
             <div class="tab-pane fade" id="pro">
@@ -177,6 +201,9 @@
         <input type="button" value="Đóng lại" onclick="$('#dvchditems').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;" />
     </div>
     <script>
+        function hideindex() {
+            $('#lstindex').hide();
+        }
         function show(id) {
             $("#" + id).show();
         }
@@ -207,11 +234,13 @@
                     $('#lstindex').css("z-index", "1001");
                 } else {
                     $('.scrollup').fadeOut();
+                    $('#lstindex').show();
                     $('#lstindex').css("position", "relative");
                     $('#lstindex').css("top", "auto");
                     $('#lstindex').css("left", "auto");
                     $('#lstindex').css("z-index", "0");
                     $('#lstindex').css("height", "auto");
+                    
                 }
             });
 

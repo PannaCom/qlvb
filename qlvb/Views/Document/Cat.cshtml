@@ -7,7 +7,27 @@
     
     int count = 0;
 }
-<div class="col-sm-12">
+<div class="col-sm-3" id="mnleft">
+    <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
+        <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+            Lĩnh vực
+        </div>
+        <ul id="allcat1" style="text-align:left;float:left;position:relative;"></ul>
+        <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+            Loại văn bản
+        </div>
+        <ul id="allcat2" style="text-align:left;float:left;position:relative;"></ul>
+        @*<div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
+            Từ khóa gợi ý
+        </div>
+        <section class="refinements-summary" style="text-align:left;">
+            <ul id="allhotkeyword" style="text-align:left;float:left;position:relative;">
+                Đang tải...
+            </ul>
+        </section>*@
+    </div>
+</div>
+<div class="col-sm-9">
 
     <div class="row">
         <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;" id="filterdiv">
@@ -230,5 +250,25 @@
     if ("@ViewBag.user"!=""){
         $("#loginli").hide();
         $("#logoutli").show();
+    }
+    $.ajax({
+        url: "/Home/getAllCat?id=1",
+        cache: false
+    }).done(function( html ) {
+        $( "#allcat1").html(""+html);
+    });
+    $.ajax({
+        url: "/Home/getAllCat?id=2",
+        cache: false
+    }).done(function( html ) {
+        $( "#allcat2").html(""+html);
+    });
+    function gotoCat(type,id){
+        if (type==1){
+            window.location.href ="/Document/Cat?cat11="+id;
+        }
+        if (type==2){
+            window.location.href ="/Document/Cat?cat22="+id;
+        }
     }
 </script>

@@ -876,6 +876,7 @@ namespace qlvb
             string rs = "";
             try
             {
+                if (st == 2 || k.Contains("/")) k = "";
                 if (k != null && k != "")
                 {
                     k = k.Replace("%20", " ");

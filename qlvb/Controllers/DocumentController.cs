@@ -560,7 +560,7 @@ namespace qlvb.Controllers
                 return HttpNotFound();
             }
             db.Database.ExecuteSqlCommand("update documents set views=views+1 where id=" + id);
-            if (keyword == null) keyword = "";
+            if (keyword == null || (st == 2 || keyword.Contains("/"))) keyword = "";
             ViewBag.keyword = keyword;
             ViewBag.f1 = f1;
             ViewBag.f2 = f2;
@@ -573,6 +573,8 @@ namespace qlvb.Controllers
             //if (keyword!="" && keyword!=null)
             try
             {
+                //string keyword2 = keyword;
+                //if (st == 2 || keyword.Contains("/")) keyword2 = "";
                 var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
                 ViewBag.chd = p;
                 ViewBag.tree = Config.showTree(id, keyword, f1, f2, f3, f4, st, status, order, to);
