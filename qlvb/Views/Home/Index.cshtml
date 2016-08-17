@@ -11,7 +11,7 @@
     
 }
 
-    <div class="col-sm-3">
+    <div class="col-sm-3" id="mnleft">
         <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
             <div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
                 Lĩnh vực
@@ -48,7 +48,7 @@
                             <td>
                                 <select id="order" >
                                     <option value="-1">Chọn</option>
-                                    <option value="RANK">Phù hợp nhất</option>
+                                    <option value="RANK" selected>Phù hợp nhất</option>
                                     <option value="views">Xem nhiều nhất</option>
                                 </select>
                             </td>
@@ -209,6 +209,7 @@
             document.getElementById("st"+@ViewBag.st).checked=true;
             document.getElementById("status"+@ViewBag.status).checked=true;
             document.getElementById("tps"+@ViewBag.tps).checked=true;
+            if (order=="") order="RANK";
             $("#order").val(order);
             function resetCat(){
                 currentCat1="";

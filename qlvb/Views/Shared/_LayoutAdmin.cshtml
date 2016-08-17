@@ -63,8 +63,8 @@
     <body>
         <div class="container" style="background:url('/Images/bgheader.gif');height:20px;width:1024px;color:white;">
             <a href="/Document/Admin" class="scroll" style="color:#ffffff;float:left;padding-right:5px;">Trang chủ Admin</a>
-            <a href="/Members/Login" class="scroll" style="color:#ffffff;float:right;padding-right:5px;">Đăng nhập</a>
-            <a id="logoutli" href="/Members/Logout" class="scroll" style="display:none;color:#ffffff;x">Thoát</a>
+            <a id="loginli" href="/Members/Login" class="scroll" style="color:#ffffff;float:right;padding-right:5px;">Đăng nhập</a>
+            <a id="logoutli" href="/Members/Logout" class="scroll" style="display:none;color:#ffffff;float:right;padding-right:5px;">Thoát</a>
         </div>
         <div style="background:url('/Images/banner.png') no-repeat scroll center top transparent !important;position:relative;display:block;float:left;height:138px;width:100%;">
             &nbsp;
@@ -87,7 +87,18 @@
             </div>
         </footer>
 
-        
+        <script>
+            $.ajax({
+                url: "/Members/checkLoged",
+                cache: false
+            }).done(function (html) {
+                if (html != "") {
+                    $("#loginli").hide();
+                    $("#logoutli").show();
+                }
+            });
+        </script>
+
     </body>
     
     

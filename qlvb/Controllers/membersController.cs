@@ -113,6 +113,10 @@ namespace qlvb.Controllers
             }
             else { return "0"; }
         }
+        public string checkLoged()
+        {
+            return Config.getCookie("userid");
+        }
         public ActionResult Logout()
         {
             if (Request.Cookies["logged"] != null)

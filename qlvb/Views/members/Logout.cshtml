@@ -1,6 +1,10 @@
 ﻿@{
     ViewBag.Title = "Logout";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
 }
 
 <h1 style="text-align:center;color:black;padding-top:100px;">Thoát khỏi hệ thống thành công!</h1>
+<p><a href="/">Về Trang Chủ</a></p>
+<script>
+    setTimeout(function () { window.location.href="/"; }, 3000);
+</script>

@@ -111,15 +111,15 @@
             <div class="tab-pane fade" id="key">
                 <table style="width:100%;text-align:center;">
                     <tr>
-                        <td class="label">Tập từ khóa từ điều 1, điều 2... :</td>
+                        @*<td class="label">Tập từ khóa từ điều 1, điều 2... :</td>*@
                         <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword1))</section><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword2))</section></td>
                     </tr>
                     <tr>
-                        <td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td>
-                        <td><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
+                        @*<td class="label">Tập từ khóa 3(từ chương 1, chương 2...) :</td>*@
+                        <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword3))</section></td>
                     </tr>
                     <tr>
-                        <td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>
+                        @*<td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>*@
                         <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
                     </tr>
                     <tr>

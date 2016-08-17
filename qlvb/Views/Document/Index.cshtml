@@ -26,7 +26,7 @@
                     <td>
                         <select id="order">
                             <option value="-1">Chọn</option>
-                            <option value="RANK">Phù hợp nhất</option>
+                            <option value="RANK" selected>Phù hợp nhất</option>
                             <option value="views">Xem nhiều nhất</option>
                         </select>
                     </td>
@@ -163,6 +163,7 @@
     document.getElementById("st"+@ViewBag.st).checked=true;
     document.getElementById("status"+@ViewBag.status).checked=true;
     document.getElementById("tps"+@ViewBag.tps).checked=true;
+    if (order=="") order="RANK";
     $("#order").val(order);
     function resetCat(){
         currentCat1="";

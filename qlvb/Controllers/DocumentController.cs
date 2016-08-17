@@ -65,6 +65,7 @@ namespace qlvb.Controllers
         }
         public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, string order, string to, int? pg)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             //try
             //{
             if (tps == 2)
@@ -385,6 +386,7 @@ namespace qlvb.Controllers
         }
         public ActionResult Admin()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             return View();
         }
         public ActionResult Cat(int? cat11,int? cat22,int? cat44,string order,string to,int? pg) { 
@@ -486,8 +488,9 @@ namespace qlvb.Controllers
                 int pageNumber = (pg ?? 1);
                 return View(p.ToPagedList(pageNumber, pageSize));
         }
-        public ViewResult ListCat()
+        public ActionResult ListCat()
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             return View();
         }
         public class search

@@ -2,35 +2,41 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
 }
 
-<h2>Index</h2>
+<div id="tf-services" style="width:100%;padding-top:100px;">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Tên
-        </th>
-        
-        <th></th>
-    </tr>
+    <h2>Danh sách người dùng </h2>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-       
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-         
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    <p>
+        @Html.ActionLink("Thêm Mới", "Create")
+    </p>
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>
+                    Tên
+                </th>
 
-</table>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+</div>
+</div>
