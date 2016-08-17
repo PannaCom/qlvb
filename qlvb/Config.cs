@@ -588,7 +588,7 @@ namespace qlvb
                 {
                     string[] word = f.Split(',');
                     for (int i = 0; i < word.Length; i++)
-                        if (word[i].Trim() != "")
+                        if (word[i].Trim() != "" && word[i].Trim().Split(' ').Length >= 4)
                         {
                             val += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + word[i].Trim() + "');\">" + word[i].Trim() + "</a>,";
                         }
@@ -1042,10 +1042,10 @@ namespace qlvb
                             preCatId = p[j].cat2_id;
                         }
                         if (p[j].id!=id){
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></td></tr></table></div>";
                         }
                         else {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
@@ -1082,11 +1082,11 @@ namespace qlvb
                         }
                         if (p2[j].id != id)
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></td></tr></table></div>";
                         }
                         else
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
