@@ -84,7 +84,7 @@ namespace qlvb.Controllers
                 if (tps == null) tps = 2;
                 ViewBag.keyword = k;
                 if (pg == null) pg = 1;
-                string query = "select * from (SELECT top 30 ";
+                string query = "select top 30 * from (SELECT  ";
                 query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                 query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                 query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
