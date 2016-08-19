@@ -5,8 +5,8 @@ html {
     -moz-osx-font-smoothing: grayscale;
     overflow-y: auto;
     overflow-x: hidden;
-    font-family: Tahoma,Verdana,'Lato', sans-serif;
-    color: #6f6f6f;
+    font-family: Arial,Helvetica,sans-serif,Tahoma,Verdana;
+    color: #000000;
 }
 ::-webkit-scrollbar { width: 6px;  }/* for vertical scrollbars */
 ::-webkit-scrollbar-track { background:rgba(0, 0, 0, 0.1);  }/* rgba(0, 0, 0, 0.1); */
@@ -857,7 +857,7 @@ ul.cat li a.active {
     border-color: #ffcc33;
 }
 .color {
-    background-color: #ffcc33;
+    background-color:rgb(155, 197, 229);
     border-color: #ffcc33;
 }
 .color:focus,

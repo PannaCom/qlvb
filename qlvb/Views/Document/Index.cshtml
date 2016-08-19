@@ -10,17 +10,17 @@
 }
 
 <div class="col-sm-12" style="margin-top:60px;float:left;position:relative;display:block;" >
-    <div style="background-color:#ebee9d;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;">
-        <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ebee9d;">
+    <div style="background-color:#fccc70;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;">
+        <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#fccc70;">
             <h3 style="text-align:left;">Tìm kiếm văn bản</h3>
             <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
             <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
         </div>
-        <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#ebee9d;">
+        <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#fccc70;">
             <table>
-                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">Tất cả <input type="radio" name="tps" id="tps2" value="2" checked>Tự động tìm trong lĩnh vực có nhiều từ khóa nhất</td></tr>
-                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>Tất cả <input type="radio" name="st" id="st1" value="1">Tiêu đề <input type="radio" name="st" id="st2" value="2">Ký hiệu/Số <input type="radio" name="st" id="st4" value="4">Toàn văn</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
-                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>Tất cả <input type="radio" name="status" id="status0" value="0">Còn hiệu lực<input type="radio" name="status" id="status1" value="1">Hết hiệu lực</td></tr>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" checked>&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Toàn văn&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
                     <td width="100px;">Sắp xếp theo:</td>
                     <td>
@@ -65,11 +65,11 @@
             <div class="span12">
                 @if (ViewBag.keyword != "")
                 {
-                    <text> <h2 style="padding-top:20px;margin-top:20px;">Tìm thấy các văn bản</h2></text>
+                    <text> <h4 style="padding-top:20px;margin-top:20px;">Tìm thấy các văn bản</h4></text>
                 }
                 else
                 {
-                    <text> <h2>Xem nhiều nhất</h2></text>
+                    <text> <h4>Xem nhiều nhất</h4></text>
                 }
                 &nbsp;<a href="/Document/Create">Thêm Mới Văn Bản<img src="~/Images/create.png" /></a>
             </div>

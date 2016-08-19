@@ -225,8 +225,8 @@ namespace qlvb.Controllers
                             {
                                 if (cat1[jj].total <= 0) continue;
                                 color = "";
-                                if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
-                                else if (cat1[jj].total > 0) color = "color:blue;";
+                                if (cat1[jj].catid.ToString() == f1) color = "color:black;font-weight:bold;";
+                                else if (cat1[jj].total > 0) color = "color:black;";
                                 scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name+"</a>,";// + "(" + cat1[jj].total + ")
                             }
                         }
@@ -241,8 +241,8 @@ namespace qlvb.Controllers
                             {
                                 if (cat2[jj].total <= 0) continue;
                                 color = "";
-                                if (cat2[jj].catid.ToString() == f2) color = "color:red;font-weight:bold;";
-                                else if (cat2[jj].total > 0) color = "color:blue;";
+                                if (cat2[jj].catid.ToString() == f2) color = "color:black;font-weight:bold;";
+                                else if (cat2[jj].total > 0) color = "color:black;";
                                 scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "</a>,";//"(" + cat2[jj].total + 
                             }
                         }
@@ -258,8 +258,8 @@ namespace qlvb.Controllers
                             {
                                 if (cat3[jj].total <= 0) continue;
                                 color = "";
-                                if (cat3[jj].catid.ToString() == f3) color = "color:red;font-weight:bold;";
-                                else if (cat3[jj].total > 0) color = "color:blue;";
+                                if (cat3[jj].catid.ToString() == f3) color = "color:black;font-weight:bold;";
+                                else if (cat3[jj].total > 0) color = "color:black;";
                                 scat3 += "<a class='filteritem' onclick='setCat(3," + cat3[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat3[jj].name + "(" + cat3[jj].total + ")</a>,";
                             }
                         }
@@ -276,8 +276,8 @@ namespace qlvb.Controllers
                                 if (cat4[jj].total <= 0) continue;
                                 color = "";
                                 if (cat4[jj].catid.ToString() == f4)
-                                    color = "color:red;font-weight:bold;";
-                                else if (cat4[jj].total > 0) color = "color:blue;";
+                                    color = "color:black;font-weight:bold;";
+                                else if (cat4[jj].total > 0) color = "color:black;";
 
                                 scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "</a>,";//"(" + cat4[jj].total + 
                             }

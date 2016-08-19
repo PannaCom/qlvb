@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p style=\"background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
+    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục <br>(<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
     var activieTab = "in active";
     var activieCs = "class=active";
 }
@@ -86,14 +86,14 @@
 
                     <table style="width:100%;text-align:left;">
                         <tr>
-                            <td id="lstindex" class="col-lg-3" valign="top" style="background:#ffd800;color:#000000;overflow:scroll;border-right:1px solid #ddd;" draggable="true"></td>
-                            <td class="col-lg-9" style="background:#ffffff;border-right:1px solid #ddd;">
+                            <td id="lstindex" class="col-sm-3" valign="top" style="background:#ffffff;color:#000000;overflow:scroll;border-right:1px solid #ddd;" draggable="true"></td>
+                            <td class="col-sm-9" style="background:#ffffff;border-right:1px solid #ddd;">
                                 @foreach (var item in ViewBag.chd)
                                 {
                                     //if (ViewBag.keyword=="")
                                     //{
                                     <text>
-                                        <p style="width:100%;text-align:left;color:black;" id="@item.id"><b style="color:#0094ff">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</b>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                        <p style="width:100%;text-align:left;color:black;" id="@item.id"><span style="color:#000000;font-weight:bold;">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</span>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
                                         @if (ViewBag.keyword != "")
                                         {
                                             <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
@@ -102,7 +102,7 @@
                                         lstindex += "<li><a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></li>";
                                     //}
                                 }
-                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)'+'</ul>';</script>
+                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)' + '</ul>';</script>
                             </td>
                     </table>
                 </div>
@@ -134,7 +134,7 @@
                     <tr>
                         <td colspan="2">
                             <p><b>Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến</b></p>
-                            <section class="refinements-summary2">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
+                            <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
                         </td>
                     </tr>
                     }
@@ -143,14 +143,14 @@
                     <tr>
                         <td colspan="2">
                             <p><b>Văn bản căn cứ từ các văn bản:</b></p>
-                            <section class="refinements-summary3">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
+                            <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
                         </td>
                     </tr>
                     }
                     <tr>
                         <td colspan="2">
                             <p><b>Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này</b></p>
-                            <section class="refinements-summary1">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section>
+                            <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section>
                         </td>
                     </tr>
                 </table>
@@ -224,25 +224,25 @@
 
         $(document).ready(function () {
 
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('.scrollup').fadeIn();
-                    $('#lstindex').css("position", "fixed");
-                    $('#lstindex').css("top", "0px");
-                    $('#lstindex').css("left", "50px");
-                    $('#lstindex').css("height", "400px");
-                    $('#lstindex').css("z-index", "1001");
-                } else {
-                    $('.scrollup').fadeOut();
-                    $('#lstindex').show();
-                    $('#lstindex').css("position", "relative");
-                    $('#lstindex').css("top", "auto");
-                    $('#lstindex').css("left", "auto");
-                    $('#lstindex').css("z-index", "0");
-                    $('#lstindex').css("height", "auto");
+            //$(window).scroll(function () {
+            //    if ($(this).scrollTop() > 100) {
+            //        $('.scrollup').fadeIn();
+            //        $('#lstindex').css("position", "fixed");
+            //        $('#lstindex').css("top", "0px");
+            //        $('#lstindex').css("left", "50px");
+            //        $('#lstindex').css("height", "400px");
+            //        $('#lstindex').css("z-index", "1001");
+            //    } else {
+            //        $('.scrollup').fadeOut();
+            //        $('#lstindex').show();
+            //        $('#lstindex').css("position", "relative");
+            //        $('#lstindex').css("top", "auto");
+            //        $('#lstindex').css("left", "auto");
+            //        $('#lstindex').css("z-index", "0");
+            //        $('#lstindex').css("height", "auto");
                     
-                }
-            });
+            //    }
+            //});
 
             $('.scrollup').click(function () {
                 $("html, body").animate({

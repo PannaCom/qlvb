@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using qlvb.Models;
 using System.Security.Cryptography;
+using System.Collections;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace qlvb.Controllers
 {
@@ -176,8 +178,14 @@ namespace qlvb.Controllers
                 //ldc.AuthType = AuthType.Negotiate;
                 //ldc.Bind(nc); // user has authenticated at this point, as the credentials were used to login to the dc.
                 //validation = true;
+                ArrayList alDcs = new ArrayList();
+                Domain domain = Domain.GetCurrentDomain();
+                //foreach (DomainController dc in domain.DomainControllers)
+                //{
+                //    alDcs.Add(dc.Name);
+                //}
                 LdapAuthentication la = new LdapAuthentication(null);
-                validation = la.IsAuthenticated("", userName, password);
+                validation = la.IsAuthenticated("WORKGROUP", userName, password);
             }
             catch (Exception ex)
             {
