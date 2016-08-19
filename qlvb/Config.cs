@@ -619,7 +619,7 @@ namespace qlvb
                             if (idvb != null)
                             {
                                 string name = p.name;
-                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#000000;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
                             }
                             else
                             {
@@ -633,7 +633,7 @@ namespace qlvb
                         for (int ii = 0; ii < li.Count; ii++)
                         {
                             if (!f.Contains(li[ii].code)) {
-                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + li[ii].id + "\"><span style='font-size:10px;color:#ffffff;'>" + li[ii].name + "</span><br>" + li[ii].code + "</a>&nbsp;";
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + li[ii].id + "\"><span style='font-size:10px;color:#000000;'>" + li[ii].name + "</span><br>" + li[ii].code + "</a>&nbsp;";
                             }
                         }
                     }
@@ -664,7 +664,7 @@ namespace qlvb
                             if (idvb != null)
                             {
                                 string name = p.name;
-                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#ffffff;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
+                                val += "<a class='filteritem' style=\"cursor:pointer;\" href=\"/Document/Details/" + idvb + "\"><span style='font-size:12px;color:#000000;'>" + name + "</span><br>" + word[i].Trim() + "</a>&nbsp;";
                             }
                             else
                             {

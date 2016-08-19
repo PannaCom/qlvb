@@ -113,7 +113,7 @@
                     {
                         <tr>
                             <td valign="top">
-                                <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</b></div>
+                                <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>
                                 <div class="row">
                                     <div class="col-sm-8" style="height:80px;float: left;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;">
                                         @*@if (item.RANK > 0 && count <= 2)

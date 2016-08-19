@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục <br>(<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
+    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
     var activieTab = "in active";
     var activieCs = "class=active";
 }
@@ -87,7 +87,7 @@
                     <table style="width:100%;text-align:left;">
                         <tr>
                             <td id="lstindex" class="col-sm-3" valign="top" style="background:#ffffff;color:#000000;overflow:scroll;border-right:1px solid #ddd;" draggable="true"></td>
-                            <td class="col-sm-9" style="background:#ffffff;border-right:1px solid #ddd;">
+                            <td class="col-sm-9" style="background:#ffffff;border-right:1px solid #ddd;" onclick="hideFull();">
                                 @foreach (var item in ViewBag.chd)
                                 {
                                     //if (ViewBag.keyword=="")
@@ -195,8 +195,8 @@
             </div>
         </div>
     </div>
-    <div id=dvchditems style="width:50%;display:block;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
-        <div id=chditems class="col-lg-3" valign="top" style="width:100%;height:500px;background:#ffffff;color:#000000;text-align:left;overflow:scroll;border:2px solid #0094ff;"></div>
+    <div id=dvchditems style="width:50%;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
+        <div id=chditems class="col-lg-3" valign="top" style="width:100%;height:300px;background:#ffffff;color:#000000;text-align:left;overflow:scroll;border:2px solid #0094ff;"></div>
         @*<iframe id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></iframe>*@
         <input type="button" value="Đóng lại" onclick="$('#dvchditems').hide();" class="btn btn-primary tf-btn color" style="position:relative; width:100px;" />
     </div>
@@ -252,8 +252,10 @@
             });
 
         });
+        var isloadedchd = false;
         function viewchd(id) {
             $('#dvchditems').show();
+            isloadedchd = false;
             //$("#chditems").attr("src","/Document/Items/"+id);
             $("#chditems").html("<img src='/images/loading.gif'>");
             $.ajax({
@@ -266,7 +268,13 @@
                 //$('#dvchditems').hide();
                 //alert(html);
                 $("#chditems").html(html);
+                isloadedchd = true;
 
             });
+        }
+        function hideFull() {
+            if (isloadedchd) {
+                $('#dvchditems').hide();
+            }
         }
     </script>
