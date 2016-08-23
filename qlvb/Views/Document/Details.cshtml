@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul>";
+    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul style=\"float:left;\">";
     var activieTab = "in active";
     var activieCs = "class=active";
 }
@@ -224,25 +224,25 @@
 
         $(document).ready(function () {
 
-            //$(window).scroll(function () {
-            //    if ($(this).scrollTop() > 100) {
-            //        $('.scrollup').fadeIn();
-            //        $('#lstindex').css("position", "fixed");
-            //        $('#lstindex').css("top", "0px");
-            //        $('#lstindex').css("left", "50px");
-            //        $('#lstindex').css("height", "400px");
-            //        $('#lstindex').css("z-index", "1001");
-            //    } else {
-            //        $('.scrollup').fadeOut();
-            //        $('#lstindex').show();
-            //        $('#lstindex').css("position", "relative");
-            //        $('#lstindex').css("top", "auto");
-            //        $('#lstindex').css("left", "auto");
-            //        $('#lstindex').css("z-index", "0");
-            //        $('#lstindex').css("height", "auto");
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                    //$('#lstindex').css("position", "fixed");
+                    //$('#lstindex').css("top", "0px");
+                    //$('#lstindex').css("left", "50px");
+                    //$('#lstindex').css("height", "400px");
+                    //$('#lstindex').css("z-index", "1001");
+                } else {
+                    $('.scrollup').fadeOut();
+                    //$('#lstindex').show();
+                    //$('#lstindex').css("position", "relative");
+                    //$('#lstindex').css("top", "auto");
+                    //$('#lstindex').css("left", "auto");
+                    //$('#lstindex').css("z-index", "0");
+                    //$('#lstindex').css("height", "auto");
                     
-            //    }
-            //});
+                }
+            });
 
             $('.scrollup').click(function () {
                 $("html, body").animate({

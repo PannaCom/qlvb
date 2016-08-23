@@ -44,7 +44,7 @@ namespace qlvb.Controllers
         {
             //try
             //{
-                if (tps == 2) { 
+                if (tps == 2 && (st!=1 & st!=2)) { 
                     string tempf1 = Config.getMaxCat1(k);
                     if (tempf1 != "" && tps == 2) f1 = tempf1;
                 }
