@@ -18,6 +18,7 @@
         </div>
         <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#fccc70;">
             <table>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Chính xác:</td><td><input type="radio" name="ft" id="ft1" value="1" checked>&nbsp;Chính xác cụm từ trên&nbsp;<input type="radio" name="ft" id="ft2" value="2" >&nbsp;Liên quan cụm từ trên&nbsp;</td></tr>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" checked>&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Toàn văn&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
@@ -94,10 +95,10 @@
                     <td align="left" style="width:55%;">
                         @if (item.RANK > 0 && count <= 2)
                         {
-                            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name-@item.code</b></a>
+                            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name-@item.code</b></a>
                         }
                         else
-                        {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name-@item.code </a>}
+                        {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name-@item.code </a>}
                     </td>
                     <td align="left">
                         @qlvb.Config.getCatNameById(1, @item.cat1_id)
@@ -147,6 +148,7 @@
     var st=@ViewBag.st;
     var status=@ViewBag.status;
     var tps=@ViewBag.tps;
+    var ft=@ViewBag.ft;
     //if (order.toString().indexOf("RANK")>=0){
     //    $("#order").val(1);
     //}
@@ -163,6 +165,7 @@
     document.getElementById("st"+@ViewBag.st).checked=true;
     document.getElementById("status"+@ViewBag.status).checked=true;
     document.getElementById("tps"+@ViewBag.tps).checked=true;
+    document.getElementById("ft"+@ViewBag.ft).checked=true;
     if (order=="") order="RANK";
     $("#order").val(order);
     function resetCat(){
@@ -233,9 +236,10 @@
         st=$('input[name="st"]:checked').val();
         status=$('input[name="status"]:checked').val();
         tps=$('input[name="tps"]:checked').val();
+        ft=$('input[name="ft"]:checked').val();
         order=$('#order').val();
         //alert(st);
-        url += "/Document/?k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&order="+order+"&to="+to+"&pg="+pg;
+        url += "/Document/?k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&ft=" + ft +"&order="+order+"&to="+to+"&pg="+pg;
         window.location.href = url;
     }
     //function search() {

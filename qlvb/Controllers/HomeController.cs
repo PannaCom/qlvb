@@ -40,23 +40,32 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
-        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status,byte? tps,string order, string to, int? pg)
+        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status,byte? tps,int? ft,string order, string to, int? pg)
         {
+            string fts = "freetexttable";
             //try
             //{
                 if (tps == 2 && (st!=1 & st!=2)) { 
                     string tempf1 = Config.getMaxCat1(k);
                     if (tempf1 != "" && tps == 2) f1 = tempf1;
                 }
+                if (tps == 1)
+                {
+                    Config.changeHeso(tps, k);
+                }
+                
                 if (k != null && k.Trim() != "")
                 {
-                    k = k.Replace("%20", " ");
+                    if (ft == 1) { fts = "CONTAINSTABLE"; }
+                    else
+                    { k = k.Replace("%20", " "); }
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
                     if (status == null) status = 2;
                     if (tps == null) tps = 2;
+                    if (ft == null) ft = 1;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "select top 30 * from (SELECT ";
@@ -68,7 +77,7 @@ namespace qlvb.Controllers
                     query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
                     query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                     query += "ELSE KEY_TBL.RANK ";
-                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN " + fts + "(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                     query += " where (RANK>"+Config.minRank+") ";
 
                     string[] item = new string[10];
@@ -208,6 +217,7 @@ namespace qlvb.Controllers
                     ViewBag.st = st;
                     ViewBag.status = status;
                     ViewBag.tps = tps;
+                    ViewBag.ft = ft;
                     try
                     {
                         string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
@@ -311,6 +321,7 @@ namespace qlvb.Controllers
                     if (st == null) st = 0;                   
                     if (status == null) status = 2;
                     if (tps == null) tps = 2;
+                    if (ft == null) ft = 1;
                     ViewBag.keyword = k;
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
@@ -342,6 +353,7 @@ namespace qlvb.Controllers
                     ViewBag.st = st;
                     ViewBag.status = status;
                     ViewBag.tps = tps;
+                    ViewBag.ft = ft;
                     ViewBag.page = pg;
                     ViewBag.order = order;
                     ViewBag.to = to;
