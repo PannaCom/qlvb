@@ -43,8 +43,8 @@ namespace qlvb.Controllers
         public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status,byte? tps,int? ft,string order, string to, int? pg)
         {
             string fts = "freetexttable";
-            //try
-            //{
+            try
+            {
                 if (tps == 2 && (st!=1 & st!=2)) { 
                     string tempf1 = Config.getMaxCat1(k);
                     if (tempf1 != "" && tps == 2) f1 = tempf1;
@@ -362,10 +362,11 @@ namespace qlvb.Controllers
                     int pageNumber = (pg ?? 1);
                     return View(p.ToPagedList(pageNumber, pageSize));
                 }
-            //}
-            //catch (Exception exmain) {
-            //    return View();
-            //}
+            }
+            catch (Exception exmain)
+            {
+                return View();
+            }
         }
         public class document_itemscs
         {

@@ -410,7 +410,7 @@ namespace qlvb
                     tempcount++;
                     
                     //result += entry.Key + " , ";
-                    if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a>&nbsp;";
+                    if (!entry.Key.Equals("xã hội chủ nghĩa") && !entry.Key.Equals("cộng hòa") && !entry.Key.Equals("việt nam")) result += "<li><a class='filteritem' style=\"cursor:pointer;\" onclick=\"searchkw('" + entry.Key + "');\">" + entry.Key + "</a></li>";
                     if (tempcount >= 20) break;
                 }
                 return result;
