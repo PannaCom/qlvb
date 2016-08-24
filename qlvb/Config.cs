@@ -17,7 +17,7 @@ namespace qlvb
         private static qlvbEntities db=new qlvbEntities();
         public static string domain = "http://vanbanquocgia.com";//"http://localhost:59574/";
         public static Hashtable allword=null;
-        public static int minRank = -1;
+        public static int minRank = 0;
         public static int heso1 = 1000;
         public static int heso2 = 500;
         public static int heso3 = 50;
@@ -25,6 +25,32 @@ namespace qlvb
         public static int heso5 = 5;
         public static int heso6 = 2;
         public static bool isRunning = false;
+        public static void changeHeso(int? tps,string k)
+        {
+            heso1 = 1000;
+            heso2 = 500;
+            heso3 = 50;
+            heso4 = 10;
+            heso5 = 5;
+            heso6 = 2;
+            if (tps == 1)
+            {
+                //query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                //query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                //query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                //query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                //query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                //query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
+                heso1 = (int)db.cat2.Find(7).no;
+                heso2 = (int)db.cat2.Find(18).no;
+                heso3 = (int)db.cat2.Find(15).no;
+                heso4 = (int)db.cat2.Find(5).no;
+                heso5 = (int)db.cat2.Find(23).no;
+                heso6 = (int)db.cat2.Find(6).no;
+                //if (k != null & k != "" && k.Split(' ').Length <= 1) minRank = -1; else minRank = 0;
+            }
+
+        }
         public static void loadDic(){
             var p = (from q in db.dic_normal select q).ToList();
             if (allword == null || allword.Count <= 0) allword = new Hashtable(); 
@@ -545,11 +571,15 @@ namespace qlvb
             }
             return "";
         }
-        public static string  makeQuery(string k,string cols,string f1,string f2,string f3,string f4){
+        public static string  makeQuery(int? ft,string k,string cols,string f1,string f2,string f3,string f4){
+            string fts = "freetexttable";
+            if (ft == 1) { fts = "CONTAINSTABLE"; }
+            else
+            { k = k.Replace("%20", " "); }
             string query="select catid,name,total,no from (select catid,name,count(id) as total from ";
             query+="(select catid,name,id from ";
             query += "(select id as catid,name from cat" + cols + ") as A left join ";
-            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and KEY_TBL.RANK>" + Config.minRank + ") as B on A.catid=B.cat" + cols + "_id ";
+            query += "(select FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.id from documents AS FT_TBL INNER JOIN " + fts + "(documents, auto_des,'" + k + "')  AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and KEY_TBL.RANK>" + Config.minRank + ") as B on A.catid=B.cat" + cols + "_id ";
             
                 string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
                 for (int f = 0; f < filter.Length; f++)
@@ -871,22 +901,34 @@ namespace qlvb
             public byte? status { get; set; }
 
         }
-        public static string showTree(int id,string k, string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to)
+        public static string showTree(int id, string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to)
         {
             string rs = "";
+            string fts = "freetexttable";
             try
             {
                 if (st == 2 || k.Contains("/")) k = "";
+                if (tps == 2 && (st != 1 & st != 2))
+                {
+                    string tempf1 = Config.getMaxCat1(k);
+                    if (tempf1 != "" && tps == 2) f1 = tempf1;
+                }
+                if (tps == 1)
+                {
+                    Config.changeHeso(tps, k);
+                }
                 if (k != null && k != "")
                 {
-                    k = k.Replace("%20", " ");
+                    if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%"); }
+                    else
+                    { k = k.Replace("%20", " ").Replace("%", " "); }
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
                     if (status == null) status = 2;
-                   
-                    string query = "select * from (SELECT top 30 ";
+
+                    string query = "select top 30 * from (SELECT  ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -895,7 +937,7 @@ namespace qlvb
                     query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
                     query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                     query += "ELSE KEY_TBL.RANK ";
-                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN " + fts + "(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                     query += " where (RANK>" + Config.minRank + ") ";
 
                     string[] item = new string[10];
@@ -1083,11 +1125,11 @@ namespace qlvb
                         }
                         if (p2[j].id != id)
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps="+tps+"&ft="+ft+"&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></td></tr></table></div>";
                         }
                         else
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps=" + tps + "&ft=" + ft + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
