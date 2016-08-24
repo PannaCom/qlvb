@@ -56,17 +56,17 @@ namespace qlvb.Controllers
                 
                 if (k != null && k.Trim() != "")
                 {
-                    if (ft == 1) { fts = "CONTAINSTABLE"; }
+                    if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%");}
                     else
-                    { k = k.Replace("%20", " "); }
+                    { k = k.Replace("%20", " ").Replace("%", " "); }
 
                     f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;
                     if (status == null) status = 2;
-                    if (tps == null) tps = 2;
+                    if (tps == null) tps = 1;
                     if (ft == null) ft = 1;
-                    ViewBag.keyword = k;
+                    ViewBag.keyword = k.Replace("%", " ");
                     if (pg == null) pg = 1;
                     string query = "select top 30 * from (SELECT ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
@@ -220,10 +220,10 @@ namespace qlvb.Controllers
                     ViewBag.ft = ft;
                     try
                     {
-                        string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
-                        string query2 = Config.makeQuery(k, "2", f1, f2, f3, f4);
-                        string query3 = Config.makeQuery(k, "3", f1, f2, f3, f4);
-                        string query4 = Config.makeQuery(k, "4", f1, f2, f3, f4);
+                        string query1 = Config.makeQuery(ft,k, "1", f1, f2, f3, f4);
+                        string query2 = Config.makeQuery(ft, k, "2", f1, f2, f3, f4);
+                        string query3 = Config.makeQuery(ft, k, "3", f1, f2, f3, f4);
+                        string query4 = Config.makeQuery(ft, k, "4", f1, f2, f3, f4);
                         int jj = 0;
                         string scat1 = "", scat2 = "", scat3 = "", scat4 = "";
                         try
@@ -320,9 +320,9 @@ namespace qlvb.Controllers
                     f4 = f4 != null ? f4 : "";
                     if (st == null) st = 0;                   
                     if (status == null) status = 2;
-                    if (tps == null) tps = 2;
+                    if (tps == null) tps = 1;
                     if (ft == null) ft = 1;
-                    ViewBag.keyword = k;
+                    ViewBag.keyword = k.Replace("%", " ");
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
                     query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as rank FROM documents ";

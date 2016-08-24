@@ -19,7 +19,7 @@
         <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#fccc70;">
             <table>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Chính xác:</td><td><input type="radio" name="ft" id="ft1" value="1" checked>&nbsp;Chính xác cụm từ trên&nbsp;<input type="radio" name="ft" id="ft2" value="2" >&nbsp;Liên quan cụm từ trên&nbsp;</td></tr>
-                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1">&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" checked>&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
+                <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2">&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Toàn văn&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
                 <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
@@ -173,6 +173,18 @@
         currentCat2="";
         currentCat3="";
         currentCat4="";
+        currentCat1="";
+        currentCat2="";
+        currentCat3="";
+        currentCat4="";
+        st=0;
+        tps=1;
+        ft=1;
+        status=2;
+        document.getElementById("st0").checked=true;
+        document.getElementById("status2").checked=true;
+        document.getElementById("tps1").checked=true;
+        document.getElementById("ft1").checked=true;
         search();
     }
     function setCat(type,val){

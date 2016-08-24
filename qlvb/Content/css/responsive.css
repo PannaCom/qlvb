@@ -93,6 +93,14 @@
     .ipad-wrapper .app-wrap {left: 3%;}
     #mnleft{display:none;}
     #mainmenu{display:none;}
+    #listviewleft{
+        width:100%;
+    }
+    #listviewright{
+        width:100%;
+        float:left;
+        margin-top:20px;
+    }
 }
 @media (max-width: 360px) { 
 	#tf-services,
@@ -132,6 +140,14 @@
 	.blog .post-meta {min-height: 55px;}
     #mnleft{display:none;}
     #mainmenu{display:none;}
+    #listviewleft{
+        width:100%;
+    }
+    #listviewright{
+        width:100%;
+        float:left;
+        margin-top:20px;
+    }
 }
 @media (max-width: 320px) { 
 	.post-wrap .post .media-body p {display: none;}
@@ -146,4 +162,12 @@
 	}
     #mnleft{display:none;}
     #mainmenu{display:none;}
+    #listviewleft{
+        width:100%;
+    }
+    #listviewright{
+        width:100%;
+        float:left;
+        margin-top:20px;
+    }
 }

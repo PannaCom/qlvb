@@ -63,29 +63,37 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
-        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, string order, string to, int? pg)
+        public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to, int? pg)
         {
-            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
+            string fts = "freetexttable";
             //try
             //{
-            if (tps == 2)
+            if (tps == 2 && (st != 1 & st != 2))
             {
                 string tempf1 = Config.getMaxCat1(k);
                 if (tempf1 != "" && tps == 2) f1 = tempf1;
             }
+            if (tps == 1)
+            {
+                Config.changeHeso(tps, k);
+            }
+
             if (k != null && k.Trim() != "")
             {
-                k = k.Replace("%20", " ");
+                if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%"); }
+                else
+                { k = k.Replace("%20", " ").Replace("%", " "); }
 
                 f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
                 f4 = f4 != null ? f4 : "";
                 if (st == null) st = 0;
                 if (status == null) status = 2;
-                if (tps == null) tps = 2;
-                ViewBag.keyword = k;
+                if (tps == null) tps = 1;
+                if (ft == null) ft = 1;
+                ViewBag.keyword = k.Replace("%", " ");
                 if (pg == null) pg = 1;
-                string query = "select top 30 * from (SELECT  ";
-                query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views, RANK=CASE FT_TBL.cat2_id ";
+                string query = "select top 30 * from (SELECT ";
+                query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
                 query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                 query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
                 query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
@@ -93,7 +101,7 @@ namespace qlvb.Controllers
                 query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
                 query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
                 query += "ELSE KEY_TBL.RANK ";
-                query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN FREETEXTTABLE(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN " + fts + "(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
                 query += " where (RANK>" + Config.minRank + ") ";
 
                 string[] item = new string[10];
@@ -123,7 +131,7 @@ namespace qlvb.Controllers
                 query += ") as A ";
                 if (k != null && st == 2)
                 {
-                    query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                    query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                     query += "WHEN 7 THEN " + Config.heso1 + " ";
                     query += "WHEN 18 THEN " + Config.heso2 + " ";
                     query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -158,7 +166,7 @@ namespace qlvb.Controllers
                 {
                     if (k != null && (st == 1))
                     {
-                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -191,7 +199,7 @@ namespace qlvb.Controllers
                     }
                     if (k != null && (st == 4))
                     {
-                        query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,RANK=CASE cat2_id ";
+                        query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -236,25 +244,26 @@ namespace qlvb.Controllers
                 ViewBag.st = st;
                 ViewBag.status = status;
                 ViewBag.tps = tps;
+                ViewBag.ft = ft;
                 try
                 {
-                    string query1 = Config.makeQuery(k, "1", f1, f2, f3, f4);
-                    string query2 = Config.makeQuery(k, "2", f1, f2, f3, f4);
-                    string query3 = Config.makeQuery(k, "3", f1, f2, f3, f4);
-                    string query4 = Config.makeQuery(k, "4", f1, f2, f3, f4);
+                    string query1 = Config.makeQuery(ft, k, "1", f1, f2, f3, f4);
+                    string query2 = Config.makeQuery(ft, k, "2", f1, f2, f3, f4);
+                    string query3 = Config.makeQuery(ft, k, "3", f1, f2, f3, f4);
+                    string query4 = Config.makeQuery(ft, k, "4", f1, f2, f3, f4);
                     int jj = 0;
                     string scat1 = "", scat2 = "", scat3 = "", scat4 = "";
                     try
                     {
                         var cat1 = db.Database.SqlQuery<catitem>(query1).ToList();
-                        scat1 = "<b>Lĩnh vực:</b>";
+                        scat1 = "<b>Lĩnh vực:</b> ";
                         string color = "";
                         for (jj = 0; jj < cat1.Count; jj++)
                         {
                             if (cat1[jj].total <= 0) continue;
                             color = "";
-                            if (cat1[jj].catid.ToString() == f1) color = "color:red;font-weight:bold;";
-                            else if (cat1[jj].total > 0) color = "color:blue;";
+                            if (cat1[jj].catid.ToString() == f1) color = "color:black;font-weight:bold;";
+                            else if (cat1[jj].total > 0) color = "color:black;";
                             scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + "</a>,";// + "(" + cat1[jj].total + ")
                         }
                     }
@@ -264,14 +273,14 @@ namespace qlvb.Controllers
                     try
                     {
                         var cat2 = db.Database.SqlQuery<catitem>(query2).ToList();
-                        scat2 = "<b>Loại văn bản:</b>";
+                        scat2 = "<b>Loại văn bản:</b> ";
                         string color = "";
                         for (jj = 0; jj < cat2.Count; jj++)
                         {
                             if (cat2[jj].total <= 0) continue;
                             color = "";
-                            if (cat2[jj].catid.ToString() == f2) color = "color:red;font-weight:bold;";
-                            else if (cat2[jj].total > 0) color = "color:blue;";
+                            if (cat2[jj].catid.ToString() == f2) color = "color:black;font-weight:bold;";
+                            else if (cat2[jj].total > 0) color = "color:black;";
                             scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "</a>,";//"(" + cat2[jj].total + 
                         }
                     }
@@ -287,8 +296,8 @@ namespace qlvb.Controllers
                         {
                             if (cat3[jj].total <= 0) continue;
                             color = "";
-                            if (cat3[jj].catid.ToString() == f3) color = "color:red;font-weight:bold;";
-                            else if (cat3[jj].total > 0) color = "color:blue;";
+                            if (cat3[jj].catid.ToString() == f3) color = "color:black;font-weight:bold;";
+                            else if (cat3[jj].total > 0) color = "color:black;";
                             scat3 += "<a class='filteritem' onclick='setCat(3," + cat3[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat3[jj].name + "(" + cat3[jj].total + ")</a>,";
                         }
                     }
@@ -298,15 +307,15 @@ namespace qlvb.Controllers
                     try
                     {
                         var cat4 = db.Database.SqlQuery<catitem>(query4).ToList();
-                        scat4 = "<b>Cơ quan ban hành:</b>";
+                        scat4 = "<b>Cơ quan ban hành:</b> ";
                         string color = "";
                         for (jj = 0; jj < cat4.Count; jj++)
                         {
                             if (cat4[jj].total <= 0) continue;
                             color = "";
                             if (cat4[jj].catid.ToString() == f4)
-                                color = "color:red;font-weight:bold;";
-                            else if (cat4[jj].total > 0) color = "color:blue;";
+                                color = "color:black;font-weight:bold;";
+                            else if (cat4[jj].total > 0) color = "color:black;";
 
                             scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "</a>,";//"(" + cat4[jj].total + 
                         }
@@ -339,11 +348,12 @@ namespace qlvb.Controllers
                 f4 = f4 != null ? f4 : "";
                 if (st == null) st = 0;
                 if (status == null) status = 2;
-                if (tps == null) tps = 2;
-                ViewBag.keyword = k;
+                if (tps == null) tps = 1;
+                if (ft == null) ft = 1;
+                ViewBag.keyword = k.Replace("%", " ");
                 if (pg == null) pg = 1;
                 string query = "SELECT top 100 ";
-                query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views, 0 as rank FROM documents ";
+                query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as rank FROM documents ";
                 //if (order == null || order == "") order = "rank";
                 //query += " order by " + order;
                 //if (to == null || to == "") to = "Desc";
@@ -371,6 +381,7 @@ namespace qlvb.Controllers
                 ViewBag.st = st;
                 ViewBag.status = status;
                 ViewBag.tps = tps;
+                ViewBag.ft = ft;
                 ViewBag.page = pg;
                 ViewBag.order = order;
                 ViewBag.to = to;
@@ -552,7 +563,7 @@ namespace qlvb.Controllers
         {
             return View();
         }
-        public ActionResult Details(int id,string keyword,string f1, string f2, string f3, string f4, int? st, byte? status, string order, string to)
+        public ActionResult Details(int id, string keyword, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to)
         {
             document document = db.documents.Find(id);
             if (document == null)
@@ -577,7 +588,7 @@ namespace qlvb.Controllers
                 //if (st == 2 || keyword.Contains("/")) keyword2 = "";
                 var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
                 ViewBag.chd = p;
-                ViewBag.tree = Config.showTree(id, keyword, f1, f2, f3, f4, st, status, order, to);
+                ViewBag.tree = Config.showTree(id, keyword, f1, f2, f3, f4, st, status,tps,ft, order, to);
             }
             catch (Exception ex) { }
             return View(document);
