@@ -74,6 +74,23 @@ namespace qlvb
             }
             return rs;
         }
+        public static string showQuoteText(string content, string keyword)
+        {
+            if (keyword.Trim() == "") return content;
+            string[] sen = content.Split('.');
+            string rs = "";
+            for (int i = 0; i < sen.Length; i++)
+            {
+                if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
+                {
+                    sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
+                    rs += "..." + sen[i] + "...";
+                    
+                    break;
+                }
+            }
+            return rs;
+        }
         public static string showCHD(string content)
         {
             string[] sen = content.Split('_');
