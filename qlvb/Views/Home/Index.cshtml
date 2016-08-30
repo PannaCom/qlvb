@@ -136,8 +136,8 @@
                                         {*@
                                         <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#131E32;"><b>@item.name</b> </a>
                                         @*}*@
-                                        @*<p id="items_@item.id"></p>
-                                        <script>getShortDesItemSearch(@item.id,"@ViewBag.keyword");</script>*@
+                                        <p id="items_@item.id"></p>
+                                        <script>getShortDesItemSearch(@item.id,"@ViewBag.keyword");</script>
                                     </div>
                                     <div class="col-sm-4" style="float:right;height:80px;position:relative;display:block;" id="listviewright">
                                         <table>
@@ -289,9 +289,10 @@
             function search() {
                 var url = "/?";
                 var k = $("#word").val();
-                //if (k == "") {
-                //    return;
-                //}
+                if (k == "") {
+                    alert("Nhập từ khóa!");
+                    return;
+                }
                 var f1="";
                 var f2="";
                 var f3="";

@@ -78,7 +78,7 @@
     #listviewright{
         width:100%;
         float:left;
-        margin-top:20px;
+        margin-top:40px;
     }
 }
 @media (max-width: 603px) { 
@@ -109,7 +109,7 @@
     #listviewright{
         width:100%;
         float:left;
-        margin-top:20px;
+         margin-top:40px;
     }
 }
 @media (max-width: 360px) { 
@@ -156,7 +156,7 @@
     #listviewright{
         width:100%;
         float:left;
-        margin-top:20px;
+        margin-top:40px;
     }
 }
 @media (max-width: 320px) { 
@@ -178,6 +178,6 @@
     #listviewright{
         width:100%;
         float:left;
-        margin-top:20px;
+         margin-top:40px;
     }
 }

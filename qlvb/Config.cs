@@ -84,7 +84,10 @@ namespace qlvb
                 if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
                 {
                     sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
-                    rs += "..." + sen[i] + "...";
+                    int from = sen[i].IndexOf(keyword);
+                    int ffrom = from - 100 > 0 ? from - 100 : 0;
+                    int fto = from + 100 > sen[i].Length ? sen[i].Length - 2 : from + 100-2;
+                    rs += "..." + sen[i].Substring(ffrom,fto-ffrom) + "...";
                     
                     break;
                 }
