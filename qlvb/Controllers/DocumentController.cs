@@ -1074,5 +1074,15 @@ namespace qlvb.Controllers
                 return "0";
             }
         }
+        public string getShortDesItemSearch(int id,string keyword)
+        {
+            try { 
+                var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
+                string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword) + "</p>";
+                return content;
+            }catch(Exception ex){
+                return "";
+            }
+        }
     }
 }

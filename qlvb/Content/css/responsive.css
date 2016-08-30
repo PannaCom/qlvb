@@ -70,6 +70,16 @@
 	}
 	.slider .content-heading p.lead { margin-bottom: 20px; }
 	.slider .carousel-indicators { bottom: 30px; }
+    #listviewleft{
+        width:100%;
+        max-height:80px;
+        height:20px;
+    }
+    #listviewright{
+        width:100%;
+        float:left;
+        margin-top:20px;
+    }
 }
 @media (max-width: 603px) { 
 	.slider a.goto-btn { display: none;}

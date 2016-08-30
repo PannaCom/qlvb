@@ -10,7 +10,18 @@
     
     
 }
+<script>
+    function getShortDesItemSearch(id,keyword) {
+        
+        $.ajax({
+            url: "/Document/getShortDesItemSearch?id=" + id+"&keyword="+keyword,
+            cache: false
+        }).done(function (html) {
+            $("#items_"+id).html(html);
 
+        });
+    }
+</script>
     <div class="col-sm-3" id="mnleft">
         <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
             <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
@@ -82,7 +93,7 @@
                     @Html.Raw(@ViewBag.cat4)
                 </div>
             </div>
-            <div style="width:100%;float:left;position:relative;">
+            <div style="width:100%;float:left;position:relative;" id="contextlist">
                 <div style="width:100%;margin-top:5px;">
                     <div class="span12">
                         @if (ViewBag.keyword != "")
@@ -116,15 +127,17 @@
                             <td valign="top">
                                 <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>
                                 <div class="row">
-                                    <div class="col-sm-8" style="height:80px;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft">
+                                    <div class="col-sm-8" style="min-height:80px;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft">
                                         @*@if (item.RANK > 0 && count <= 2)
                                         {
                                             <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
                                         }
                                         else
                                         {*@
-                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#131E32;"><b>@item.name</b> </a>
                                         @*}*@
+                                        @*<p id="items_@item.id"></p>
+                                        <script>getShortDesItemSearch(@item.id,"@ViewBag.keyword");</script>*@
                                     </div>
                                     <div class="col-sm-4" style="float:right;height:80px;position:relative;display:block;" id="listviewright">
                                         <table>
@@ -380,3 +393,9 @@
                 }
             }
         </script>
+        <script src="/Scripts/mark.js"></script>
+        <script>
+            var instance = new Mark(document.getElementById("contextlist"));
+            instance.mark("@ViewBag.keyword");
+        </script>
+
