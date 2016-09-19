@@ -51,18 +51,15 @@
                 </div>
                 <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#fccc70;">
                     <table>
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Chính xác:</td><td><input type="radio" name="ft" id="ft1" value="1">&nbsp;Chính xác cụm từ trên&nbsp;<input type="radio" name="ft" id="ft2" value="2" checked>&nbsp;Liên quan cụm từ trên&nbsp;</td></tr>
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Kiểu tìm:</td><td><input type="radio" name="tps" id="tps1" value="1" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" >&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Toàn văn&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm:</td><td><input type="radio" name="ft" id="ft1" value="1">&nbsp;Chính xác cụm từ&nbsp;<input type="radio" name="ft" id="ft2" value="2" checked>&nbsp;Liên quan cụm từ&nbsp;</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Lĩnh vực:</td><td><input type="radio" name="tps" id="tps1" value="1" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" >&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Nội dung&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
                         <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
                         <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
                             <td width="100px;">Sắp xếp theo:</td>  
                             <td>
-                                <select id="order" >
-                                    <option value="-1">Chọn</option>
-                                    <option value="RANK" selected>Phù hợp nhất</option>
-                                    <option value="views">Xem nhiều nhất</option>
-                                </select>
+                                <input type="radio" name="order" id="RANK" value="RANK" checked>&nbsp;Phù hợp nhất&nbsp;<input type="radio" name="order" id="views" value="views">&nbsp;Xem nhiều nhất
+                                
                             </td>
                         </tr>
                     </table>
@@ -137,7 +134,11 @@
                                         <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#131E32;"><b>@item.name</b> </a>
                                         @*}*@
                                         <p id="items_@item.id"></p>
-                                        <script>getShortDesItemSearch(@item.id,"@ViewBag.keyword");</script>
+                                        <script>
+                                            if ("@ViewBag.keyword"!=""){
+                                                getShortDesItemSearch(@item.id,"@ViewBag.keyword");
+                                            }
+                                        </script>
                                     </div>
                                     <div class="col-sm-4" style="float:right;height:80px;position:relative;display:block;" id="listviewright">
                                         <table>
@@ -225,6 +226,7 @@
             document.getElementById("status"+@ViewBag.status).checked=true;
             document.getElementById("tps"+@ViewBag.tps).checked=true;
             document.getElementById("ft"+@ViewBag.ft).checked=true;
+            document.getElementById("@ViewBag.order").checked=true;
             if (order=="") order="RANK";
             $("#order").val(order);
             function resetCat(){
@@ -260,7 +262,7 @@
                 search();
             }
             function chooseOder(){
-                if ($("#order").val()=="1"){
+                if ($("#RANK").val()=="RANK"){
                     setorder('RANK','Desc');
                 }
                     //else
@@ -272,7 +274,7 @@
                     //            setorder('code','Asc');
                     //        }
                 else
-                    if ($("#order").val()=="2"){
+                    if ($("#views").val()=="views"){
                         setorder('views','Desc');
                     }
             }
@@ -305,7 +307,7 @@
                 status=$('input[name="status"]:checked').val();
                 tps=$('input[name="tps"]:checked').val();
                 ft=$('input[name="ft"]:checked').val();
-                order=$('#order').val();
+                order=$('input[name="order"]:checked').val();
 
                 //alert(st);
                 url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&ft=" + ft +"&order="+order+"&to="+to+"&pg="+pg;

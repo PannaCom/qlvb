@@ -78,13 +78,25 @@ namespace qlvb
         {
             if (keyword.Trim() == "") return content;
             string[] sen = content.Split('.');
+            string[] basicword = keyword.Split(' ');
             string rs = "";
+            bool found=false;
+            int fromii = 0;
             for (int i = 0; i < sen.Length; i++)
             {
-                if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
+                found=false;
+                if (!sen[i].Contains(keyword))
+                {
+                    for (int l = 0; l < basicword.Length; l++)
+                    {
+                        if (sen[i].Contains(basicword[l])) { fromii = l; found = true; break; }
+                    }
+                }
+                if (found || sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
                 {
                     sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
                     int from = sen[i].IndexOf(keyword);
+                    if (found && !sen[i].Contains(keyword)) from = sen[i].IndexOf(basicword[fromii]);
                     int ffrom = from - 100 > 0 ? from - 100 : 0;
                     int fto = from + 100 > sen[i].Length ? sen[i].Length - 2 : from + 100-2;
                     rs += "..." + sen[i].Substring(ffrom,fto-ffrom) + "...";

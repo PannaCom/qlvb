@@ -1074,13 +1074,26 @@ namespace qlvb.Controllers
                 return "0";
             }
         }
+        public class ItemSearchDes
+        {
+            public string item_id { get; set; }
+            public string item_content { get; set; }
+        }
         public string getShortDesItemSearch(int id,string keyword)
         {
             try {
                 if (keyword == "" || keyword == null) return "";
-                var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
-                string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword) + "</p>";
-                return content;
+                keyword = keyword.Replace(" ", "%");
+                var p1 = db.Database.SqlQuery<ItemSearchDes>("select top 1 * from document_items where document_id=" + id + " and item_content like N'%" + keyword + "%'").ToList();
+                if (p1.Count > 0)
+                {
+                    var p = p1[0];
+                    keyword = keyword.Replace("%20", " ").Replace("%", " ").Replace("  "," ");
+                    //(from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
+                    string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword) + "</p>";
+                    return content;
+                }
+                else return "";
             }catch(Exception ex){
                 return "";
             }

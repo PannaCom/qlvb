@@ -325,8 +325,8 @@ namespace qlvb.Controllers
                     ViewBag.keyword = k.Replace("%", " ");
                     if (pg == null) pg = 1;
                     string query = "SELECT top 100 ";
-                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as rank FROM documents ";
-                    //if (order == null || order == "") order = "rank";
+                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as RANK FROM documents ";
+                    if (order == null || order == "") order = "RANK";
                     //query += " order by " + order;
                     //if (to == null || to == "") to = "Desc";
                     //query += " " + to;
