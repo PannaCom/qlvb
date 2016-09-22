@@ -54,7 +54,7 @@ namespace qlvb.Controllers
         {
             if (ModelState.IsValid)
             {
-                cat1.no = 0;
+                //cat1.no = 0;
                 db.cat1.Add(cat1);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,7 +86,7 @@ namespace qlvb.Controllers
         {
             if (ModelState.IsValid)
             {
-                cat1.no = 0;
+                //cat1.no = 0;
                 db.Entry(cat1).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

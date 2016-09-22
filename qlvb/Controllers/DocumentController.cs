@@ -644,6 +644,7 @@ namespace qlvb.Controllers
                 ViewBag.be_linked = document.be_linked;
                 ViewBag.link_to = document.link_to;
                 ViewBag.link = document.link;
+                ViewBag.link_to_over_date = document.link_to_over_date;
                 ViewBag.year = document.year;
                 ViewBag.related_id = document.related_id;
                 DateTime? date_publish = document.date_publish;
@@ -838,7 +839,7 @@ namespace qlvb.Controllers
             }
             return "0";
         }
-        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to, DateTime? date_publish, DateTime? date_start, string full_content, byte status)
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to,string link_to_over_date, DateTime? date_publish, DateTime? date_start, string full_content, byte status)
         {
             try
             {
@@ -853,6 +854,7 @@ namespace qlvb.Controllers
                     doc.keyword3 = keyword3;
                     doc.keyword4 = keyword4;
                     doc.keyword5 = keyword5;
+                  
                     doc.cat1_id = cat1;
                     doc.cat2_id = cat2;
                     doc.cat3_id = cat3;
@@ -872,6 +874,7 @@ namespace qlvb.Controllers
                     doc.views = 0;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
+                    doc.link_to_over_date = link_to_over_date;
                     doc.date_publish = date_publish;// Config.convertToDate(date_publish);
                     doc.date_start = date_start;// Config.convertToDate(date_start);
                     //if (doc.date_publish == DateTime.MinValue) doc.date_publish = null;
@@ -920,6 +923,7 @@ namespace qlvb.Controllers
                     doc.year = year;
                     doc.be_linked = be_linked;
                     doc.link_to = link_to;
+                    doc.link_to_over_date = link_to_over_date;
                     doc.date_publish = date_publish;// Config.convertToDate(date_publish);
                     doc.date_start = date_start;// Config.convertToDate(date_start);
                     //if (doc.date_publish == DateTime.MinValue) doc.date_publish = null;

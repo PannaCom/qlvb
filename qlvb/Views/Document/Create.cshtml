@@ -94,9 +94,10 @@
         <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
         <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
         <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4">@Html.Raw(@ViewBag.keyword4)</textarea>
-        <label class="label">Tập từ khóa 5(Lấy từ các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này) *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
-        <label class="label" >Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến các văn bản:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
-        <label class="label" >Văn bản căn cứ từ các văn bản:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="be_linked" name="be_linked" value="@ViewBag.be_linked" onkeyup="autosearch(event,1);" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label">Văn bản liên quan *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
+        <label class="label" >Văn bản sửa đổi bổ sung:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label" >Văn bản căn cứ:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="be_linked" name="be_linked" value="@ViewBag.be_linked" onkeyup="autosearch(event,1);" style="width:100%;display:block;float:left;position:relative;">
+        <label class="label">Văn bản hết hiệu lực:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to_over_date" name="link_to_over_date" value="@ViewBag.link_to_over_date" onkeyup="autosearch(event,2);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
         <script>getCat(1,"@ViewBag.cat1");</script>
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>       
@@ -503,6 +504,7 @@
         formdata.append("related_id", document.getElementById("related_id").value);
         formdata.append("be_linked", document.getElementById("be_linked").value);
         formdata.append("link_to", document.getElementById("link_to").value);
+        formdata.append("link_to_over_date", document.getElementById("link_to_over_date").value);
         formdata.append("date_publish", document.getElementById("date_publish").value);
         formdata.append("date_start", document.getElementById("date_start").value);
         formdata.append("full_content", "");
@@ -527,6 +529,7 @@
     function autosearch(e,type) {
         var code = document.getElementById("link_to").value;
         if (type==1) code=document.getElementById("be_linked").value;
+        if (type==2) code=document.getElementById("link_to_over_date").value;
         //Tách code ra
         var arrcode=code.split(',');
         var tempcode=arrcode[arrcode.length-1].trim();

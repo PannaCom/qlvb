@@ -93,6 +93,7 @@
           <Property Name="link" Type="nvarchar" MaxLength="550" />
           <Property Name="link_to" Type="nvarchar" MaxLength="152" />
           <Property Name="be_linked" Type="nvarchar" MaxLength="152" />
+          <Property Name="link_to_over_date" Type="nvarchar" MaxLength="152" />
           <Property Name="status" Type="tinyint" />
           <Property Name="views" Type="int" />
           <Property Name="date_publish" Type="date" />
@@ -142,8 +143,8 @@
           <EntitySet Name="dic_pro" EntityType="qlvbModel.dic_pro" />
           <EntitySet Name="members" EntityType="qlvbModel.member" />
           <EntitySet Name="logs" EntityType="qlvbModel.log" />
-          <EntitySet Name="documents" EntityType="qlvbModel.document" />
           <EntitySet Name="document_items" EntityType="qlvbModel.document_items" />
+          <EntitySet Name="documents" EntityType="qlvbModel.document" />
         </EntityContainer>
         <EntityType Name="cat1">
           <Key>
@@ -214,6 +215,17 @@
           <Property Name="word" Type="String" MaxLength="1505" FixedLength="false" Unicode="true" />
           <Property Name="count" Type="Int32" />
         </EntityType>
+        <EntityType Name="document_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="document_id" Type="Int32" />
+          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ch" Type="Int32" />
+          <Property Name="d" Type="Int32" />
+        </EntityType>
         <EntityType Name="document">
           <Key>
             <PropertyRef Name="id" />
@@ -238,22 +250,12 @@
           <Property Name="link" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Name="link_to" Type="String" MaxLength="152" FixedLength="false" Unicode="true" />
           <Property Name="be_linked" Type="String" MaxLength="152" FixedLength="false" Unicode="true" />
+          <Property Name="link_to_over_date" Type="String" MaxLength="152" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="Byte" />
           <Property Name="views" Type="Int32" />
           <Property Name="date_publish" Type="DateTime" Precision="0" />
           <Property Name="date_start" Type="DateTime" Precision="0" />
           <Property Name="full_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="document_items">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="document_id" Type="Int32" />
-          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="item_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ch" Type="Int32" />
-          <Property Name="d" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -339,6 +341,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="document_items">
+            <EntityTypeMapping TypeName="qlvbModel.document_items">
+              <MappingFragment StoreEntitySet="document_items">
+                <ScalarProperty Name="d" ColumnName="d" />
+                <ScalarProperty Name="ch" ColumnName="ch" />
+                <ScalarProperty Name="item_content" ColumnName="item_content" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="document_id" ColumnName="document_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="qlvbModel.document">
               <MappingFragment StoreEntitySet="documents">
@@ -347,6 +361,7 @@
                 <ScalarProperty Name="date_publish" ColumnName="date_publish" />
                 <ScalarProperty Name="views" ColumnName="views" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="link_to_over_date" ColumnName="link_to_over_date" />
                 <ScalarProperty Name="be_linked" ColumnName="be_linked" />
                 <ScalarProperty Name="link_to" ColumnName="link_to" />
                 <ScalarProperty Name="link" ColumnName="link" />
@@ -366,18 +381,6 @@
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="auto_des" ColumnName="auto_des" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="document_items">
-            <EntityTypeMapping TypeName="qlvbModel.document_items">
-              <MappingFragment StoreEntitySet="document_items">
-                <ScalarProperty Name="d" ColumnName="d" />
-                <ScalarProperty Name="ch" ColumnName="ch" />
-                <ScalarProperty Name="item_content" ColumnName="item_content" />
-                <ScalarProperty Name="item_id" ColumnName="item_id" />
-                <ScalarProperty Name="document_id" ColumnName="document_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

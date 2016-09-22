@@ -65,9 +65,9 @@
             <li>
                 <a href="#rel" data-toggle="tab">Văn bản liên quan</a>
             </li>
-            <li>
+            @*<li>
                 <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
-            </li>
+            </li>*@
             <li>
                 <a href="#download" data-toggle="tab">Tải về</a>
             </li>
@@ -133,23 +133,32 @@
                     @if (Model.link_to != null && Model.link_to != "") { 
                     <tr>
                         <td colspan="2">
-                            <p><b>Văn bản sửa đổi/bổ sung/hướng dẫn/điều chỉnh/thay thế đến</b></p>
+                            <p><b>Văn bản sửa đổi bổ sung</b></p>
                             <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
                         </td>
                     </tr>
+                    }
+                    @if (Model.link_to_over_date != null && Model.link_to_over_date != "")
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <p><b>Văn bản hết hiệu lực</b></p>
+                                <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to_over_date))</section>
+                            </td>
+                        </tr>
                     }
                     @if (Model.be_linked != null && Model.be_linked != "")
                     {
                     <tr>
                         <td colspan="2">
-                            <p><b>Văn bản căn cứ từ các văn bản:</b></p>
+                            <p><b>Văn bản căn cứ</b></p>
                             <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
                         </td>
                     </tr>
                     }
                     <tr>
                         <td colspan="2">
-                            <p><b>Các văn bản khác có liên quan, hoặc xuất hiện trong nội dung văn bản này</b></p>
+                            <p><b>Văn bản liên quan</b></p>
                             <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section>
                         </td>
                     </tr>

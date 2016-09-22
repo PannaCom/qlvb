@@ -65,6 +65,7 @@
                     </table>
                 </div>
             </div>
+            @if (Model.Count > 0) { 
             <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
                 <h4>Bộ lọc tìm kiếm</h4>
                 <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
@@ -90,12 +91,13 @@
                     @Html.Raw(@ViewBag.cat4)
                 </div>
             </div>
+            }                
             <div style="width:100%;float:left;position:relative;" id="contextlist">
                 <div style="width:100%;margin-top:5px;">
                     <div class="span12">
                         @if (ViewBag.keyword != "")
                         {
-                            <text> <h2>Tìm thấy các văn bản</h2></text>
+                            <text> <h2>Kết quả tìm kiếm</h2></text>
                         }
                         else
                         {
