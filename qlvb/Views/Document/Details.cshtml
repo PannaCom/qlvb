@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục (<img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;\">)</p><ul style=\"float:left;\">";
+    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục <img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;float:right;padding-right:2px;\"></p><ul style=\"float:left;\">";
     var activieTab = "in active";
     var activieCs = "class=active";
 }
@@ -47,12 +47,12 @@
                 <a href="#" data-toggle="tab" style="color:black;">Home</a>
             </li>
             <li style="color:black;">
-                <a href="#tree" data-toggle="tab" style="color:black;">Cây thư mục</a>
+                <a href="#tree" data-toggle="tab" style="color:black;">Hệ thống văn bản</a>
             </li>
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
                 <li @activieCs>
-                    <a href="#keyword" data-toggle="tab">Mục lục văn bản</a>
+                    <a href="#keyword" data-toggle="tab">Mục lục liên quan</a>
                 </li>
                 activieCs = "";
             }
@@ -130,6 +130,12 @@
             </div>
             <div class="tab-pane fade" id="rel">
                 <table style="width:100%;text-align:left;">
+                    <tr>
+                        <td colspan="2">
+                            <p><b>Văn bản hiện thời</b></p>
+                            <section class="refinements-summary"><a href="/Document/Details?id=@Model.id">@Model.code - @Model.name</a></section>
+                        </td>
+                    </tr>
                     @if (Model.link_to != null && Model.link_to != "") { 
                     <tr>
                         <td colspan="2">

@@ -950,6 +950,7 @@ namespace qlvb
         {
             string rs = "";
             string fts = "freetexttable";
+            string basic_keyword = k;
             try
             {
                 if (st == 2 || k.Contains("/")) k = "";
@@ -1130,10 +1131,10 @@ namespace qlvb
                             preCatId = p[j].cat2_id;
                         }
                         if (p[j].id!=id){
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></td></tr></table></div>";
                         }
                         else {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
