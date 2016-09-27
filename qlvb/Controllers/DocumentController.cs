@@ -721,6 +721,7 @@ namespace qlvb.Controllers
             string p2 = "", p3 = "", p4 = "", p5 = "";
             string type_document="";
             string publish = "";
+            string date_publish = "";
             string people_sign = "";//trả về người ký văn bản
             string full_content = "";
             for (int i = 0; i < countFile; i++)
@@ -785,6 +786,7 @@ namespace qlvb.Controllers
                     p4 = Config.getP4(content);
                     p5 = Config.getP5(content);
                     publish = Config.getPublish(content);
+                    date_publish = Config.getDatePublish(content);
                     people_sign = Config.getPeopleSign(content);
                     wordprocessingDocument.Close();
                     wordprocessingDocument = null;
@@ -798,7 +800,7 @@ namespace qlvb.Controllers
                         //code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
                 }
             }
-            return code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + publish + Config.sp + people_sign;// code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
+            return code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + publish + Config.sp + people_sign + Config.sp + date_publish;// code + Config.sp + title + Config.sp + p1 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2;// "/Files/" + nameFile;
             //return nameFile;
         }
 

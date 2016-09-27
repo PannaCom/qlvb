@@ -7,7 +7,7 @@
     string allFilter = ViewBag.f1 + "," + ViewBag.f2 + "," + ViewBag.f3 + "," + ViewBag.f4;
     int count = 0;
     string allHotKeyword = "";
-    
+    string height = "80px";
     
 }
 <script>
@@ -18,7 +18,10 @@
             cache: false
         }).done(function (html) {
             $("#items_"+id).html(html);
-
+            if (html==""){
+                alert("ok");
+                $('#listviewleft[name*=listviewleft_'+id+']').css("min-height","10px");
+            }
         });
     }
 </script>
@@ -126,13 +129,13 @@
                             <td valign="top">
                                 <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>
                                 <div class="row">
-                                    <div class="col-sm-8" style="min-height:80px;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft">
+                                    <div class="col-sm-8" style="min-height:@height;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft" name="listviewleft_@item.id">
                                         @*@if (item.RANK > 0 && count <= 2)
-                                        {
-                                            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
-                                        }
-                                        else
-                                        {*@
+            {
+                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+            }
+            else
+            {*@
                                         <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#131E32;"><b>@item.name</b> </a>
                                         @*}*@
                                         <p id="items_@item.id"></p>
