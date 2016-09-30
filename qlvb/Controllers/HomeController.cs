@@ -68,7 +68,7 @@ namespace qlvb.Controllers
                     if (ft == null) ft = 1;
                     ViewBag.keyword = k.Replace("%", " ");
                     if (pg == null) pg = 1;
-                    string query = "select top 30 * from (SELECT ";
+                    string query = "select top 300 * from (SELECT ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*"+Config.heso1+" ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -105,7 +105,7 @@ namespace qlvb.Controllers
                     query += ") as A ";
                     if (k != null && st==2)
                     {
-                        query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                        query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -139,7 +139,7 @@ namespace qlvb.Controllers
                     {
                         if (k != null && (st==1))
                         {
-                            query = "select top 30  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -172,7 +172,7 @@ namespace qlvb.Controllers
                         }
                         if (k != null && (st == 4))
                         {
-                            query = "select top 30 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query = "select top 300 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -237,7 +237,7 @@ namespace qlvb.Controllers
                                 color = "";
                                 if (cat1[jj].catid.ToString() == f1) color = "color:black;font-weight:bold;";
                                 else if (cat1[jj].total > 0) color = "color:black;";
-                                scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name+"</a>,";// + "(" + cat1[jj].total + ")
+                                scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + " (" + cat1[jj].total + ")</a>, ";// + "(" + cat1[jj].total + ")
                             }
                         }
                         catch (Exception exc1) { 
@@ -253,7 +253,7 @@ namespace qlvb.Controllers
                                 color = "";
                                 if (cat2[jj].catid.ToString() == f2) color = "color:black;font-weight:bold;";
                                 else if (cat2[jj].total > 0) color = "color:black;";
-                                scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + "</a>,";//"(" + cat2[jj].total + 
+                                scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + " (" + cat2[jj].total +")</a>,";//" (" + cat2[jj].total + 
                             }
                         }
                         catch (Exception exc2)
@@ -289,7 +289,7 @@ namespace qlvb.Controllers
                                     color = "color:black;font-weight:bold;";
                                 else if (cat4[jj].total > 0) color = "color:black;";
 
-                                scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + "</a>,";//"(" + cat4[jj].total + 
+                                scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + " (" + cat4[jj].total + ")</a>,";//"(" + cat4[jj].total + 
                             }
                         }
                         catch (Exception exc4)
@@ -324,7 +324,7 @@ namespace qlvb.Controllers
                     if (ft == null) ft = 1;
                     ViewBag.keyword = k.Replace("%", " ");
                     if (pg == null) pg = 1;
-                    string query = "SELECT top 100 ";
+                    string query = "SELECT top 300 ";
                     query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as RANK FROM documents ";
                     if (order == null || order == "") order = "RANK";
                     //query += " order by " + order;

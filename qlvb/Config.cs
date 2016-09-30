@@ -254,6 +254,25 @@ namespace qlvb
                 return "";
             }
         }
+        public static string getDatePublish(string content)
+        {
+            try
+            {
+                Regex titRegex = new Regex(@"ngày [0-9]{2} tháng [0-9]{2} năm [0-9]{4}", RegexOptions.IgnoreCase);
+                Match titm = titRegex.Match(content);
+                if (titm.Success)
+                {
+                    content = titm.Groups[0].Value;
+                }
+                else return "";
+                content = content.ToLowerInvariant().Replace("ngày", "").Replace("tháng", "/").Replace("năm", "/").Replace(" ","").Trim();
+                return content;
+            }
+            catch
+            {
+                return "";
+            }
+        }
         //năm [0-9]{4}\s\S\s\S\s\S(.*?).*\s\S.*\s\S.*
         public static string getTitle(string content)
         { 

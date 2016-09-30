@@ -19,7 +19,7 @@
         }).done(function (html) {
             $("#items_"+id).html(html);
             if (html==""){
-                alert("ok");
+                //alert("ok");
                 $('#listviewleft[name*=listviewleft_'+id+']').css("min-height","10px");
             }
         });
@@ -27,28 +27,30 @@
 </script>
     <div class="col-sm-3" id="mnleft">
         <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
-            <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
-                Lĩnh vực
+            <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+                LĨNH VỰC
             </div>
             <ul id="allcat1" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
-            <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
-                Loại văn bản
+            <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+                LOẠI VĂN BẢN
             </div>
             <ul id="allcat2" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
-            <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+            @*<div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
                 Từ khóa gợi ý
             </div>
             <section class="refinements-summary" style="text-align:left;">
                 <ul id="allhotkeyword" style="text-align:left;float:left;position:relative;">
                     Đang tải...
                 </ul>
-            </section>
+            </section>*@
         </div>
     </div>
     <div class="col-sm-9">
-            <div style="background-color:#fccc70;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;">
+            <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+                TÌM KIẾM VĂN BẢN
+            </div>
+            <div style="background-color:#fccc70;margin-top:0px;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;">
                 <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#fccc70;">
-                    <h3 style="text-align:left;">Tìm kiếm văn bản</h3>
                     <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
                     <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
                 </div>
@@ -68,9 +70,16 @@
                     </table>
                 </div>
             </div>
-            @if (Model.Count > 0) { 
-            <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
-                <h4>Bộ lọc tìm kiếm</h4>
+            @if (Model.Count > 0)
+            {
+                if (ViewBag.keyword!="")
+                {
+                    <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+                        BỘ LỌC TÌM KIẾM
+                    </div>
+                }
+            <div style="background-color:#ffffee;margin-top:0px;width:100%;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
+               
                 <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
                     <section class="refinements-summary">
                         @if (ViewBag.f1 != "" || ViewBag.f2 != "" || ViewBag.f3 != "" || ViewBag.f4 != "")
@@ -94,21 +103,21 @@
                     @Html.Raw(@ViewBag.cat4)
                 </div>
             </div>
-            }                
-            <div style="width:100%;float:left;position:relative;" id="contextlist">
-                <div style="width:100%;margin-top:5px;">
-                    <div class="span12">
-                        @if (ViewBag.keyword != "")
-                        {
-                            <text> <h2>Kết quả tìm kiếm</h2></text>
-                        }
-                        else
-                        {
-                            <text> <h2>Xem nhiều nhất</h2></text>
-                        }
-
-                    </div>
+            }            
+            @if (ViewBag.keyword != "")
+            {
+                <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+                    KẾT QUẢ TÌM KIẾM
                 </div>
+            }
+            else
+            {
+                <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+                    XEM NHIỀU NHẤT
+                </div>
+            }    
+            <div style="width:100%;float:left;position:relative;" id="contextlist">
+                
                 <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
                     @*<tr>
                         <th>
@@ -127,7 +136,7 @@
                     {
                         <tr>
                             <td valign="top">
-                                <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>
+                                @*<div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>*@
                                 <div class="row">
                                     <div class="col-sm-8" style="min-height:@height;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft" name="listviewleft_@item.id">
                                         @*@if (item.RANK > 0 && count <= 2)
@@ -136,7 +145,8 @@
             }
             else
             {*@
-                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#131E32;"><b>@item.name</b> </a>
+                                        <b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b><br />
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#5e5e5e;">@item.name</a>
                                         @*}*@
                                         <p id="items_@item.id"></p>
                                         <script>
@@ -183,6 +193,7 @@
                         //allHotKeyword+=@item.ke
                     }
                 </table>
+                @if (Model.PageCount>=1){
                 <div>
                     Trang:
                     @for (int i = 1; i <= Model.PageCount; i++)
@@ -190,7 +201,11 @@
                         <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
                     }
                 </div>
-
+                }
+                else
+                {
+                    <div>Không tìm thấy kết quả. Hãy thay đổi từ khóa phù hợp hơn.</div>
+                }
             </div>
             @*<section class="refinements-summary" style="text-align:left;"></section>
             <section class="refinements-summary" style="text-align:left;">

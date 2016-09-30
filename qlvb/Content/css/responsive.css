@@ -102,7 +102,10 @@
     .slider .carousel-indicators { bottom: 0px; }
     .ipad-wrapper .app-wrap {left: 3%;}
     #mnleft{display:none;}
-    #mainmenu{display:none;}
+    #mainmenu{
+        background:url('/Images/bannerm.jpg') no-repeat scroll center top transparent !important;
+
+    }
     #listviewleft{
         width:100%;
     }
@@ -149,7 +152,10 @@
 	}
 	.blog .post-meta {min-height: 55px;}
     #mnleft{display:none;}
-    #mainmenu{display:none;}
+    #mainmenu{
+        background:url('/Images/bannerm.jpg') no-repeat scroll center top transparent !important;
+        background-size: 360px;
+    }
     #listviewleft{
         width:100%;
     }
@@ -171,7 +177,7 @@
 	    padding: 5px 10px;
 	}
     #mnleft{display:none;}
-    #mainmenu{display:none;}
+    #mainmenu{background:url('/Images/bannerm.jpg') no-repeat scroll center top transparent !important;}
     #listviewleft{
         width:100%;
     }
