@@ -20,8 +20,9 @@
             $("#items_"+id).html(html);
             if (html==""){
                 //alert("ok");
-                $('#listviewleft[name*=listviewleft_'+id+']').css("min-height","10px");
+                $('#listviewleft_'+id).css("min-height","10px");
             }
+            if (html.length>300){$('#listviewleft_'+id).css("min-height","120px");}
         });
     }
 </script>
@@ -30,11 +31,11 @@
             <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
                 LĨNH VỰC
             </div>
-            <ul id="allcat1" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
+            <ul id="allcat1" style="text-align:left;float:left;position:relative;padding-left: 16px;color:#525252;"></ul>
             <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
                 LOẠI VĂN BẢN
             </div>
-            <ul id="allcat2" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
+            <ul id="allcat2" style="text-align:left;float:left;position:relative;padding-left: 16px;color:#525252;"></ul>
             @*<div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
                 Từ khóa gợi ý
             </div>
@@ -49,17 +50,18 @@
             <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
                 TÌM KIẾM VĂN BẢN
             </div>
-            <div style="background-color:#fccc70;margin-top:0px;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;">
-                <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#fccc70;">
-                    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
-                    <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;" />
+            <div style="background-color:#ffffff;margin-top:0px;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;">
+                <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ffffff;">
+                    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;background-color:#e9ecf2;font-style:italic;" onkeyup="autosearch(event);">
+                    <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;height:44px;" />
+                    <span style="display:block;float:left;position:relative;height:44px;margin-left:5px;padding: 10px 20px;"><a onclick="viewopts();" href="#"><img src="~/Images/more.png">&nbsp;Tìm nâng cao</a></span>
                 </div>
-                <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#fccc70;">
+                <div style="width:100%;padding-top:30px;float:left;position:relative;background-color:#ffffff;">
                     <table>
                         <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm:</td><td><input type="radio" name="ft" id="ft1" value="1">&nbsp;Chính xác cụm từ&nbsp;<input type="radio" name="ft" id="ft2" value="2" checked>&nbsp;Liên quan cụm từ&nbsp;</td></tr>
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Lĩnh vực:</td><td><input type="radio" name="tps" id="tps1" value="1" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" >&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Nội dung&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
-                        <tr style="float:left;position:relative;width:100%;display:block;text-align:left;"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:none;text-align:left;" id="opts1"><td width="100px;">Lĩnh vực:</td><td><input type="radio" name="tps" id="tps1" value="1" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="tps" id="tps2" value="2" >&nbsp;Tự động tìm trong lĩnh vực có nhiều từ khóa nhất&nbsp;</td></tr>
+                        <tr style="float:left;position:relative;width:100%;display:none;text-align:left;" id="opts2"><td width="100px;">Tìm trong:</td><td> <input type="radio" name="st" id="st0" value="0" checked>&nbsp;Tất cả <input type="radio" name="st" id="st1" value="1">&nbsp;Tiêu đề&nbsp;<input type="radio" name="st" id="st2" value="2">&nbsp;Ký hiệu/Số&nbsp;<input type="radio" name="st" id="st4" value="4">&nbsp;Nội dung&nbsp;</td></tr>@*<input type="radio" name="st" id="st3" value="3">Chương, Điều*@
+                        <tr style="float:left;position:relative;width:100%;display:none;text-align:left;" id="opts3"><td width="100px;">Còn hiệu lực:</td><td><input type="radio" name="status" id="status2" value="2" checked>&nbsp;Tất cả&nbsp;<input type="radio" name="status" id="status0" value="0">&nbsp;Còn hiệu lực&nbsp;<input type="radio" name="status" id="status1" value="1">&nbsp;Hết hiệu lực</td></tr>
                         <tr style="float:left;position:relative;width:100%;display:block;text-align:left;">
                             <td width="100px;">Sắp xếp theo:</td>  
                             <td>
@@ -78,7 +80,7 @@
                         BỘ LỌC TÌM KIẾM
                     </div>
                 }
-            <div style="background-color:#ffffee;margin-top:0px;width:100%;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
+            <div style="background-color:#ffffd1;margin-top:0px;width:100%;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
                
                 <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
                     <section class="refinements-summary">
@@ -138,7 +140,7 @@
                             <td valign="top">
                                 @*<div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>*@
                                 <div class="row">
-                                    <div class="col-sm-8" style="min-height:@height;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft" name="listviewleft_@item.id">
+                                    <div class="col-sm-8 listviewleft" style="min-height:@height;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft_@item.id" name="listviewleft_@item.id">
                                         @*@if (item.RANK > 0 && count <= 2)
             {
                 <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
@@ -155,16 +157,16 @@
                                             }
                                         </script>
                                     </div>
-                                    <div class="col-sm-4" style="float:right;height:80px;position:relative;display:block;" id="listviewright">
+                                    <div class="col-sm-4 listviewright" style="float:right;height:80px;position:relative;display:block;" id="listviewright_@item.id">
                                         <table>
-                                            <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
+                                            <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;color:#8a8a8a;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
                                             @if (item.date_publish != null)
                                             {
-                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Ban hành: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_publish)</p></td></tr>
+                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;color:#8a8a8a;">Ban hành: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.formatDDMMYYYY(@item.date_publish)</p></td></tr>
                                             }
                                             @if (item.date_start != null)
                                             {
-                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
+                                                <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;color:#8a8a8a;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
                                             }
                                         </table>
                                     </div>
@@ -249,6 +251,21 @@
             document.getElementById("@ViewBag.order").checked=true;
             if (order=="") order="RANK";
             $("#order").val(order);
+            if (document.getElementById("tps2").checked || document.getElementById("st1").checked || document.getElementById("st2").checked || document.getElementById("st4").checked
+                || document.getElementById("status0").checked || document.getElementById("status1").checked){
+                viewopts();
+            }
+            function viewopts(){
+                if (document.getElementById("opts1").style.display=="none"){
+                    $("#opts1").show();
+                    $("#opts2").show();
+                    $("#opts3").show();
+                }else{
+                    $("#opts1").hide();
+                    $("#opts2").hide();
+                    $("#opts3").hide();
+                }
+            }
             function resetCat(){
                 currentCat1="";
                 currentCat2="";

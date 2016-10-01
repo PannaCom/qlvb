@@ -229,14 +229,14 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat1 = db.Database.SqlQuery<catitem>(query1).ToList();
-                            scat1 = "<b>Lĩnh vực:</b> ";
+                            scat1 = "<b style=\"color:#555661;\">Lĩnh vực:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat1.Count; jj++)
                             {
                                 if (cat1[jj].total <= 0) continue;
                                 color = "";
-                                if (cat1[jj].catid.ToString() == f1) color = "color:black;font-weight:bold;";
-                                else if (cat1[jj].total > 0) color = "color:black;";
+                                if (cat1[jj].catid.ToString() == f1) color = "color:#545432;font-weight:bold;";
+                                else if (cat1[jj].total > 0) color = "color:#545432;";
                                 scat1 += "<a class='filteritem' onclick='setCat(1," + cat1[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat1[jj].name + " (" + cat1[jj].total + ")</a>, ";// + "(" + cat1[jj].total + ")
                             }
                         }
@@ -245,14 +245,14 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat2 = db.Database.SqlQuery<catitem>(query2).ToList();
-                            scat2 = "<b>Loại văn bản:</b> ";
+                            scat2 = "<b style=\"color:#555661;\">Loại văn bản:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat2.Count; jj++)
                             {
                                 if (cat2[jj].total <= 0) continue;
                                 color = "";
-                                if (cat2[jj].catid.ToString() == f2) color = "color:black;font-weight:bold;";
-                                else if (cat2[jj].total > 0) color = "color:black;";
+                                if (cat2[jj].catid.ToString() == f2) color = "color:#545432;font-weight:bold;";
+                                else if (cat2[jj].total > 0) color = "color:#545432;";
                                 scat2 += "<a class='filteritem' onclick='setCat(2," + cat2[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat2[jj].name + " (" + cat2[jj].total +")</a>,";//" (" + cat2[jj].total + 
                             }
                         }
@@ -268,8 +268,8 @@ namespace qlvb.Controllers
                             {
                                 if (cat3[jj].total <= 0) continue;
                                 color = "";
-                                if (cat3[jj].catid.ToString() == f3) color = "color:black;font-weight:bold;";
-                                else if (cat3[jj].total > 0) color = "color:black;";
+                                if (cat3[jj].catid.ToString() == f3) color = "color:#545432;font-weight:bold;";
+                                else if (cat3[jj].total > 0) color = "color:#545432;";
                                 scat3 += "<a class='filteritem' onclick='setCat(3," + cat3[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat3[jj].name + "(" + cat3[jj].total + ")</a>,";
                             }
                         }
@@ -279,15 +279,15 @@ namespace qlvb.Controllers
                         try
                         {
                             var cat4 = db.Database.SqlQuery<catitem>(query4).ToList();
-                            scat4 = "<b>Cơ quan ban hành:</b> ";
+                            scat4 = "<b style=\"color:#555661;\">Cơ quan ban hành:</b> ";
                             string color = "";
                             for (jj = 0; jj < cat4.Count; jj++)
                             {
                                 if (cat4[jj].total <= 0) continue;
                                 color = "";
                                 if (cat4[jj].catid.ToString() == f4)
-                                    color = "color:black;font-weight:bold;";
-                                else if (cat4[jj].total > 0) color = "color:black;";
+                                    color = "color:#545432;font-weight:bold;";
+                                else if (cat4[jj].total > 0) color = "color:#545432;";
 
                                 scat4 += "<a class='filteritem' onclick='setCat(4," + cat4[jj].catid + ")' style='cursor:pointer;" + color + "'>" + cat4[jj].name + " (" + cat4[jj].total + ")</a>,";//"(" + cat4[jj].total + 
                             }
