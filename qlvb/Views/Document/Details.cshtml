@@ -3,18 +3,19 @@
 @{
     ViewBag.Title = Model.name + "-" + Model.code;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstindex = "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục <img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;float:right;padding-right:2px;\"></p><ul style=\"float:left;\">";
+    var lstindex = "";// "<p style=\"background: rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;\">Danh mục <img src=\"/Images/remove.png\" onclick=\"hideindex();\" style=\"cursor:pointer;float:right;padding-right:2px;\"></p><ul style=\"float:left;\">";
     var activieTab = "in active";
     var activieCs = "class=active";
+    var selectlstindex = "<select id=jumintochd onchange=\"jumintochd(this);\" class=\"form-control\" style=\"margin-top:5px;\">";
 }
 @*<script type="text/javascript" src="/Content/tree/simpletreemenu.js"></script>
 <link rel="stylesheet" type="text/css" href="/Content/tree/simpletree.css" />*@
 <style>
-    table tr {
+    /*table tr {
         border-bottom: 1px dotted #ccc;
         height: auto;
-    }
-
+    }*/
+    
     blockquote {
         background: #f9f9f9;
         border-left: 10px solid #ccc;
@@ -39,15 +40,21 @@
             text-align: left;
         }
 </style>
-
-    <div class="panel-body" style="position: relative; display: block; float: left;width:100%;margin-top:10px;">
+<div class="col-sm-3" id="mnleft2">
+    <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;width:100%;" class="headingsearchtitle">
+        <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+            DANH MỤC
+        </div>
+        <ul id="lstindex" class="detaillstindex" valign="top" style="padding-left:5px;float:left;position:relative;width:100%;background:#ffffff;color:#000000;overflow:scroll;border-right:1px solid #ddd;text-align:left;" draggable="true"></ul>
+    </div>
+</div>
+<div class="col-sm-9" >
+    <div class="panel-body" style="position: relative; display: block; float: left;width:100%;margin-top:10px;padding:0px;">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-            <li style="color:black;">
-                <a href="#" data-toggle="tab" style="color:black;">Home</a>
-            </li>
-            <li style="color:black;">
-                <a href="#tree" data-toggle="tab" style="color:black;">Hệ thống văn bản</a>
+
+            <li>
+                <a href="#tree" data-toggle="tab">Hệ thống văn bản</a>
             </li>
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
@@ -66,15 +73,15 @@
                 <a href="#rel" data-toggle="tab">Văn bản liên quan</a>
             </li>
             @*<li>
-                <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
-            </li>*@
+                    <a href="#key" data-toggle="tab">Từ khoá liên quan</a>
+                </li>*@
             <li>
                 <a href="#download" data-toggle="tab">Tải về</a>
             </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane fade" id="tree">
+            <div class="tab-pane fade" id="tree" style="padding-left:2px;">
                 @Html.Raw(@ViewBag.tree)
                 @*<script type="text/javascript">
                         ddtreemenu.createTree("treemenu2", true);
@@ -83,26 +90,33 @@
             @if (ViewBag.chd != null && ViewBag.chd.Count > 0)
             {
                 <div class="tab-pane fade @activieTab" id="keyword">
-
+                    <h4 style="color:#455c96;">@Model.name</h4>
                     <table style="width:100%;text-align:left;">
                         <tr>
-                            <td id="lstindex" class="col-sm-3" valign="top" style="background:#ffffff;color:#000000;overflow:scroll;border-right:1px solid #ddd;" draggable="true"></td>
-                            <td class="col-sm-9" style="background:#ffffff;border-right:1px solid #ddd;" onclick="hideFull();">
+                            <td class="col-sm-12" style="background:#ffffff;border-right:1px solid #ddd;" onclick="hideFull();">
                                 @foreach (var item in ViewBag.chd)
                                 {
                                     //if (ViewBag.keyword=="")
                                     //{
                                     <text>
-                                        <p style="width:100%;text-align:left;color:black;" id="@item.id"><span style="color:#000000;font-weight:bold;">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</span>: @Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))</p>
+                                        <p style="width:100%;text-align:left;color:black;border-bottom:1px solid #c9c9c9;" id="@item.id"><span style="color:#435e94;font-weight:bold;">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</span> <p style="text-align: justify;">@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))...</p></p>
                                         @if (ViewBag.keyword != "")
                                         {
                                             <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
                                         }
                                     </text>
                                         lstindex += "<li><a href=\"#" + item.id + "\">" + qlvb.Config.showCHD(item.item_id) + "</a></li>";
+                                        selectlstindex += "<option value=" + item.id + ">" + qlvb.Config.showCHD(item.item_id) + "</option>";
                                     //}
                                 }
-                                <script>document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)' + '</ul>';</script>
+                                @{selectlstindex += "</select>";}
+                                <script>
+                                    document.getElementById('lstindex').innerHTML = '@Html.Raw(@lstindex)' + '</ul>';
+                                    if ($(window).width() <= 460) {
+                                        //alert("ok1");
+                                        document.getElementById('lstindex').innerHTML = '@Html.Raw(@selectlstindex)';
+                                    }
+                                </script>
                             </td>
                     </table>
                 </div>
@@ -125,91 +139,103 @@
                         @*<td class="label">Tập từ khóa lặp đi lặp lại nhiều nhất trong văn bản :</td>*@
                         <td colspan="2"><section class="refinements-summary">@Html.Raw(@qlvb.Config.hashtags(@Model.keyword4))</section></td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="tab-pane fade" id="rel">
-                <table style="width:100%;text-align:left;">
+                <table style="width:100%;text-align:center;border:1px solid #cfcfcf;">
                     <tr>
-                        <td colspan="2">
-                            <p><b>Văn bản hiện thời</b></p>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;width: 20%;">
+                            Văn bản hiện thời
+                        </td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">
                             <section class="refinements-summary"><a href="/Document/Details?id=@Model.id">@Model.code - @Model.name</a></section>
                         </td>
                     </tr>
-                    @if (Model.link_to != null && Model.link_to != "") { 
-                    <tr>
-                        <td colspan="2">
-                            <p><b>Văn bản sửa đổi bổ sung</b></p>
-                            <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
-                        </td>
-                    </tr>
+                    @if (Model.link_to != null && Model.link_to != "")
+                    {
+                        <tr>
+                            <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;width: 20%;">
+                                Văn bản sửa đổi bổ sung
+                            </td>
+                            <td style="border:1px solid #cfcfcf;color:#828282;">
+                                <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to))</section>
+                            </td>
+                        </tr>
                     }
                     @if (Model.link_to_over_date != null && Model.link_to_over_date != "")
                     {
                         <tr>
-                            <td colspan="2">
-                                <p><b>Văn bản hết hiệu lực</b></p>
+                            <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;width: 20%;">
+                                Văn bản hết hiệu lực
+                            </td>
+                            <td style="border:1px solid #cfcfcf;color:#828282;">
                                 <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.link_to_over_date))</section>
                             </td>
                         </tr>
                     }
                     @if (Model.be_linked != null && Model.be_linked != "")
                     {
-                    <tr>
-                        <td colspan="2">
-                            <p><b>Văn bản căn cứ</b></p>
-                            <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;width: 20%;">
+                                Văn bản căn cứ
+                            </td>
+                            <td style="border:1px solid #cfcfcf;color:#828282;">
+                                <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewhashtags(@Model.be_linked))</section>
+                            </td>
+                        </tr>
                     }
                     <tr>
-                        <td colspan="2">
-                            <p><b>Văn bản liên quan</b></p>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;width: 20%;">
+                            Văn bản liên quan
+                        </td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">
                             <section class="refinements-summary">@Html.Raw(@qlvb.Config.viewallhashtags(@Model.keyword5, @Model.code))</section>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="tab-pane fade" id="download">
-                <table style="width:100%;text-align:center;margin-top:10px;">
-                    <tr>
-                        <td class="label"><a href="@qlvb.Config.domain/Files/@Model.link">@Model.link</a></td>
-                        <td>Lượt xem: @Model.views</td>
+                <table style="width:100%;text-align:center;border:1px solid #cfcfcf;">
+                    <tr style="height:50px;">
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;"><a href="@qlvb.Config.domain/Files/@Model.link">@Model.link</a></td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">Lượt xem: @Model.views</td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="tab-pane fade" id="pro">
-                <h4>@Model.name</h4>
-                <table style="width:100%;text-align:center;">
-                    <tr>
-                        <td class="label">Ký hiệu :</td>
-                        <td>@Model.code</td>
-                        <td class="label">Lĩnh vực :</td>
-                        <td>@qlvb.Config.getCatNameById(1, @Model.cat1_id)</td>
+                <h4 style="color:#455c96;">@Model.name</h4>
+                <table style="width:100%;text-align:center;border:1px solid #cfcfcf;">
+                    <tr style="height:50px;">
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Ký hiệu</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@Model.code</td>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Lĩnh vực</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.getCatNameById(1, @Model.cat1_id)</td>
                     </tr>
-                    <tr>
-                        <td class="label">Loại văn bản :</td>
-                        <td>@qlvb.Config.getCatNameById(2, @Model.cat2_id)</td>
-                        <td class="label">Người ký :</td>
-                        <td>@qlvb.Config.getCatNameById(3, @Model.cat3_id)</td>
+                    <tr style="height:50px;">
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Loại văn bản</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.getCatNameById(2, @Model.cat2_id)</td>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Người ký</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.getCatNameById(3, @Model.cat3_id)</td>
                     </tr>
-                    <tr>
-                        <td class="label">Cơ quan ban hành :</td>
-                        <td>@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
-                        <td class="label">Ngày ban hành :</td>
-                        <td>@qlvb.Config.formatDDMMYYYY(@Model.date_publish)</td>
+                    <tr style="height:50px;">
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Cơ quan ban hành</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.getCatNameById(4, @Model.cat4_id)</td>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Ngày ban hành</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.formatDDMMYYYY(@Model.date_publish)</td>
                     </tr>
-                    <tr>
-                        <td class="label">Ngày có hiệu lực :</td>
-                        <td>@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
-                        <td class="label">Còn hiệu lực? :</td>
-                        <td>@qlvb.Config.statusStr(@Model.status)</td>
+                    <tr style="height:50px;">
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Ngày có hiệu lực</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.formatDDMMYYYY(@Model.date_start)</td>
+                        <td style="border:1px solid #cfcfcf;text-align:left;padding-left:5px;color:#445c94;font-weight:bold;">Còn hiệu lực?</td>
+                        <td style="border:1px solid #cfcfcf;color:#828282;">@qlvb.Config.statusStr(@Model.status)</td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
+</div>
     <div id=dvchditems style="width:50%;float:left;position:fixed;top:0px;left:10px;background-color:#f9f9f9;color:#000000;z-index:2001;text-align:center;display:none;">
         <div id=chditems class="col-lg-3" valign="top" style="width:100%;height:300px;background:#ffffff;color:#000000;text-align:left;overflow:scroll;border:2px solid #0094ff;"></div>
         @*<iframe id=chditems style="width:100%;display:block;float:left;position:relative;text-align:left;overflow:scroll;"></iframe>*@
@@ -294,5 +320,8 @@
             if (isloadedchd) {
                 $('#dvchditems').hide();
             }
+        }
+        function jumintochd(obj) {
+            window.location.hash = '#' + obj.value;
         }
     </script>

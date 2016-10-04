@@ -9,56 +9,63 @@
 }
 <div class="col-sm-3" id="mnleft">
     <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
-        <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
-            Lĩnh vực
+        <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+            LĨNH VỰC
         </div>
-        <ul id="allcat1" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
-        <div style="background:rgb(155, 197, 229);color:#000000;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
-            Loại văn bản
+        <ul id="allcat1" style="text-align:left;float:left;position:relative;padding-left: 16px;color:#525252;"></ul>
+        <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+            LOẠI VĂN BẢN
         </div>
-        <ul id="allcat2" style="text-align:left;float:left;position:relative;padding-left: 16px"></ul>
-        @*<div style="background:#74b709;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:center;padding-top:10px;">
-            Từ khóa gợi ý
-        </div>
-        <section class="refinements-summary" style="text-align:left;">
-            <ul id="allhotkeyword" style="text-align:left;float:left;position:relative;">
-                Đang tải...
-            </ul>
-        </section>*@
+        <ul id="allcat2" style="text-align:left;float:left;position:relative;padding-left: 16px;color:#525252;"></ul>
+        @*<div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
+                Từ khóa gợi ý
+            </div>
+            <section class="refinements-summary" style="text-align:left;">
+                <ul id="allhotkeyword" style="text-align:left;float:left;position:relative;">
+                    Đang tải...
+                </ul>
+            </section>*@
     </div>
 </div>
-<div class="col-sm-9">
-        <div style="background-color:#ffffee;margin-top:10px;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;" id="filterdiv">
-            <h4>Bộ lọc tìm kiếm</h4>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                <section class="refinements-summary">
-                    @if (ViewBag.f1 != null || ViewBag.f2 != null || ViewBag.f4 != null)
-                    {
-                        <b>Đang lọc theo: </b>@Html.Raw(qlvb.Config.tagscat(@ViewBag.f1, @ViewBag.f2, @ViewBag.f4))
+<div class="col-sm-9 headingsearchtitle">
+    <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+        BỘ LỌC TÌM KIẾM
+    </div>
 
-                        <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
-                    }
-                </section>
-            </div>
+    <div style="background-color:#ffffd1;border:1px solid #ff6a00;border-radius:5px;float:left;position:relative;padding-left:5px;" id="filterdiv">
 
-            @*<div style="width:100%;">
-                    <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
-                    <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
-                </div>*@
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat1)
-            </div>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat2)
-            </div>
-            <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
-                @Html.Raw(@ViewBag.cat4)
-            </div>
+        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+            <section class="refinements-summary">
+                @if (ViewBag.f1 != null || ViewBag.f2 != null || ViewBag.f4 != null)
+                {
+                    <b>Đang lọc theo: </b>@Html.Raw(qlvb.Config.tagscat(@ViewBag.f1, @ViewBag.f2, @ViewBag.f4))
 
+                    <a style="cursor:pointer;" onclick="resetCat();">xóa bộ lọc</a>
+                }
+            </section>
         </div>
+
+        @*<div style="width:100%;">
+                <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;" onkeyup="autosearch(event);">
+                <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;"/>
+            </div>*@
+        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+            @Html.Raw(@ViewBag.cat1)
+        </div>
+        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+            @Html.Raw(@ViewBag.cat2)
+        </div>
+        <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
+            @Html.Raw(@ViewBag.cat4)
+        </div>
+
+    </div>
+    <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+        Tìm thấy @Model.TotalItemCount văn bản
+    </div>
+    <div style="width:100%;padding-top:30px;">
         <div style="width:100%;padding-top:30px;">
-            <div style="width:100%;padding-top:30px;">
-                <div class="span9">
+            @*<div class="span9">
                     @if (ViewBag.keyword != "")
                     {
                         <text> <h5>Tìm thấy (@Model.TotalItemCount) - <span>văn bản</span></h5></text>
@@ -75,58 +82,72 @@
                             <select id="order" onchange="chooseOder();">
                                 <option value="-1">Chọn</option>
                                 <option value="1">Lĩnh vực văn bản(Luật,Nghị định...)</option>
-                                @* <option value="2">Mới nhất</option>
-                                    <option value="3">Cũ nhất</option>*@
+                                 <option value="2">Mới nhất</option>
+                                    <option value="3">Cũ nhất</option>
                                 <option value="2">Xem nhiều nhất</option>
                             </select>
                         </text>
                     }
-                </div>
-            </div>
-            <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
-               
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td valign="top">
-                            <div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>
-                            <div class="row">
-                                <div class="col-sm-8" style="height:80px;float: left;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;">
-                                   
-                                    <a href="/Document/Details?id=@item.id" target="_blank">@item.name </a>
-                                   
-                                </div>
-                                <div class="col-sm-4" style="float:right;height:80px;">
-                                    <table>
-                                        <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
-                                        @if (item.date_publish != null)
-                                        {
-                                            <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Ban hành: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_publish)</p></td></tr>
-                                        }
-                                        @if (item.date_start != null)
-                                        {
-                                            <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
-                                        }
-                                    </table>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                                        count++;
-                    //allHotKeyword+=@item.ke
-                }
-            </table>
-
-            <div>
-                Trang:
-                @for (int i = 1; i <= Model.PageCount; i++)
-                {
-                    <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
-                }
-            </div>
+                </div>*@
         </div>
-    
+        <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td valign="top">
+                        @*<div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>*@
+                        <div class="row">
+                            <div class="col-sm-8 listviewleft" style="min-height:80px;height:auto;float:left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft_@item.id" name="listviewleft_@item.id">
+                                @*@if (item.RANK > 0 && count <= 2)
+                                    {
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                                    }
+                                    else
+                                    {*@
+                                <b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b><br />
+                                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#5e5e5e;height:auto;float:left;position:relative;display:block;">@item.name</a>
+                                @*}*@
+                                <p id="items_@item.id" style="height:auto;float:left;position:relative;display:block;">
+                                    @if (ViewBag.keyword != "")
+                                    {
+                                        @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, "@ViewBag.keyword"));
+                                    }
+                                    <script>autocheckHeight(@item.id);</script>
+                                </p>
+                            </div>
+                            <div class="col-sm-4 listviewright" style="float:right;height:80px;position:relative;display:block;" id="listviewright_@item.id">
+                                <table>
+                                    <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;color:#8a8a8a;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
+                                    @if (item.date_publish != null)
+                                    {
+                                        <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;color:#8a8a8a;">Ban hành: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.formatDDMMYYYY(@item.date_publish)</p></td></tr>
+                                    }
+                                    @if (item.date_start != null)
+                                    {
+                                        <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;color:#8a8a8a;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                                    count++;
+                //allHotKeyword+=@item.ke
+            }
+        </table>
+
+        <div>
+            Trang:
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <a onclick="setpage(@i);" style="cursor:pointer;">@i,</a>
+            }
+        </div>
+    </div>
+
 </div>
+
 <script>
     var pg=@ViewBag.page;
     var order="@ViewBag.order";

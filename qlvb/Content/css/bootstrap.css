@@ -3870,6 +3870,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
   padding: 10px 15px;
+  color: #ffffff;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -3907,9 +3908,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li {
   float: left;
   margin-bottom: -1px;
-  background-color:#f1f1f1;
+  background-color:#3cb0de;/*#f1f1f1;*/
   border:1px solid #ffffff;
   border-radius:2px;
+  color: #ffffff;
 }
 .nav-tabs > li > a {
   margin-right: 2px;
@@ -3923,9 +3925,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #000000;
+  color: #ffffff;/*#000000;*/
   cursor: default;
-  background-color: #fccc70;
+  background-color: #35568f;
   border: 1px solid #002d6d;
   border-bottom-color: transparent;
 }

@@ -11,19 +11,46 @@
     
 }
 <script>
-    function getShortDesItemSearch(id,keyword) {
+    function getShortDesItemSearch(id,keyword,length) {
         
         $.ajax({
             url: "/Document/getShortDesItemSearch?id=" + id+"&keyword="+keyword,
             cache: false
         }).done(function (html) {
             $("#items_"+id).html(html);
-            if (html==""){
-                //alert("ok");
-                $('#listviewleft_'+id).css("min-height","10px");
-            }
-            if (html.length>300){$('#listviewleft_'+id).css("min-height","120px");}
+            //if (html==""){
+            //    //alert("ok");
+            //    $('#listviewleft_'+id).css("min-height","10px");
+            //}
+            //if (html.length>300){$('#listviewleft_'+id).css("min-height","120px");}
+            //autocheckHeight(html.length+length,id);
+            
         });
+    }
+    function autocheckHeight(id){
+        //alert($('#listviewleft_'+id).text().length);
+        var length=$('#listviewleft_'+id).text().length;
+        if (length>=600)
+        {
+            $('#listviewleft_'+id).css("min-height","120px");
+        } 
+        else
+            if (length>=500)
+            {
+                $('#listviewleft_'+id).css("min-height","110px");
+            }
+            else if (length>=400)
+            {
+                $('#listviewleft_'+id).css("min-height","100px");
+            }
+            else if (length>=300)
+            {
+                $('#listviewleft_'+id).css("min-height","90px");
+            }
+            else 
+            {
+                $('#listviewleft_'+id).css("min-height","80px");
+            }
     }
 </script>
     <div class="col-sm-3" id="mnleft">
@@ -47,10 +74,10 @@
         </div>
     </div>
     <div class="col-sm-9">
-            <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
+            <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;" class="headingsearchtitle">
                 TÌM KIẾM VĂN BẢN
             </div>
-            <div style="background-color:#ffffff;margin-top:0px;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;">
+            <div style="background-color:#ffffff;margin-top:0px;border:1px solid #e6e6e6;float:left;position:relative;padding-left:5px;">
                 <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ffffff;">
                     <input type="text" class="form-control" placeholder="Từ khóa" id="word" name="word" value="@ViewBag.keyword" style="width:60%;display:block;float:left;position:relative;background-color:#e9ecf2;font-style:italic;" onkeyup="autosearch(event);">
                     <input type="button" value="tìm kiếm" onclick="search();" class="btn btn-primary tf-btn color" style="display:block;float:left;position:relative;height:44px;" />
@@ -80,7 +107,7 @@
                         BỘ LỌC TÌM KIẾM
                     </div>
                 }
-            <div style="background-color:#ffffd1;margin-top:0px;width:100%;border:1px solid #ff6a00;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
+            <div style="background-color:#ffffd1;margin-top:0px;width:100%;border:1px solid #e6e6e6;float:left;position:relative;padding-left:5px;display:none;" id="filterdiv">
                
                 <div style="width:100%;float:left;display:block;text-align: left;margin-top:2px;">
                     <section class="refinements-summary">
@@ -118,29 +145,17 @@
                     XEM NHIỀU NHẤT
                 </div>
             }    
-            <div style="width:100%;float:left;position:relative;" id="contextlist">
+            <div style="width:100%;float:left;position:relative;border:1px solid #e6e6e6;" id="contextlist">
                 
-                <table class="table" style="border-collapse: collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #808080;">
-                    @*<tr>
-                        <th>
-                            Ký hiệu
-                        </th>
-                        <th>
-                            Tên văn bản
-                        </th>
-                        <th>
-                            Lĩnh vực
-                        </th>
-                        <th>Loại văn bản</th>
-                    </tr>*@
-
+                <table class="table" style="border-collapse:collapse;border-spacing: 0;border-spacing: 2px;border-color: grey;border:1px solid #e6e6e6;width:100%;">
+                    
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td valign="top">
                                 @*<div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>*@
                                 <div class="row">
-                                    <div class="col-sm-8 listviewleft" style="min-height:@height;float: left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft_@item.id" name="listviewleft_@item.id">
+                                    <div class="col-sm-8 listviewleft" style="min-height:@height;height:auto;float:left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft_@item.id" name="listviewleft_@item.id">
                                         @*@if (item.RANK > 0 && count <= 2)
             {
                 <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
@@ -148,14 +163,14 @@
             else
             {*@
                                         <b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b><br />
-                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#5e5e5e;">@item.name</a>
+                                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#5e5e5e;height:auto;float:left;position:relative;display:block;">@item.name</a>
                                         @*}*@
-                                        <p id="items_@item.id"></p>
-                                        <script>
-                                            if ("@ViewBag.keyword"!=""){
-                                                getShortDesItemSearch(@item.id,"@ViewBag.keyword");
+                                        <p id="items_@item.id" style="height:auto;float:left;position:relative;display:block;">
+                                            @if (ViewBag.keyword!=""){
+                                               @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id,"@ViewBag.keyword"));
                                             }
-                                        </script>
+                                            <script>autocheckHeight(@item.id);</script>
+                                        </p>
                                     </div>
                                     <div class="col-sm-4 listviewright" style="float:right;height:80px;position:relative;display:block;" id="listviewright_@item.id">
                                         <table>
@@ -172,24 +187,6 @@
                                     </div>
                                 </div>
                             </td>
-
-    @*<td align="left">
-        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.code</a>
-    </td>
-    <td align="left" style="width:55%;">
-        @if (item.RANK > 0 && count <= 2)
-        {
-            <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
-        }
-        else
-        {   <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank">@item.name </a>}
-    </td>
-    <td align="left">
-        @qlvb.Config.getCatNameById(1, @item.cat1_id)
-    </td>
-    <td align="left">
-        @qlvb.Config.getCatNameById(2, @item.cat2_id)
-    </td>*@
                         </tr>
                                 count++;
                         //allHotKeyword+=@item.ke
@@ -383,12 +380,12 @@
             //$.getJSON("/Home/getAllHotKeyWord", null, function (data) {
             //    alert(data);
             //});
-            $.ajax({
-                url: "/Home/getAllHotKeyWord",
-                cache: false
-            }).done(function( html ) {
-                $( "#allhotkeyword").html(html);
-            });
+            //$.ajax({
+            //    url: "/Home/getAllHotKeyWord",
+            //    cache: false
+            //}).done(function( html ) {
+            //    $( "#allhotkeyword").html(html);
+            //});
             $.ajax({
                 url: "/Home/getAllCat?id=1",
                 cache: false

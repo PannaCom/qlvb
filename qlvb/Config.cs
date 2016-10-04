@@ -69,7 +69,8 @@ namespace qlvb
                 if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
                 {
                     sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
-                    rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
+                    //rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
+                    rs += "<span style=\"color:#595959;\">..." + sen[i] + "</span>";
                 }
             }
             return rs;
@@ -1255,6 +1256,33 @@ namespace qlvb
         public static string statusStr(byte? status)
         {
             if (status == null || status == 1) return "hết/chưa hiệu lực"; else return "có hiệu lực";
+        }
+        public class ItemSearchDes
+        {
+            public string item_id { get; set; }
+            public string item_content { get; set; }
+        }
+        public static string getShortDesItemSearch(int id, string keyword)
+        {
+            try
+            {
+                if (keyword == "" || keyword == null) return "";
+                keyword = keyword.Replace(" ", "%");
+                var p1 = db.Database.SqlQuery<ItemSearchDes>("select top 1 * from document_items where document_id=" + id + " and item_content like N'%" + keyword + "%'").ToList();
+                if (p1.Count > 0)
+                {
+                    var p = p1[0];
+                    keyword = keyword.Replace("%20", " ").Replace("%", " ").Replace("  ", " ");
+                    //(from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
+                    string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword) + "</p>";
+                    return content;
+                }
+                else return "";
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
     }
     
