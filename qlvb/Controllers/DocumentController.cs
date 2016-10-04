@@ -36,7 +36,10 @@ namespace qlvb.Controllers
             public int cat3_id { get; set; }
             public int cat4_id { get; set; }
             public int views { get; set; }
+            public DateTime? date_publish { get; set; }
+            public DateTime? date_start { get; set; }
             public int RANK { get; set; }
+            public byte? status { get; set; }
 
         }
         public class catlist
@@ -1081,6 +1084,17 @@ namespace qlvb.Controllers
                 return "0";
             }
         }
-        
+        public string setstatus(int id, int? type)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("update documents set status="+type+" where id=" + id);
+                return "1";
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
+        }
     }
 }

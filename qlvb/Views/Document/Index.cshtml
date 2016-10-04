@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<qlvb.Controllers.HomeController.searchitem>
+﻿@model PagedList.IPagedList<qlvb.Controllers.DocumentController.searchitem>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Tìm Kiếm Văn Bản Quy Phạm";
@@ -74,7 +74,7 @@
 </div>
 <div class="col-sm-12">
     <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;" class="headingsearchtitle">
-        TÌM KIẾM VĂN BẢN
+        TÌM KIẾM VĂN BẢN 
     </div>
     <div style="background-color:#ffffff;margin-top:0px;border:1px solid #e6e6e6;float:left;position:relative;padding-left:5px;">
         <div style="width:100%;float:left;position:relative;margin-top:3px;background-color:#ffffff;">
@@ -132,10 +132,11 @@
             </div>
         </div>
     }
+    <div style="background:#e9ecf2;color:#ffffff;height:40px;float:right;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;"><a style="float:right;color:#6468a1;" href="/Document/Create"><img src="/Images/create.png">Thêm mới</a></div>
     @if (ViewBag.keyword != "")
     {
         <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
-            KẾT QUẢ TÌM KIẾM
+            KẾT QUẢ TÌM KIẾM 
         </div>
     }
     else
@@ -172,7 +173,7 @@
                                     <script>autocheckHeight(@item.id);</script>
                                 </p>
                             </div>
-                            <div class="col-sm-4 listviewright" style="float:right;height:80px;position:relative;display:block;" id="listviewright_@item.id">
+                            <div class="col-sm-4 listviewright" style="float:right;height:90px;position:relative;display:block;" id="listviewright_@item.id">
                                 <table>
                                     <tr><td style="text-align:left;width:50px;"><p style="font-size:12px;color:#8a8a8a;">Lĩnh vực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.getCatNameById(1, @item.cat1_id)</p></td></tr>
                                     @if (item.date_publish != null)
@@ -183,6 +184,13 @@
                                     {
                                         <tr><td style="text-align:left;width:100px;"><p style="font-size:12px;color:#8a8a8a;">Hiệu lực: </p></td><td style="text-align:left;"><p style="font-size:12px;color:#8a8a8a;">@qlvb.Config.formatDDMMYYYY(@item.date_start)</p></td></tr>
                                     }
+                                    <tr><td style="text-align:left;width:50px;"><a style="font-size:12px;color:#8a8a8a;font-weight:bolder;" href="/Document/Create?id=@item.id" >Sửa</a></td><td style="text-align:left;"><a style="font-size:12px;color:#8a8a8a;font-weight:bolder;" href="/Document/Delete/@item.id" >Xóa</a> - <input type="checkbox" id="status_@item.id" name="status_@item.id" onchange="setstatus(@item.id)">&nbsp;Hết hiệu lực</td></tr>
+                                    <script>
+                                            if ("@item.status" == "1")
+                                            {
+                                                document.getElementById("status_"+@item.id).checked=true;
+                                            }
+                                    </script>
                                 </table>
                             </div>
                         </div>
@@ -324,7 +332,7 @@
         search();
     }
     function search() {
-        var url = "/?";
+        var url = "/Document/Index?";
         var k = $("#word").val();
         if (k == "") {
             alert("Nhập từ khóa!");
@@ -387,26 +395,40 @@
     //}).done(function( html ) {
     //    $( "#allhotkeyword").html(html);
     //});
-    $.ajax({
-        url: "/Home/getAllCat?id=1",
-        cache: false
-    }).done(function( html ) {
-        $( "#allcat1").html(""+html);
-    });
-    $.ajax({
-        url: "/Home/getAllCat?id=2",
-        cache: false
-    }).done(function( html ) {
-        $( "#allcat2").html(""+html);
-    });
+    //$.ajax({
+    //    url: "/Home/getAllCat?id=1",
+    //    cache: false
+    //}).done(function( html ) {
+    //    $( "#allcat1").html(""+html);
+    //});
+    //$.ajax({
+    //    url: "/Home/getAllCat?id=2",
+    //    cache: false
+    //}).done(function( html ) {
+    //    $( "#allcat2").html(""+html);
+    //});
     $.ajax({
         url: "/Home/Log?keyword=@ViewBag.keyword",
         cache: false
     }).done(function( html ) {
 
     });
+    function setstatus(id){
+        var type=0;
+        if (document.getElementById("status_"+id).checked){
+            type=1;
+        }
+        $.ajax({
+            url: "/Document/setstatus?id="+id+"&type="+type,
+            cache: false
+        }).done(function(html) {
+            if (html=="1"){
+                window.location.reload();
+            }
+        });
+    }
     function searchkw(keyword) {
-        var url = "/Home/Index?";
+        var url = "/Document/Index?";
         var k = keyword;
         //if (k == "") {
         //    return;
