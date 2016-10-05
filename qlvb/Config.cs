@@ -61,8 +61,20 @@ namespace qlvb
                 }
             }
         }
-        public static string showQuote(string content,string keyword){
+        public static int isHaveOne(string[] kw,string content)
+        {
+            for (int j = 0; j < kw.Length; j++)
+            {
+                if (content.Contains(kw[j])) return j;
+            }
+            return -1;
+        }
+        public static string showQuote(string content,string keyword,int? ft){
             if (keyword.Trim() == "") return content;
+            if (ft == 1) { keyword = keyword.Replace("%", " ");}
+            //else
+            //{ keyword = keyword.Replace(" ", "%20").Replace(" ", "%"); }
+            string[] kw = keyword.Split(' ');
             string[] sen = content.Split('.');
             string rs = "";
             for (int i = 0; i < sen.Length; i++) {
@@ -71,6 +83,16 @@ namespace qlvb
                     sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
                     //rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
                     rs += "<span style=\"color:#595959;\">..." + sen[i] + "</span>";
+                }
+                else
+                {
+                    int jj = isHaveOne(kw, sen[i]);
+                    if (jj >= 0)
+                    {
+                        sen[i] = kw[jj] != "" ? sen[i].ToLowerInvariant().Replace(kw[jj].ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + kw[jj] + "</span>") : sen[i];
+                        //rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
+                        rs += "<span style=\"color:#595959;\">..." + sen[i] + "</span>";
+                    }
                 }
             }
             return rs;

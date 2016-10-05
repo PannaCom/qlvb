@@ -66,6 +66,15 @@ namespace qlvb.Controllers
             public string name { get; set; }
             public int total { get; set; }
         }
+        public class documentitem
+        {
+            public int id { get; set; }
+            public int document_id { get; set; }
+            public string item_id { get; set; }
+            public string item_content { get; set; }
+            public int ch { get; set; }
+            public int d { get; set; }
+        }
         public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to, int? pg)
         {
             if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
@@ -570,6 +579,7 @@ namespace qlvb.Controllers
         }
         public ActionResult Details(int id, string keyword, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to)
         {
+            string fts = "freetexttable";
             document document = db.documents.Find(id);
             if (document == null)
             {
@@ -586,13 +596,33 @@ namespace qlvb.Controllers
             ViewBag.status = status;
             ViewBag.order = order;
             ViewBag.to = to;
+            ViewBag.ft = ft;
             //if (keyword!="" && keyword!=null)
             try
             {
                 //string keyword2 = keyword;
                 //if (st == 2 || keyword.Contains("/")) keyword2 = "";
-                var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
-                ViewBag.chd = p;
+                string k = keyword;
+                if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%"); }
+                else
+                { k = k.Replace("%20", " ").Replace("%", " "); }
+                //if (ft == 1) { 
+                    if (k == "" || k == null) {
+                        var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
+                        ViewBag.chd = p;
+                    }
+                    else {
+                        string query = "SELECT FT_TBL.id,FT_TBL.document_id,FT_TBL.item_id,FT_TBL.item_content,FT_TBL.ch,FT_TBL.d,RANK FROM document_items AS FT_TBL INNER JOIN " + fts + "(document_items, item_content,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and FT_TBL.document_id = "+id+" order by ch,d ";
+                        var p = db.Database.SqlQuery<documentitem>(query).ToList();
+                        ViewBag.chd = p;
+                    }
+                    
+                //}
+                //else
+                //{
+                    //var p = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).ToList();
+                    //ViewBag.chd = p;
+                //}
                 ViewBag.tree = Config.showTree(id, keyword, f1, f2, f3, f4, st, status,tps,ft, order, to);
             }
             catch (Exception ex) { }

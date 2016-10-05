@@ -99,7 +99,7 @@
                                     //if (ViewBag.keyword=="")
                                     //{
                                     <text>
-                                        <p style="width:100%;text-align:left;color:black;border-bottom:1px solid #c9c9c9;" id="@item.id"><span style="color:#435e94;font-weight:bold;">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</span> <p style="text-align: justify;">@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword))...</p></p>
+                                        <p style="width:100%;text-align:left;color:black;border-bottom:1px solid #c9c9c9;" id="@item.id"><span style="color:#435e94;font-weight:bold;">@Html.Raw(@qlvb.Config.showCHD(@item.item_id))</span> <p style="text-align: justify;">@Html.Raw(@qlvb.Config.showQuote(@item.item_content, @ViewBag.keyword, @ViewBag.ft))...</p></p>
                                         @if (ViewBag.keyword != "")
                                         {
                                             <p style="width:100%;text-align:right;"><a onclick="viewchd(@item.id);" style="cursor:pointer;">Xem đầy đủ</a></p>
