@@ -68,6 +68,7 @@ namespace qlvb.Controllers
         }
         public ActionResult Index(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to, int? pg)
         {
+            if (Config.getCookie("userid") == "") return RedirectToAction("Login", "members");
             string fts = "freetexttable";
             try
             {
@@ -1086,6 +1087,7 @@ namespace qlvb.Controllers
         }
         public string setstatus(int id, int? type)
         {
+            if (Config.getCookie("userid") == "") return "0";
             try
             {
                 db.Database.ExecuteSqlCommand("update documents set status="+type+" where id=" + id);

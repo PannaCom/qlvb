@@ -660,7 +660,7 @@ namespace qlvb
         }
         public static string makeQueryCat(string col,int? cat1,int? cat2,int? cat4)
         {
-            string query = " select catid,name,count(*) as total from ";
+            string query = "select catid,name,total,no from (select catid,name,count(*) as total from ";
                   query +="(";
                   query += "select cat" + col + "_id as catid,cat" + col + " as name from ";
                   query +="(select id,code,name,cat1_id,cat2_id,cat4_id,views from documents) as A left join ";
@@ -670,7 +670,8 @@ namespace qlvb
                   if (cat1!=null) query +=" and cat1_id="+cat1;
                   if (cat2!=null) query +=" and cat2_id="+cat2;
                   if (cat4!=null) query +=" and cat4_id="+cat4;
-                  query += ") as total group by catid,name ";
+                  query += " ) as E group by catid,name ";
+                  query += ") as total left join (select id,no from cat" + col + ") as total2 on total.catid=total2.id order by no desc, name";//group by catid,name 
             return query;
         }
         public static string hashtags(string f)
@@ -1139,6 +1140,7 @@ namespace qlvb
                     if (to == null || to == "") to = "Desc";
                     query += " " + to;
                     rs = "";// "<ul id=\"treemenu2\" class=\"treeview\">";
+                    //rs = "<ul id=\"treemenu2\" class=\"treeview\">";
                     int? preCatId = -1;
                     var p = db.Database.SqlQuery<searchitem2>(query).ToList();
                     for (int j = 0; j < p.Count; j++)
@@ -1147,14 +1149,16 @@ namespace qlvb
                         if (p[j].cat2_id != preCatId)
                         {
                             //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p[j].cat2_id) + "</b></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\">"; 
+                            rs += "<table><tr>" + spacer + "<td><img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p[j].cat2_id) + "</b></td></table>";
+                            rs += "</div>";
                             preCatId = p[j].cat2_id;
                         }
                         if (p[j].id!=id){
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].name + "-" + p[j].code + "</a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"><table><tr>" + spacer + "<td><img src=\"/Images/elbow-end.gif\"><span ><a style=\"white-space:normal;\" href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p[j].code + "-" + p[j].name + "</a><span></td></tr></table></div>";
                         }
                         else {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap>" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].name + "-" + p[j].code + "</b></a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"><table><tr>" + spacer + "<td><img src=\"/Images/elbow-end.gif\"><span ><a style=\"white-space:normal;\" href=\"/Document/Details?id=" + p[j].id + "&keyword=" + basic_keyword + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p[j].code + "-" + p[j].name + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
@@ -1186,16 +1190,16 @@ namespace qlvb
                         if (p2[j].cat2_id != preCatId)
                         {
                             //spacer += "<img src=\"/Images/leaf.gif\">" + getCatNameById(2, p[j].cat2_id);
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  >" + spacer + "<img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p2[j].cat2_id) + "</b></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"><table><tr>" + spacer + "<td><img src=\"/Images/leaf.gif\"><b>" + getCatNameById(2, p2[j].cat2_id) + "</b></td></tr></table></div>";
                             preCatId = p2[j].cat2_id;
                         }
                         if (p2[j].id != id)
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps="+tps+"&ft="+ft+"&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].name + "-" + p2[j].code + "</a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"><table><tr>" + spacer + "<td><img src=\"/Images/elbow-end.gif\"><span ><a style=\"white-space:normal;\" href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps=" + tps + "&ft=" + ft + "&order=" + order + "&to=" + to + "\" target=\"_blank\">" + p2[j].code + "-" + p2[j].name + "</a><span></td></tr></table></div>";
                         }
                         else
                         {
-                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"  ><table><tr><td nowrap style=\"width:95%;\">" + spacer + "<img src=\"/Images/elbow-end.gif\"><span ><a href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps=" + tps + "&ft=" + ft + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].name + "-" + p2[j].code + "</b></a><span></td></tr></table></div>";
+                            rs += "<div style=\"width:95%;cursor:pointer;text-align:left;\"><table><tr>" + spacer + "<td><img src=\"/Images/elbow-end.gif\"><span ><a style=\"white-space:normal;\" href=\"/Document/Details?id=" + p2[j].id + "&keyword=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&st=" + st + "&status=" + status + "&tps=" + tps + "&ft=" + ft + "&order=" + order + "&to=" + to + "\" target=\"_blank\"><b>" + p2[j].code + "-" + p2[j].name + "</b></a><span></td></tr></table></div>";
                         }
                     }
                     //rs += "</ul>";
@@ -1223,10 +1227,10 @@ namespace qlvb
                 depth=7;
            
             string spacer="<img src=\"/Images/spacer.gif\" width=16>";
-            for (var j = 0; j <depth; j++) {
+            for (var j = 0; j <depth-1; j++) {
                             spacer+="<img src=\"/Images/spacer.gif\" width=16>";
             }
-            return spacer;
+            return "<td nowrap>" + spacer + "</td>";
         }
         public class getMaxCat
         {

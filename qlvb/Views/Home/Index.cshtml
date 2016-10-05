@@ -136,7 +136,7 @@
             @if (ViewBag.keyword != "")
             {
                 <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
-                    KẾT QUẢ TÌM KIẾM
+                    KẾT QUẢ TÌM KIẾM TRANG @ViewBag.page
                 </div>
             }
             else
@@ -391,12 +391,14 @@
                 cache: false
             }).done(function( html ) {
                 $( "#allcat1").html(""+html);
+                $( "#mainmenu1").append(""+html);
             });
             $.ajax({
                 url: "/Home/getAllCat?id=2",
                 cache: false
             }).done(function( html ) {
                 $( "#allcat2").html(""+html);
+                $( "#mainmenu2").append(""+html);
             });
             $.ajax({
                 url: "/Home/Log?keyword=@ViewBag.keyword",

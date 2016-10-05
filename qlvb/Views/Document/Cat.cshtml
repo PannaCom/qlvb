@@ -7,6 +7,33 @@
     
     int count = 0;
 }
+<script>
+    function autocheckHeight(id){
+        //alert($('#listviewleft_'+id).text().length);
+        var length=$('#listviewleft_'+id).text().length;
+        if (length>=600)
+        {
+            $('#listviewleft_'+id).css("min-height","120px");
+        } 
+        else
+            if (length>=500)
+            {
+                $('#listviewleft_'+id).css("min-height","110px");
+            }
+            else if (length>=400)
+            {
+                $('#listviewleft_'+id).css("min-height","100px");
+            }
+            else if (length>=300)
+            {
+                $('#listviewleft_'+id).css("min-height","90px");
+            }
+            else 
+            {
+                $('#listviewleft_'+id).css("min-height","80px");
+            }
+    }
+</script>
 <div class="col-sm-3" id="mnleft">
     <div style="margin-top:10px;float:left;position:relative;border:1px solid #ff6a00;border-radius:5px;">
         <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:100%;text-align:left;padding-top:10px;padding-left:15px;">
@@ -275,12 +302,14 @@
         cache: false
     }).done(function( html ) {
         $( "#allcat1").html(""+html);
+        $( "#mainmenu1").append(""+html);
     });
     $.ajax({
         url: "/Home/getAllCat?id=2",
         cache: false
     }).done(function( html ) {
         $( "#allcat2").html(""+html);
+        $( "#mainmenu2").append(""+html);
     });
     function gotoCat(type,id){
         if (type==1){

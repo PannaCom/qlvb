@@ -54,6 +54,7 @@ a:focus {
     background-color: #ffffff;
     padding: 10px 0;
     height: auto;
+    display:none;
 }
 .navbar-brand img {
     /*height: 30px;*/
