@@ -30,27 +30,33 @@
     function autocheckHeight(id){
         //alert($('#listviewleft_'+id).text().length);
         var length=$('#listviewleft_'+id).text().length;
-        if (length>=600)
-        {
-            $('#listviewleft_'+id).css("min-height","120px");
-        } 
-        else
-            if (length>=500)
-            {
-                $('#listviewleft_'+id).css("min-height","110px");
-            }
-            else if (length>=400)
-            {
-                $('#listviewleft_'+id).css("min-height","100px");
-            }
-            else if (length>=300)
-            {
-                $('#listviewleft_'+id).css("min-height","90px");
-            }
-            else 
-            {
-                $('#listviewleft_'+id).css("min-height","80px");
-            }
+        var min=(length/100)*20+20+(length/$(window).width())*15;
+        $('#listviewleft_'+id).css("min-height",min+"px");
+        //if (length>=700)
+        //{
+        //    $('#listviewleft_'+id).css("min-height","140px");
+        //} else
+        //if (length>=600)
+        //{
+        //    $('#listviewleft_'+id).css("min-height","120px");
+        //} 
+        //else
+        //    if (length>=500)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","110px");
+        //    }
+        //    else if (length>=400)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","100px");
+        //    }
+        //    else if (length>=300)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","90px");
+        //    }
+        //    else 
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","80px");
+        //    }
     }
 </script>
     <div class="col-sm-3" id="mnleft">
@@ -99,7 +105,7 @@
                     </table>
                 </div>
             </div>
-            @if (Model.Count > 0)
+           @if (Model.Count > 0)
             {
                 if (ViewBag.keyword!="")
                 {
@@ -167,7 +173,7 @@
                                         @*}*@
                                         <p id="items_@item.id" style="height:auto;float:left;position:relative;display:block;">
                                             @if (ViewBag.keyword!=""){
-                                               @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id,"@ViewBag.keyword"));
+                                               @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, @ViewBag.keyword, @ViewBag.ft));
                                             }
                                             <script>autocheckHeight(@item.id);</script>
                                         </p>
@@ -203,7 +209,7 @@
                 }
                 else
                 {
-                    <div>Không tìm thấy kết quả. Hãy thay đổi từ khóa phù hợp hơn.</div>
+                    <div>Không tìm thấy kết quả. Hãy thay đổi từ khóa phù hợp hơn hoặc chọn kiểu tìm liên quan cụm từ.</div>
                 }
             </div>
             @*<section class="refinements-summary" style="text-align:left;"></section>

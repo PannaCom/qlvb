@@ -2,36 +2,36 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
 }
-<div id="tf-services" style="width:100%;padding-top:200px;">
-<div class="container">
-<h2>Đăng nhập</h2>
+<div id="tf-services" style="width:50%;padding-top:200px;text-align:center;margin-left:25%;">
+    <div class="container" style="width:100%;background-color:#f0f0f0;color:#808080;padding:0px 0px 0px 0px;float:left;display:block;">
+        <h2 style="width:100%;background-color:#33558f;color:#fff;padding:15px 15px 15px 15px;text-align:center;float:left;display:block;top:0px;position:relative;margin-top: 0px;">Đăng nhập</h2>
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-    <fieldset>
+            <fieldset>
+                @*<div class="editor-label">
+                    Tên
+                </div>*@
+                <div class="editor-field">
+                    <input type="text" id="name" name="name" placeholder="Tên" style="border:none;border-bottom:1px solid #dedede;margin-bottom:10px;">
+                </div>
+                @*<div class="editor-label">
+                    Mật khẩu
+                </div>*@
+                <div class="editor-field">
+                    <input type="password" id="pass" name="pass" placeholder="Mật khẩu" style="border:none;border-bottom:1px solid #dedede;">
+                </div>
 
-        <div class="editor-label">
-            Tên 
-        </div>
-        <div class="editor-field">
-            <input type="text" id="name" name="name" >
-        </div>
-        <div class="editor-label">
-            Mật khẩu 
-        </div>
-        <div class="editor-field">
-            <input type="password" id="pass" name="pass">
-        </div>
-        
-        <p>
-            <input type="button" value="Login" onclick="Login();" id="btnSA" />
-        </p>
-    </fieldset>
-}
+                <p>
+                    <input type="button" value="Login" onclick="Login();" id="btnSA" style="width:30%;background-color:#2e2e2e;color:#fff;padding:15px 15px 15px 15px;"/>
+                </p>
+            </fieldset>
+        }
 
-</div>
+    </div>
 </div>
 <script>
     function Login() {

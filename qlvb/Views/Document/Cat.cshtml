@@ -11,27 +11,30 @@
     function autocheckHeight(id){
         //alert($('#listviewleft_'+id).text().length);
         var length=$('#listviewleft_'+id).text().length;
-        if (length>=600)
-        {
-            $('#listviewleft_'+id).css("min-height","120px");
-        } 
-        else
-            if (length>=500)
-            {
-                $('#listviewleft_'+id).css("min-height","110px");
-            }
-            else if (length>=400)
-            {
-                $('#listviewleft_'+id).css("min-height","100px");
-            }
-            else if (length>=300)
-            {
-                $('#listviewleft_'+id).css("min-height","90px");
-            }
-            else 
-            {
-                $('#listviewleft_'+id).css("min-height","80px");
-            }
+        var min=(length/100)*20+20+(length/$(window).width())*15;
+        $('#listviewleft_'+id).css("min-height",min+"px");
+        //var length=$('#listviewleft_'+id).text().length;
+        //if (length>=600)
+        //{
+        //    $('#listviewleft_'+id).css("min-height","120px");
+        //} 
+        //else
+        //    if (length>=500)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","110px");
+        //    }
+        //    else if (length>=400)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","100px");
+        //    }
+        //    else if (length>=300)
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","90px");
+        //    }
+        //    else 
+        //    {
+        //        $('#listviewleft_'+id).css("min-height","80px");
+        //    }
     }
 </script>
 <div class="col-sm-3" id="mnleft">
@@ -138,7 +141,7 @@
                                 <p id="items_@item.id" style="height:auto;float:left;position:relative;display:block;">
                                     @if (ViewBag.keyword != "")
                                     {
-                                        @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, "@ViewBag.keyword"));
+                                        @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, @ViewBag.keyword,@ViewBag.ft));
                                     }
                                     <script>autocheckHeight(@item.id);</script>
                                 </p>

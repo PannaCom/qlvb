@@ -22,7 +22,8 @@
 </div>
 <div id="tf-services" style="width:100%;padding-top:30px;">
 <div class="container">
-<h2>Thêm mới Văn bản</h2>
+<h2 style="margin-top:10px;">Thêm mới Văn bản</h2>
+<h4>Nhập văn bản tốt nhất với trình duyệt <a href="https://www.google.com/intl/vi/chrome/browser/desktop/">Chrome</a></h4>
 <script>
     var currentTypeCat = 1;
     var idDocument=@ViewBag.id;
@@ -86,13 +87,13 @@
         <div style="width:100%;">
         <label class="label">Chọn file *:</label><input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
         <label class="label">Cơ quan ban hành *:</label>
-            <input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="cat4" name="cat4" value="@ViewBag.be_linked" onkeyup="autosearchcat(event,4);" style="width:100%;display:block;float:left;position:relative;">   
-            @*<select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select>
-            <script>getCat(4, "@ViewBag.cat4");</script>*@ 
+            @*<input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="cat4" name="cat4" value="@ViewBag.be_linked" onkeyup="autosearchcat(event,4);" style="width:100%;display:block;float:left;position:relative;">*@   
+            <select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select>
+            <script>getCat(4, "@ViewBag.cat4");</script> 
         @*<iframe id="namelabel" src="" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      *@
         <a style="width:100%;display:none;float:left;position:relative;color:blue;text-decoration:solid;" id="viewdoc" target="_blank" href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@ViewBag.link">Upload thành công, Xem toàn văn nội dung</a>            
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" >
-        <label class="label">Ngày ban hành *:</label><input type="date" id="date_publish" name="date_publish" class="form-control" value="@ViewBag.date_publish">  
+        <label class="label">Ngày ban hành *:</label><input type="date" id="date_publish" name="date_publish" class="form-control" value="@ViewBag.date_publish" placeholder="Tháng/Ngày/Năm">  
         <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>
         <script>getCat(2,"@ViewBag.cat2");</script>
         <label class="label">Tiêu đề *:(<img src="/Images/lw.png" style="width:16px;height:16px;cursor:pointer;" onclick="tolower();">)</label><textarea class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" rows="4">@Html.Raw(@ViewBag.name)</textarea>
@@ -111,7 +112,7 @@
         <label class="label">Năm ban hành *:</label><select id="year" name="year" class="form-control" onchange="chooseCat(4);"></select> 
         <script>getYear(@ViewBag.year);</script>
          
-        <label class="label">Ngày có hiệu lực *:</label><input type="date" id="date_start" name="date_start" class="form-control" value="@ViewBag.date_start">  
+        <label class="label">Ngày có hiệu lực *:</label><input type="date" id="date_start" name="date_start" placeholder="Tháng/Ngày/Năm" class="form-control" value="@ViewBag.date_start">  
         <label class="label">Còn hay hết hiệu lực *:</label><input type="checkbox" id="status" name="status" checked class="form-control">Còn hiệu lực 
         @*<label class="label">Toàn văn *:</label><script src="/Scripts/ckeditor/ckeditor.js"></script>   
             <textarea name="full_content" id="full_content" rows="9"></textarea>
