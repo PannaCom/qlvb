@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div id=showlookup style="display:block;float:right;position:fixed;top:0;right:0;z-index:2001;">
+<div id=showlookup style="display:none;float:right;position:fixed;top:0;right:0;z-index:2001;">
     <img src="/Images/lookup.png" onclick="showlookup();" style="cursor:pointer;">
 </div>
 <div id=lookup style="width:50%;display:block;float:left;position:fixed;top:40%;left:25%;background-color:blue;color:#fff;z-index:1001;text-align:center;display:none;">
@@ -87,15 +87,19 @@
         <div style="width:100%;">
         <label class="label">Chọn file *:</label><input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
         <label class="label">Cơ quan ban hành *:</label>
-            @*<input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="cat4" name="cat4" value="@ViewBag.be_linked" onkeyup="autosearchcat(event,4);" style="width:100%;display:block;float:left;position:relative;">*@   
-            <select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select>
-            <script>getCat(4, "@ViewBag.cat4");</script> 
+            <input type="text" class="form-control" placeholder="Cơ quan ban hành" id="cat4" name="cat4" value="@ViewBag.cat4new" onkeyup="autosearchcat(4);" style="width:100%;display:block;float:left;position:relative;"> 
+            <input type="hidden" id="cat4new" name="cat4new" value="@ViewBag.cat4">
+            @*<select id="cat4" name="cat4" class="form-control" onchange="chooseCat(4);"></select>
+            <script>getCat(4, "@ViewBag.cat4");</script>*@ 
         @*<iframe id="namelabel" src="" class="form-control" style="width:100%;display:none;float:left;position:relative;height:400px;"></iframe>      *@
         <a style="width:100%;display:none;float:left;position:relative;color:blue;text-decoration:solid;" id="viewdoc" target="_blank" href="https://docs.google.com/viewer?url=@qlvb.Config.domain/Files/@ViewBag.link">Upload thành công, Xem toàn văn nội dung</a>            
         <label class="label">Ký hiệu *:</label><input type="text" class="form-control" placeholder="Nhập ký hiệu văn bản: ví dụ 72/2015/TT-BTNMT" id="code" name="code" value="@ViewBag.code" style="width:100%;display:block;float:left;position:relative;" >
         <label class="label">Ngày ban hành *:</label><input type="date" id="date_publish" name="date_publish" class="form-control" value="@ViewBag.date_publish" placeholder="Tháng/Ngày/Năm">  
-        <label class="label">Loại văn bản *:</label><select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>
-        <script>getCat(2,"@ViewBag.cat2");</script>
+        <label class="label">Loại văn bản *:</label>
+            <input type="text" class="form-control" placeholder="Loại văn bản" id="cat2" name="cat2" value="@ViewBag.cat2new" onkeyup="autosearchcat(2);" style="width:100%;display:block;float:left;position:relative;">
+            <input type="hidden" id="cat2new" name="cat2new" value="@ViewBag.cat2">
+            @*<select id="cat2" name="cat2" class="form-control" onchange="chooseCat(2);"></select>
+        <script>getCat(2,"@ViewBag.cat2");</script>*@
         <label class="label">Tiêu đề *:(<img src="/Images/lw.png" style="width:16px;height:16px;cursor:pointer;" onclick="tolower();">)</label><textarea class="form-control" placeholder="Nhập tiêu đề văn bản" id="name" name="name" style="width:100%;display:block;float:left;position:relative;" rows="4">@Html.Raw(@ViewBag.name)</textarea>
         <label class="label">Văn bản căn cứ:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="be_linked" name="be_linked" value="@ViewBag.be_linked" onkeyup="autosearch(event,1);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Tập từ khóa 1(Lấy từ title của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy các từ khóa từ title văn bản" id="keyword1" name="keyword1" value="@Html.Raw(@ViewBag.keyword1)">
@@ -105,10 +109,16 @@
         <label class="label">Văn bản liên quan *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
         <label class="label" >Văn bản sửa đổi bổ sung:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Văn bản hết hiệu lực:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to_over_date" name="link_to_over_date" value="@ViewBag.link_to_over_date" onkeyup="autosearch(event,2);" style="width:100%;display:block;float:left;position:relative;">
-        <label class="label">Lĩnh vực *:</label><select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
-        <script>getCat(1,"@ViewBag.cat1");</script>
-        <label class="label">Người ký *:</label><select id="cat3" name="cat3" class="form-control" onchange="chooseCat(3);"></select>
-        <script>getCat(3,"@ViewBag.cat3");</script>          
+        <label class="label">Lĩnh vực *:</label>
+            <input type="text" class="form-control" placeholder="Lĩnh vực" id="cat1" name="cat1" value="@ViewBag.cat1new" onkeyup="autosearchcat(1);" style="width:100%;display:block;float:left;position:relative;">
+            <input type="hidden" id="cat1new" name="cat1new" value="@ViewBag.cat1">
+            @*<select id="cat1" name="cat1" class="form-control" onchange="chooseCat(1);"></select>
+        <script>getCat(1,"@ViewBag.cat1");</script>*@
+        <label class="label">Người ký *:</label>
+            <input type="text" class="form-control" placeholder="Người ký" id="cat3" name="cat3" value="@ViewBag.cat3new" onkeyup="autosearchcat(3);" style="width:100%;display:block;float:left;position:relative;">
+            <input type="hidden" id="cat3new" name="cat3new" value="@ViewBag.cat3">
+            @*<select id="cat3" name="cat3" class="form-control" onchange="chooseCat(3);"></select>
+        <script>getCat(3,"@ViewBag.cat3");</script>*@          
         <label class="label">Năm ban hành *:</label><select id="year" name="year" class="form-control" onchange="chooseCat(4);"></select> 
         <script>getYear(@ViewBag.year);</script>
          
@@ -277,12 +287,14 @@
                 //$('#link').val(items[3]);
                 var text2 = items[8];
                 var ddcat2 = document.getElementById('cat2');
-                for (var i = 0; i < ddcat2.options.length; i++) {
-                    if (ddcat2.options[i].text === text2) {
-                        ddcat2.selectedIndex = i;
-                        break;
-                    }
-                }
+                ddcat2.value=text2;
+                getCatIdByName(2,text2);
+                //for (var i = 0; i < ddcat2.options.length; i++) {
+                //    if (ddcat2.options[i].text === text2) {
+                //        ddcat2.selectedIndex = i;
+                //        break;
+                //    }
+                //}
                 items[6]=items[6].replace(items[0]+" ,","");
                 $('#keyword1').val(items[2]);
                 $('#keyword2').val(items[3]);
@@ -300,22 +312,26 @@
                 var text4=items[10];
                 //alert(text4.toLowerCase());
                 var ddcat4 = document.getElementById('cat4');
-                for (var i = 0; i < ddcat4.options.length; i++) {
-                    if (ddcat4.options[i].text.toLowerCase() === text4.toLowerCase()) {
-                        ddcat4.selectedIndex = i;
-                        break;
-                    }
-                }
+                ddcat4.value=text4;
+                getCatIdByName(4,text4);
+                //for (var i = 0; i < ddcat4.options.length; i++) {
+                //    if (ddcat4.options[i].text.toLowerCase() === text4.toLowerCase()) {
+                //        ddcat4.selectedIndex = i;
+                //        break;
+                //    }
+                //}
                 //Xem ai ký
                 var text3=items[11];
                 //alert(text4.toLowerCase());
                 var ddcat3 = document.getElementById('cat3');
-                for (var i = 0; i < ddcat3.options.length; i++) {
-                    if (ddcat3.options[i].text.toLowerCase() === text3.toLowerCase()) {
-                        ddcat3.selectedIndex = i;
-                        break;
-                    }
-                }
+                ddcat3.value=text3;
+                getCatIdByName(3,text3);
+                //for (var i = 0; i < ddcat3.options.length; i++) {
+                //    if (ddcat3.options[i].text.toLowerCase() === text3.toLowerCase()) {
+                //        ddcat3.selectedIndex = i;
+                //        break;
+                //    }
+                //}
                 $('#date_publish').val(items[12]);
                 hideLoadingImage();    
             }
@@ -440,22 +456,22 @@
             document.getElementById("keyword1").focus();
             return;
         }
-        if (document.getElementById("cat1").value == -2) {
+        if (document.getElementById("cat1").value == "" || document.getElementById("cat1new").value=="") {
             alert("Nhập lĩnh vực văn bản");
             document.getElementById("cat1").focus();
             return;
         }
-        if (document.getElementById("cat2").value == -2) {
+        if (document.getElementById("cat2").value == "" || document.getElementById("cat2new").value=="") {
             alert("Nhập loại văn bản");
             document.getElementById("cat2").focus();
             return;
         }
-        if (document.getElementById("cat3").value == -2) {
+        if (document.getElementById("cat3").value == "" || document.getElementById("cat3new").value=="") {
             alert("Nhập người ký văn bản");
             document.getElementById("cat3").focus();
             return;
         }
-        if (document.getElementById("cat4").value == -2) {
+        if (document.getElementById("cat4").value == "" || document.getElementById("cat4new").value=="") {
             alert("Nhập cơ quan ban hành");
             document.getElementById("cat4").focus();
             return;
@@ -500,10 +516,10 @@
         formdata.append("keyword3", document.getElementById("keyword3").value);
         formdata.append("keyword4", document.getElementById("keyword4").value);
         formdata.append("keyword5", document.getElementById("keyword5").value);
-        formdata.append("cat1", document.getElementById("cat1").value);
-        formdata.append("cat2", document.getElementById("cat2").value);
-        formdata.append("cat3", document.getElementById("cat3").value);
-        formdata.append("cat4", document.getElementById("cat4").value);
+        formdata.append("cat1", document.getElementById("cat1new").value);
+        formdata.append("cat2", document.getElementById("cat2new").value);
+        formdata.append("cat3", document.getElementById("cat3new").value);
+        formdata.append("cat4", document.getElementById("cat4new").value);
         formdata.append("year", document.getElementById("year").value);
         formdata.append("related_id", document.getElementById("related_id").value);
         formdata.append("be_linked", document.getElementById("be_linked").value);
@@ -584,5 +600,28 @@
         }else{
             document.getElementById("lookup").style.display="none";
         }
+    }
+    function autosearchcat(type) {
+        var keyword = document.getElementById("cat"+type).value;
+        var urlSearch = '/Home/getCat'+type+'New?keyword=';
+        $('#cat'+type).autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);
+                $('#cat'+type+"new").val(ui.item.id);
+                return false;
+            },
+            minLength: 1
+        });
+    }
+    function getCatIdByName(type,keyword) {
+        var urlSearch = '/Home/getCatIdByName?type='+type+'&keyword=';
+        $.ajax({
+            url:  urlSearch +keyword,
+            cache: false
+        }).done(function (html) {
+            $("#cat"+type+"new").val(html);
+           
+        });
     }
 </script>

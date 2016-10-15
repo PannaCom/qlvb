@@ -97,50 +97,80 @@ namespace qlvb
             }
             return rs;
         }
-        public static string showQuoteText(string content, string keyword)
+        public static string showQuoteText(string content, string keyword,int? ft)
         {
             if (keyword.Trim() == "") return content;
+            if (ft == 1) { keyword = keyword.Replace("%", " "); }
+            //else
+            //{ keyword = keyword.Replace(" ", "%20").Replace(" ", "%"); }
+            string[] kw = keyword.Split(' ');
             string[] sen = content.Split('.');
-            string[] basicword = keyword.Split(' ');
             string rs = "";
-            bool found=false;
-            int fromii = 0;
             for (int i = 0; i < sen.Length; i++)
             {
-                found=false;
-                if (!sen[i].Contains(keyword))
-                {
-                    for (int l = 0; l < basicword.Length; l++)
-                    {
-                        if (sen[i].Contains(basicword[l])) { fromii = l; found = true; break; }
-                    }
-                }
-                if (found || sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
+                if (sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
                 {
                     sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
-                    int from = sen[i].IndexOf(keyword);
-                    if (found && !sen[i].Contains(keyword))
+                    //rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
+                    rs += "<span style=\"color:#595959;\">..." + sen[i] + "</span>";
+                    return rs;
+                }
+                else
+                {
+                    int jj = isHaveOne(kw, sen[i]);
+                    if (jj >= 0)
                     {
-                        fromii = -1;
-                        for (int l2 = 0; l2 < basicword.Length; l2++)
-                        {
-                            if (sen[i].Contains(basicword[l2])) {
-                                sen[i] = basicword[l2] != "" ? sen[i].ToLowerInvariant().Replace(basicword[l2].ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + basicword[l2] + "</span>") : sen[i];
-                                if (fromii != -1) fromii = sen[i].IndexOf(basicword[l2]);
-                            }
-                           
-                        }
-                        from = fromii;
-                        
+                        sen[i] = kw[jj] != "" ? sen[i].ToLowerInvariant().Replace(kw[jj].ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + kw[jj] + "</span>") : sen[i];
+                        //rs += "<blockquote>..." + sen[i] + "<p></p>...</blockquote></p>";
+                        rs += "<span style=\"color:#595959;\">..." + sen[i] + "</span>";
+                        return rs;
                     }
-                    int ffrom = from - 100 > 0 ? from - 100 : 0;
-                    int fto = from + 100 > sen[i].Length ? sen[i].Length - 2 : from + 100-2;
-                    rs += "..." + sen[i].Substring(ffrom,fto-ffrom) + "...";
-                    
-                    break;
                 }
             }
             return rs;
+            //if (keyword.Trim() == "") return content;
+            //string[] sen = content.Split('.');
+            //string[] basicword = keyword.Split(' ');
+            //string rs = "";
+            //bool found=false;
+            //int fromii = 0;
+            //for (int i = 0; i < sen.Length; i++)
+            //{
+            //    found=false;
+            //    if (!sen[i].Contains(keyword))
+            //    {
+            //        for (int l = 0; l < basicword.Length; l++)
+            //        {
+            //            if (sen[i].Contains(basicword[l])) { fromii = l; found = true; break; }
+            //        }
+            //    }
+            //    if (found || sen[i].Contains(keyword) || sen[i].ToLowerInvariant().Contains(keyword.ToLowerInvariant()))
+            //    {
+            //        sen[i] = keyword != "" ? sen[i].ToLowerInvariant().Replace(keyword.ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + keyword + "</span>") : sen[i];
+            //        int from = sen[i].IndexOf(keyword);
+            //        if (found && !sen[i].Contains(keyword))
+            //        {
+            //            fromii = -1;
+            //            for (int l2 = 0; l2 < basicword.Length; l2++)
+            //            {
+            //                if (sen[i].Contains(basicword[l2])) {
+            //                    sen[i] = basicword[l2] != "" ? sen[i].ToLowerInvariant().Replace(basicword[l2].ToLowerInvariant(), "<span style=\"background:yellow;color:black;\">" + basicword[l2] + "</span>") : sen[i];
+            //                    if (fromii != -1) fromii = sen[i].IndexOf(basicword[l2]);
+            //                }
+                           
+            //            }
+            //            from = fromii;
+                        
+            //        }
+            //        int ffrom = from - 100 > 0 ? from - 100 : 0;
+            //        int fto = from + 100 > sen[i].Length ? sen[i].Length - 2 : from + 100-2;
+            //        rs += "..." + sen[i].Substring(ffrom,fto-ffrom) + "...";
+                    
+            //        break;
+            //    }
+            //}
+            //return rs;
+            
         }
         public static string showCHD(string content)
         {
@@ -1288,22 +1318,58 @@ namespace qlvb
             public string item_id { get; set; }
             public string item_content { get; set; }
         }
-        public static string getShortDesItemSearch(int id, string keyword)
+        public class documentitem
+        {
+            public int id { get; set; }
+            public int document_id { get; set; }
+            public string item_id { get; set; }
+            public string item_content { get; set; }
+            public int ch { get; set; }
+            public int d { get; set; }
+        }
+        public static string getShortDesItemSearch(int id, string keyword,int? ft)
         {
             try
             {
+                string fts = "freetexttable";
                 if (keyword == "" || keyword == null) return "";
-                keyword = keyword.Replace(" ", "%");
-                var p1 = db.Database.SqlQuery<ItemSearchDes>("select top 1 * from document_items where document_id=" + id + " and item_content like N'%" + keyword + "%'").ToList();
-                if (p1.Count > 0)
+                //keyword = keyword.Replace(" ", "%");
+                //var p1 = db.Database.SqlQuery<ItemSearchDes>("select top 1 * from document_items where document_id=" + id + " and item_content like N'%" + keyword + "%'").ToList();
+                string k = keyword;
+                if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%"); }
+                else
+                { k = k.Replace("%20", " ").Replace("%", " "); }
+                
+                //if (ft == 1) { 
+                if (k == "" || k == null)
                 {
-                    var p = p1[0];
-                    keyword = keyword.Replace("%20", " ").Replace("%", " ").Replace("  ", " ");
-                    //(from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
-                    string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword) + "</p>";
-                    return content;
+                    var p1 = (from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).Take(1).ToList();
+                    if (p1.Count > 0)
+                    {
+                        var p = p1[0];
+                        keyword = keyword.Replace("%20", " ").Replace("%", " ").Replace("  ", " ");
+                        //(from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
+                        string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword,ft) + "</p>";
+                        return content;
+                    }
+                    else return "";
                 }
-                else return "";
+                else
+                {
+                    string query = "SELECT top 1 FT_TBL.id,FT_TBL.document_id,FT_TBL.item_id,FT_TBL.item_content,FT_TBL.ch,FT_TBL.d,RANK FROM document_items AS FT_TBL INNER JOIN " + fts + "(document_items, item_content,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] and FT_TBL.document_id = " + id + " order by ch,d ";
+                    var p1 = db.Database.SqlQuery<documentitem>(query).ToList();
+                    if (p1.Count > 0)
+                    {
+                        var p = p1[0];
+                        keyword = keyword.Replace("%20", " ").Replace("%", " ").Replace("  ", " ");
+                        //(from q in db.document_items where q.document_id == id && q.item_content.Contains(keyword) select q).OrderBy(o => o.ch).ThenBy(o => o.d).FirstOrDefault();
+                        string content = "<p style=\"width:100%;text-align:left;color:black;font-style: italic; float: left; position: relative; display: block;\" ><span style=\"color:#000000;\">" + Config.showCHD(p.item_id) + "</span>:" + Config.showQuoteText(p.item_content, keyword,ft) + "</p>";
+                        return content;
+                    }
+                    else return "";
+                    
+                }
+                
             }
             catch (Exception ex)
             {

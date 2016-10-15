@@ -567,6 +567,11 @@ namespace qlvb.Controllers
 
             return View();
         }
+        public string getCat1(string keyword)
+        {
+            var p = (from q in db.cat1 where q.name.Contains(keyword) select q.name).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
         public string getCat2(string keyword)
         {
             var p = (from q in db.cat2 where q.name.Contains(keyword) select q.name).Distinct().ToList();
@@ -581,6 +586,49 @@ namespace qlvb.Controllers
         {
             var p = (from q in db.cat4 where q.name.Contains(keyword) select q.name).Distinct().ToList();
             return JsonConvert.SerializeObject(p);
+        }
+        public string getCat1New(string keyword)
+        {
+            var p = (from q in db.cat1 where q.name.Contains(keyword) select new { value = q.name, id = q.id }).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
+        public string getCat2New(string keyword)
+        {
+            var p = (from q in db.cat2 where q.name.Contains(keyword) select new { value = q.name, id = q.id }).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
+        public string getCat3New(string keyword)
+        {
+            var p = (from q in db.cat3 where q.name.Contains(keyword) select new { value = q.name, id = q.id }).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
+        public string getCat4New(string keyword)
+        {
+            var p = (from q in db.cat4 where q.name.Contains(keyword) select new { value = q.name, id = q.id }).Distinct().ToList();
+            return JsonConvert.SerializeObject(p);
+        }
+        public int? getCatIdByName(int type,string keyword)
+        {
+            switch (type)
+            {
+                case 1:
+                    var p = db.cat1.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                    return p.id;
+                    break;
+                case 2:
+                    var p2 = db.cat2.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                    return p2.id;
+                    break;
+                case 3:
+                    var p3 = db.cat3.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                    return p3.id;
+                    break;
+                case 4:
+                    var p4 = db.cat4.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                    return p4.id;
+                    break;
+            }
+            return null;
         }
         public string getCat(int type)
         {

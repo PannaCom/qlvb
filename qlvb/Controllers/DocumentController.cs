@@ -668,9 +668,13 @@ namespace qlvb.Controllers
                 ViewBag.name = document.name;
                 ViewBag.code = document.code;
                 ViewBag.cat1 = document.cat1_id;
+                ViewBag.cat1new = db.cat1.Find(document.cat1_id).name;
                 ViewBag.cat2 = document.cat2_id;
+                ViewBag.cat2new = db.cat2.Find(document.cat2_id).name;
                 ViewBag.cat3 = document.cat3_id;
+                ViewBag.cat3new = db.cat3.Find(document.cat3_id).name;
                 ViewBag.cat4 = document.cat4_id;
+                ViewBag.cat4new = db.cat4.Find(document.cat4_id).name;
                 ViewBag.keyword1 = document.keyword1;
                 ViewBag.keyword2 = document.keyword2;
                 ViewBag.keyword3 = document.keyword3;
