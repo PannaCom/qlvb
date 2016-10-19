@@ -668,13 +668,35 @@ namespace qlvb.Controllers
                 ViewBag.name = document.name;
                 ViewBag.code = document.code;
                 ViewBag.cat1 = document.cat1_id;
-                ViewBag.cat1new = db.cat1.Find(document.cat1_id).name;
+                try { 
+                    ViewBag.cat1new = db.cat1.Find(document.cat1_id).name;
+                }catch(Exception ex){
+                    ViewBag.cat1new = "";
+                }
                 ViewBag.cat2 = document.cat2_id;
+                try { 
                 ViewBag.cat2new = db.cat2.Find(document.cat2_id).name;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.cat2new = "";
+                }
                 ViewBag.cat3 = document.cat3_id;
-                ViewBag.cat3new = db.cat3.Find(document.cat3_id).name;
+                try { 
+                    ViewBag.cat3new = db.cat3.Find(document.cat3_id).name;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.cat3new = "";
+                }
                 ViewBag.cat4 = document.cat4_id;
-                ViewBag.cat4new = db.cat4.Find(document.cat4_id).name;
+                try { 
+                    ViewBag.cat4new = db.cat4.Find(document.cat4_id).name;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.cat4new = "";
+                }
                 ViewBag.keyword1 = document.keyword1;
                 ViewBag.keyword2 = document.keyword2;
                 ViewBag.keyword3 = document.keyword3;
@@ -880,6 +902,161 @@ namespace qlvb.Controllers
             }
             return "0";
         }
+        public void addNewCatIfNew(int id,string f1,string f2,string f3,string f4)
+        {
+            try{
+                var p1 = db.cat1.Where(o => o.name == f1).FirstOrDefault();
+                if (f1 != null && f1 != "" && p1 == null)
+                {
+                    cat1 c1 = new cat1();
+                    c1.name = f1;
+                    c1.no = 0;
+                    db.cat1.Add(c1);
+                    db.SaveChanges();
+                    db.Database.ExecuteSqlCommand("update documents set cat1_id=" + c1.id + " where id=" + id);
+                }
+            }catch(Exception c1ex){
+
+            }
+            try
+            {
+                var p2 = db.cat2.Where(o => o.name == f2).FirstOrDefault();
+                if (f2 != null && f2 != "" && p2 == null)
+                {
+                    cat2 c2 = new cat2();
+                    c2.name = f2;
+                    c2.no = 0;
+                    db.cat2.Add(c2);
+                    db.SaveChanges();
+                    db.Database.ExecuteSqlCommand("update documents set cat2_id=" + c2.id + " where id=" + id);
+                }
+            }
+            catch (Exception c2ex)
+            {
+
+            }
+            try
+            {
+                var p3 = db.cat3.Where(o => o.name == f3).FirstOrDefault();
+                if (f3 != null && f3 != "" && p3 == null)
+                {
+                    cat3 c3 = new cat3();
+                    c3.name = f3;
+                    c3.no = 0;
+                    db.cat3.Add(c3);
+                    db.SaveChanges();
+                    db.Database.ExecuteSqlCommand("update documents set cat3_id=" + c3.id + " where id=" + id);
+                }
+            }
+            catch (Exception c3ex)
+            {
+
+            }
+            try
+            {
+                var p4 = db.cat4.Where(o => o.name == f4).FirstOrDefault();
+                if (f4 != null && f4 != "" && p4 == null)
+                {
+                    cat4 c4 = new cat4();
+                    c4.name = f4;
+                    c4.no = 0;
+                    db.cat4.Add(c4);
+                    db.SaveChanges();
+                    db.Database.ExecuteSqlCommand("update documents set cat4_id=" + c4.id + " where id=" + id);
+                }
+            }
+            catch (Exception c4ex)
+            {
+
+            }
+            
+        }
+        public string addNewCatReturnId(int type, string val)
+        {
+            if (type == 1) { 
+                try
+                {
+                    var p1 = db.cat1.Where(o => o.name == val).FirstOrDefault();
+                    if (val != null && val != "" && p1 == null)
+                    {
+                        cat1 c1 = new cat1();
+                        c1.name = val;
+                        c1.no = 0;
+                        db.cat1.Add(c1);
+                        db.SaveChanges();
+                        return c1.ToString();
+                    }
+                    else if (p1 != null) return p1.id.ToString();
+                }
+                catch (Exception c1ex)
+                {
+
+                }
+            }
+            if (type == 2)
+            {
+                try
+                {
+                    var p2 = db.cat2.Where(o => o.name == val).FirstOrDefault();
+                    if (val != null && val != "" && p2 == null)
+                    {
+                        cat2 c2 = new cat2();
+                        c2.name = val;
+                        c2.no = 0;
+                        db.cat2.Add(c2);
+                        db.SaveChanges();
+                        return c2.ToString();
+                    }
+                    else if (p2 != null) return p2.id.ToString();
+                }
+                catch (Exception c2ex)
+                {
+
+                }
+            }
+            if (type == 3)
+            {
+                try
+                {
+                    var p3 = db.cat3.Where(o => o.name == val).FirstOrDefault();
+                    if (val != null && val != "" && p3 == null)
+                    {
+                        cat3 c3 = new cat3();
+                        c3.name = val;
+                        c3.no = 0;
+                        db.cat3.Add(c3);
+                        db.SaveChanges();
+                        return c3.id.ToString();
+                    }
+                    else if (p3 != null) return p3.id.ToString();
+                }
+                catch (Exception c3ex)
+                {
+
+                }
+            }
+            if (type == 4) { 
+                try
+                {
+                    var p4 = db.cat4.Where(o => o.name == val).FirstOrDefault();
+                    if (val != null && val != "" && p4 == null)
+                    {
+                        cat4 c4 = new cat4();
+                        c4.name = val;
+                        c4.no = 0;
+                        db.cat4.Add(c4);
+                        db.SaveChanges();
+                        return c4.id.ToString();
+                    }
+                    else if (p4 != null) return p4.id.ToString();
+                }
+                catch (Exception c4ex)
+                {
+
+                }
+            }
+            return "";
+        }
         public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to,string link_to_over_date, DateTime? date_publish, DateTime? date_start, string full_content, byte status)
         {
             try
@@ -900,10 +1077,14 @@ namespace qlvb.Controllers
                     doc.cat2_id = cat2;
                     doc.cat3_id = cat3;
                     doc.cat4_id = cat4;
-                    string f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name;
-                    string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
-                    string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
-                    string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
+                    string f1 = "";
+                    if (cat1 != null && cat1 > 0) { try { f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name; } catch (Exception cf1) { } }
+                    string f2 = "";
+                    if (cat2 != null && cat2 > 0) { try { f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name; } catch (Exception cf2) { } }
+                    string f3 = "";
+                    if (cat3 != null && cat3 > 0) { try { f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name; } catch (Exception cf3) { } }
+                    string f4 = "";
+                    if (cat4 != null && cat4 > 0) { try { f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name; } catch (Exception cf4) { } }
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
                     doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
@@ -933,6 +1114,7 @@ namespace qlvb.Controllers
                     //    }
                     //}
                     readFull(link, doc.id);
+                    //addNewCatIfNew(doc.id,f1, f2, f3, f4);
                     return doc.id.ToString();
                 }
                 else
@@ -950,10 +1132,19 @@ namespace qlvb.Controllers
                     doc.cat2_id = cat2;
                     doc.cat3_id = cat3;
                     doc.cat4_id = cat4;
-                    string f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name;
-                    string f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name;
-                    string f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name;
-                    string f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name;
+                    string f1 = "";
+                    if (cat1 != null && cat1 > 0) { 
+                        try { 
+                            f1 = db.cat1.Where(o => o.id == cat1).FirstOrDefault().name; 
+                        } catch (Exception cf1) { 
+                        } 
+                    }
+                    string f2 = "";
+                    if (cat2 != null && cat2 > 0) { try { f2 = db.cat2.Where(o => o.id == cat2).FirstOrDefault().name; } catch (Exception cf2) { } }
+                    string f3 = "";
+                    if (cat3 != null && cat3 > 0) { try { f3 = db.cat3.Where(o => o.id == cat3).FirstOrDefault().name; } catch (Exception cf3) { } }
+                    string f4 = "";
+                    if (cat4 != null && cat4 > 0) { try { f4 = db.cat4.Where(o => o.id == cat4).FirstOrDefault().name; } catch (Exception cf4) { } }
                     string allKeyWord = keyword1 + " " + " " + keyword2 + " " + " " + keyword3 + " " + " " + keyword4 + " " + " " + keyword5;
                     allKeyWord = allKeyWord.Replace(" , ", " ");
                     doc.auto_des = code + " " + name + " " + code + " " + name + " " + code + " " + name + " " + allKeyWord + " " + f1 + " " + f2 + " " + f3 + " " + f4;
@@ -973,6 +1164,7 @@ namespace qlvb.Controllers
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
                     readFull(link, id);
+                    //addNewCatIfNew(id,f1, f2, f3, f4);
                     return id.ToString();
                 }
             }

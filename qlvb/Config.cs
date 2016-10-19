@@ -667,24 +667,30 @@ namespace qlvb
             }
             return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
         }
-        public static string getCatNameById(int type,int? id) { 
-            switch(type){
-                case 1:
-                    string p = db.cat1.Where(o => o.id == id).FirstOrDefault().name;
-                    return p;
-                    break;
-                case 2:
-                    string p2 = db.cat2.Where(o => o.id == id).FirstOrDefault().name;
-                    return p2;
-                    break;
-                case 3:
-                    string p3 = db.cat3.Where(o => o.id == id).FirstOrDefault().name;
-                    return p3;
-                    break;
-                case 4:
-                    string p4 = db.cat4.Where(o => o.id == id).FirstOrDefault().name;
-                    return p4;
-                    break;
+        public static string getCatNameById(int type,int? id) {
+            try { 
+                switch(type){
+                    case 1:
+                        string p = db.cat1.Where(o => o.id == id).FirstOrDefault().name;
+                        return p;
+                        break;
+                    case 2:
+                        string p2 = db.cat2.Where(o => o.id == id).FirstOrDefault().name;
+                        return p2;
+                        break;
+                    case 3:
+                        string p3 = db.cat3.Where(o => o.id == id).FirstOrDefault().name;
+                        return p3;
+                        break;
+                    case 4:
+                        string p4 = db.cat4.Where(o => o.id == id).FirstOrDefault().name;
+                        return p4;
+                        break;
+                }
+            }
+            catch (Exception gcbid)
+            {
+                return "";
             }
             return "";
         }
