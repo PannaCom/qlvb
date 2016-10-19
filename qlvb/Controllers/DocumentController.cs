@@ -971,6 +971,32 @@ namespace qlvb.Controllers
             }
             
         }
+        public void addNewWordToDic(string val)
+        {
+            string[] a = val.Split(',');
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i].Trim() != "")
+                {
+                     try
+                     {
+                        string temp = a[i].Trim();
+                        var p1 = db.dic_normal.Where(o => o.word == temp).FirstOrDefault();
+                        if (p1 == null)
+                        {
+                            dic_normal dic = new dic_normal();
+                            dic.word = temp;
+                            db.dic_normal.Add(dic);
+                            db.SaveChanges();
+                        }
+                     }
+                     catch (Exception c1ex2)
+                     {
+
+                     }
+                }
+            }
+        }
         public string addNewCatReturnId(int type, string val)
         {
             if (type == 1) { 
@@ -1115,6 +1141,7 @@ namespace qlvb.Controllers
                     //}
                     readFull(link, doc.id);
                     //addNewCatIfNew(doc.id,f1, f2, f3, f4);
+                    addNewWordToDic(keyword1 + ","+ keyword2 + ","+keyword3 + ","+ keyword4);
                     return doc.id.ToString();
                 }
                 else
@@ -1164,6 +1191,7 @@ namespace qlvb.Controllers
                     db.Entry(doc).State = EntityState.Modified;
                     db.SaveChanges();
                     readFull(link, id);
+                    addNewWordToDic(keyword1 + "," + keyword2 + "," + keyword3 + "," + keyword4);
                     //addNewCatIfNew(id,f1, f2, f3, f4);
                     return id.ToString();
                 }
