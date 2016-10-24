@@ -139,6 +139,7 @@
                 </div>
             </div>
             }            
+        <div style="background:#e9ecf2;color:#ffffff;height:40px;float:right;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;"><a style="float:right;color:#6468a1;" href="#" onclick="ExportExcel();"><img src="/Images/excel.png">&nbsp;Export Excel</a></div>
             @if (ViewBag.keyword != "")
             {
                 <div style="background:#33558f;color:#ffffff;height:40px;float:left;position:relative;width:auto;text-align:left;margin-top:10px;padding:10px 10px 10px 10px;">
@@ -354,6 +355,30 @@
                 //alert(st);
                 url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&ft=" + ft +"&order="+order+"&to="+to+"&pg="+pg;
                 window.location.href = url;
+            }
+            function ExportExcel() {
+                var url = "";
+                var k = $("#word").val();
+                //if (k == "") {
+                //    alert("Nhập từ khóa!");
+                //    return;
+                //}
+                var f1="";
+                var f2="";
+                var f3="";
+                var f4="";
+                f1=currentCat1;
+                f2=currentCat2;
+                f3=currentCat3;
+                f4=currentCat4;
+                st=$('input[name="st"]:checked').val();
+                status=$('input[name="status"]:checked').val();
+                tps=$('input[name="tps"]:checked').val();
+                ft=$('input[name="ft"]:checked').val();
+                order=$('input[name="order"]:checked').val();
+                url += "k=" + k + "&f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 +"&st=" + st +"&status=" + status+"&tps=" + tps +"&ft=" + ft +"&order="+order+"&to="+to;
+               
+                window.open("/Home/baocao?" + url, "_blank");
             }
             //function search() {
             //    var word = document.getElementById("word").value;

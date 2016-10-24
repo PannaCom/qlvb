@@ -1083,7 +1083,8 @@ namespace qlvb.Controllers
             }
             return "";
         }
-        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int cat1, int cat2, int cat3, int cat4, int year, string related_id, string be_linked, string link_to,string link_to_over_date, DateTime? date_publish, DateTime? date_start, string full_content, byte status)
+        [HttpPost]
+        public string addNewDocument(int id, string name, string code, string link, string keyword1, string keyword2, string keyword3, string keyword4, string keyword5, int? cat1, int? cat2, int? cat3, int? cat4, int? year, string related_id, string be_linked, string link_to,string link_to_over_date, DateTime? date_publish, DateTime? date_start, string full_content, byte? status)
         {
             try
             {

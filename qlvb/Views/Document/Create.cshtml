@@ -105,7 +105,7 @@
         <label class="label">Tập từ khóa 1(Lấy từ title của văn bản) *:</label><input type="text" class="form-control" placeholder="Lấy các từ khóa từ title văn bản" id="keyword1" name="keyword1" value="@Html.Raw(@ViewBag.keyword1)">
         <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
         <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
-        <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4">@Html.Raw(@ViewBag.keyword4)</textarea>
+        <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4" rows="4">@Html.Raw(@ViewBag.keyword4)</textarea>
         <label class="label">Văn bản liên quan *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
         <label class="label" >Văn bản sửa đổi bổ sung:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Văn bản hết hiệu lực:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to_over_date" name="link_to_over_date" value="@ViewBag.link_to_over_date" onkeyup="autosearch(event,2);" style="width:100%;display:block;float:left;position:relative;">
@@ -481,12 +481,12 @@
             document.getElementById("year").focus();
             return;
         }
-        if (document.getElementById("date_publish").value =="") {
+        if (document.getElementById("date_publish").value =="" || !isDate(document.getElementById("date_publish").value)) {
             alert("Nhập ngày ban hành");
             document.getElementById("date_publish").focus();
             return;
         }
-        if (document.getElementById("date_start").value =="") {
+        if (document.getElementById("date_start").value =="" || !isDate(document.getElementById("date_start").value)) {
             alert("Nhập ngày có hiệu lực");
             document.getElementById("date_start").focus();
             return;
@@ -622,7 +622,11 @@
             url:  urlSearch +keyword,
             cache: false
         }).done(function (html) {
-            $("#cat"+type+"new").val(html);
+            if (html!=null){
+                $("#cat"+type+"new").val(html);
+            }else{
+                addNewCatReturnId(type);
+            }
            
         });
     }
@@ -637,5 +641,11 @@
            
         });
     }
-    
+    function isDate(val){
+        var date = Date.parse(val);
+        if (isNaN(date)) {
+            return false;
+        }
+        return true;
+    }
 </script>

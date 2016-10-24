@@ -11,6 +11,7 @@ using DocumentFormat.OpenXml;
 using System.Text;
 using System.IO;
 using System.Data;
+using System.Globalization;
 
 namespace qlvb.Controllers
 {
@@ -368,6 +369,250 @@ namespace qlvb.Controllers
                 return View();
             }
         }
+        public void baocao(string k, string f1, string f2, string f3, string f4, int? st, byte? status, byte? tps, int? ft, string order, string to)
+        {
+            string fts = "freetexttable";
+            string query = "";
+            string rp="";
+            string htmlContent = "";
+            var filename = "";
+            string key = k;
+            System.Web.HttpContext.Current.Response.ContentType = "application/force-download";            
+            System.Web.HttpContext.Current.Response.Write("<html xmlns:x=\"urn:schemas-microsoft-com:office:excel\">");
+            System.Web.HttpContext.Current.Response.Write("<head>");
+            System.Web.HttpContext.Current.Response.Write("<META http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+            System.Web.HttpContext.Current.Response.Write("<!--[if gte mso 9]><xml>");
+            System.Web.HttpContext.Current.Response.Write("<x:ExcelWorkbook>");
+            System.Web.HttpContext.Current.Response.Write("<x:ExcelWorksheets>");
+            System.Web.HttpContext.Current.Response.Write("<x:ExcelWorksheet>");
+            System.Web.HttpContext.Current.Response.Write("<x:Name>Report Data</x:Name>");
+            System.Web.HttpContext.Current.Response.Write("<x:WorksheetOptions>");
+            System.Web.HttpContext.Current.Response.Write("<x:Print>");
+            System.Web.HttpContext.Current.Response.Write("<x:ValidPrinterInfo/>");
+            System.Web.HttpContext.Current.Response.Write("</x:Print>");
+            System.Web.HttpContext.Current.Response.Write("</x:WorksheetOptions>");
+            System.Web.HttpContext.Current.Response.Write("</x:ExcelWorksheet>");
+            System.Web.HttpContext.Current.Response.Write("</x:ExcelWorksheets>");
+            System.Web.HttpContext.Current.Response.Write("</x:ExcelWorkbook>");
+            System.Web.HttpContext.Current.Response.Write("</xml>");
+            System.Web.HttpContext.Current.Response.Write("<![endif]--> ");            
+            System.Web.HttpContext.Current.Response.Write("</head>");
+            try
+            {
+                if (tps == 2 && (st != 1 & st != 2))
+                {
+                    string tempf1 = Config.getMaxCat1(k);
+                    if (tempf1 != "" && tps == 2) f1 = tempf1;
+                }
+                if (tps == 1)
+                {
+                    Config.changeHeso(tps, k);
+                }
+
+                if (k != null && k.Trim() != "")
+                {
+                    if (ft == 1) { fts = "CONTAINSTABLE"; k = k.Replace(" ", "%"); }
+                    else
+                    { k = k.Replace("%20", " ").Replace("%", " "); }
+
+                    f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
+                    f4 = f4 != null ? f4 : "";
+                    if (st == null) st = 0;
+                    if (status == null) status = 2;
+                    if (tps == null) tps = 1;
+                    if (ft == null) ft = 1;
+                    
+                 
+                    query = "select top 300 * from (SELECT ";
+                    query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
+                    query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
+                    query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
+                    query += "WHEN 15 THEN KEY_TBL.RANK*" + Config.heso3 + " ";
+                    query += "WHEN 5 THEN KEY_TBL.RANK*" + Config.heso4 + " ";
+                    query += "WHEN 23 THEN KEY_TBL.RANK*" + Config.heso5 + " ";
+                    query += "WHEN 6 THEN KEY_TBL.RANK*" + Config.heso6 + " ";
+                    query += "ELSE KEY_TBL.RANK ";
+                    query += "END, FT_TBL.status FROM documents AS FT_TBL INNER JOIN " + fts + "(documents, auto_des,'" + k + "') AS KEY_TBL ON FT_TBL.id = KEY_TBL.[KEY] ";
+                    query += " where (RANK>" + Config.minRank + ") ";
+
+                    string[] item = new string[10];
+                    int i = 0;
+                    string[] filter = new string[4]; filter[0] = f1; filter[1] = f2; filter[2] = f3; filter[3] = f4;
+                    for (int f = 0; f < filter.Length; f++)
+                    {
+                        if (filter[f] != null && filter[f] != "")
+                        {
+                            query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                        }
+                    }
+                    if (status == 2)
+                    {
+                        query += " and (status=0 or status=1) ";
+                    }
+                    else
+                        if (status == 1)
+                        {
+                            query += " and (status=1) ";
+                        }
+                        else
+                            if (status == 0)
+                            {
+                                query += " and (status=0) ";
+                            }
+                    query += ") as A ";
+                    if (k != null && st == 2)
+                    {
+                        query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                        query += "WHEN 7 THEN " + Config.heso1 + " ";
+                        query += "WHEN 18 THEN " + Config.heso2 + " ";
+                        query += "WHEN 15 THEN " + Config.heso3 + " ";
+                        query += "WHEN 5 THEN " + Config.heso4 + " ";
+                        query += "WHEN 23 THEN " + Config.heso5 + " ";
+                        query += "WHEN 6 THEN " + Config.heso6 + " ";
+                        query += "ELSE 0 ";
+                        query += "END,status from documents where (code like N'" + k + "%' or code=N'" + k + "' or code like N'%" + k + "' or code like N'%" + k + "%') ";
+                        if (status == 2)
+                        {
+                            query += " and (status=0 or status=1) ";
+                        }
+                        else
+                            if (status == 1)
+                            {
+                                query += " and (status=1) ";
+                            }
+                            else
+                                if (status == 0)
+                                {
+                                    query += " and (status=0) ";
+                                }
+                        for (int f = 0; f < filter.Length; f++)
+                        {
+                            if (filter[f] != null && filter[f] != "")
+                            {
+                                query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (k != null && (st == 1))
+                        {
+                            query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where (name like N'" + k + "%' or name=N'" + k + "' or name like N'%" + k + "' or name like N'%" + k + "%') ";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
+                        }
+                        if (k != null && (st == 4))
+                        {
+                            query = "select top 300 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query += "WHEN 7 THEN " + Config.heso1 + " ";
+                            query += "WHEN 18 THEN " + Config.heso2 + " ";
+                            query += "WHEN 15 THEN " + Config.heso3 + " ";
+                            query += "WHEN 5 THEN " + Config.heso4 + " ";
+                            query += "WHEN 23 THEN " + Config.heso5 + " ";
+                            query += "WHEN 6 THEN " + Config.heso6 + " ";
+                            query += "ELSE 0 ";
+                            query += "END,status from documents where (full_content like N'" + k + "%' or  full_content like N'%" + k.Replace(" ", "%") + "%') ";
+                            if (status == 2)
+                            {
+                                query += " and (status=0 or status=1) ";
+                            }
+                            else
+                                if (status == 1)
+                                {
+                                    query += " and (status=1) ";
+                                }
+                                else
+                                    if (status == 0)
+                                    {
+                                        query += " and (status=0) ";
+                                    }
+                            for (int f = 0; f < filter.Length; f++)
+                            {
+                                if (filter[f] != null && filter[f] != "")
+                                {
+                                    query += " and (cat" + (f + 1) + "_id=" + filter[f] + ") ";
+                                }
+                            }
+                        }
+
+                    }
+                    if (order == null || order == "") order = "RANK";
+                    query += " order by " + order;
+                    if (to == null || to == "") to = "Desc";
+                    query += " " + to;
+                   
+                    
+                    
+                }
+                else
+                {
+                    k = "";
+
+                    f1 = f1 != null ? f1 : ""; f2 = f2 != null ? f2 : ""; f3 = f3 != null ? f3 : "";
+                    f4 = f4 != null ? f4 : "";
+                    if (st == null) st = 0;
+                    if (status == null) status = 2;
+                    if (tps == null) tps = 1;
+                    if (ft == null) ft = 1;
+                    ViewBag.keyword = k.Replace("%", " ");
+                   
+                    query = "SELECT top 300 ";
+                    query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as RANK FROM documents ";
+                    if (order == null || order == "") order = "RANK";
+                    query += " order by  views desc";
+                   
+                    
+                    
+                }
+                if (key == null || key == "") key = "Xem_nhiều_nhất"; else key = key.Replace(" ", "_");
+                filename = "Tìm_kiếm_từ_khóa_" + key + "_" + DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                var p = db.Database.SqlQuery<searchitem>(query).ToList();
+                rp="<tr><th>Mã văn bản</th><th>Tên văn bản</th><th>Lĩnh vực</th><th>Ban hành</th><th>Hiệu lực</th><tr>";
+                for (int i = 0; i < p.Count; i++)
+                {
+                    var item=p[i];
+                    rp += "<tr><td>" + qlvb.Config.getCatNameById(2, item.cat2_id) + " " + item.code + "</td><td>" + item.name + "</td><td>" + qlvb.Config.getCatNameById(1, item.cat1_id) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_publish) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_start) + "</td><tr>";
+                }
+                htmlContent = "<table>" + rp+ "</table>";
+                System.Web.HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=" + filename + ".xls");
+                System.Web.HttpContext.Current.Response.Write("<b>" + filename + "</b>");
+                System.Web.HttpContext.Current.Response.Write(htmlContent);
+                System.Web.HttpContext.Current.Response.Flush();
+           
+            }
+            catch (Exception exmain)
+            {
+                return;
+            }
+            
+        }
         public class document_itemscs
         {
             public int id { get; set; }
@@ -609,26 +854,31 @@ namespace qlvb.Controllers
         }
         public int? getCatIdByName(int type,string keyword)
         {
-            switch (type)
+            try
             {
-                case 1:
-                    var p = db.cat1.Where(o => o.name.Equals(keyword)).FirstOrDefault();
-                    return p.id;
-                    break;
-                case 2:
-                    var p2 = db.cat2.Where(o => o.name.Equals(keyword)).FirstOrDefault();
-                    return p2.id;
-                    break;
-                case 3:
-                    var p3 = db.cat3.Where(o => o.name.Equals(keyword)).FirstOrDefault();
-                    return p3.id;
-                    break;
-                case 4:
-                    var p4 = db.cat4.Where(o => o.name.Equals(keyword)).FirstOrDefault();
-                    return p4.id;
-                    break;
+                switch (type)
+                {
+                    case 1:
+                        var p = db.cat1.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                        return p.id;
+                        break;
+                    case 2:
+                        var p2 = db.cat2.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                        return p2.id;
+                        break;
+                    case 3:
+                        var p3 = db.cat3.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                        return p3.id;
+                        break;
+                    case 4:
+                        var p4 = db.cat4.Where(o => o.name.Equals(keyword)).FirstOrDefault();
+                        return p4.id;
+                        break;
+                }
+                return null;
+            }catch(Exception xe){
+                return null;
             }
-            return null;
         }
         public string getCat(int type)
         {
