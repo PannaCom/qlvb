@@ -175,11 +175,13 @@
         float: none;
         margin-right:0;
         width:100%;
+        display: block;
     }
     .listviewright{
         width:360px;
         float:none;
         margin-top:12px;
+        display: block;
     }
     .headingsearchtitle{
         margin-top:1px;
@@ -190,6 +192,12 @@
     #tf-menu {
         display:block;
     }
+    /*.listviewtd{
+        display: block;
+    }
+    table,td,tr{
+        display: block;
+    }*/
 }
 @media (max-width: 320px) { 
 	.post-wrap .post .media-body p {display: none;}

@@ -4,6 +4,12 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@*<script src="/Scripts/tag-it.js" type="text/javascript" charset="utf-8"></script>
+<link href="/Content/tags/master.css" rel="stylesheet" type="text/css">
+<link href="/Content/tags/subpage.css" rel="stylesheet" type="text/css">
+<link href="/Content/tags/examples.css" rel="stylesheet" type="text/css">
+<link href="/Content/tags/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="/Content/tags/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">*@
 <div id=showlookup style="display:none;float:right;position:fixed;top:0;right:0;z-index:2001;">
     <img src="/Images/lookup.png" onclick="showlookup();" style="cursor:pointer;">
 </div>
@@ -106,7 +112,19 @@
         <label class="label">Tập từ khóa 2(Lấy từ điều 1, điều 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ điều 1, điều 2 của văn bản" id="keyword2" name="keyword2" rows="4">@Html.Raw(@ViewBag.keyword2)</textarea>
         <label class="label">Tập từ khóa 3(Lấy từ chương 1, chương 2 của văn bản) *:</label><textarea class="form-control" placeholder="Lấy từ chương 1, chương 2 của văn bản" id="keyword3" name="keyword3" rows="4">@Html.Raw(@ViewBag.keyword3)</textarea>
         <label class="label">Tập từ khóa 4(Lấy từ các từ khóa lặp đi lặp lại nhiều của văn bản) *:</label><textarea class="form-control" placeholder="Các từ khóa lặp đi lặp lại nhiều trong văn bản" id="keyword4" name="keyword4" rows="4">@Html.Raw(@ViewBag.keyword4)</textarea>
-        <label class="label">Văn bản liên quan *:</label><textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
+        <label class="label">Văn bản liên quan *:</label>
+            <textarea class="form-control" placeholder="Các ký hiệu của văn bản khác xuất hiện trong văn bản này" id="keyword5" name="keyword5" rows="8">@Html.Raw(@ViewBag.keyword5)</textarea>
+            @*<input type="text" id="keyword5" name="keyword5" style="display:none;" value="@Html.Raw(@ViewBag.keyword5)">
+            <ul id="ukeyword5" name="ukeyword5" style="background:#ffffff;float:left;position:relative;display:block;" class="form-control"></ul>
+            <script>
+                var sampleTags1 = [''];
+                $('#ukeyword5').tagit({
+                    availableTags: sampleTags1,
+                    // This will make Tag-it submit a single form value, as a comma-delimited field.
+                    singleField: true,
+                    singleFieldNode: $('#keyword5')
+                });
+            </script>*@
         <label class="label" >Văn bản sửa đổi bổ sung:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to" name="link_to" value="@ViewBag.link_to" onkeyup="autosearch(event,0);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Văn bản hết hiệu lực:</label><input type="text" class="form-control" placeholder="Nhập các mã văn bản, ngăn cách nhau dấu ," id="link_to_over_date" name="link_to_over_date" value="@ViewBag.link_to_over_date" onkeyup="autosearch(event,2);" style="width:100%;display:block;float:left;position:relative;">
         <label class="label">Lĩnh vực *:</label>
@@ -580,9 +598,9 @@
                 minLength: 1
             });
         }else if (type==2){
-            var keyword=document.getElementById("lookupvalue").value
+            var keyword=document.getElementById("link_to_over_date").value
             urlSearch = '/Document/getDoc?keyword=';
-            $('#lookupvalue').autocomplete({
+            $('#link_to_over_date').autocomplete({
                 source: urlSearch + keyword,
                 select: function (event, ui) {                  
                     window.open("/Document/Details/"+ui.item.id,"_blank");

@@ -24,10 +24,10 @@ namespace qlvb.Controllers
             public int id { get; set; }
             public string name { get; set; }
             public string code { get; set; }
-            public int cat1_id { get; set; }
-            public int cat2_id { get; set; }
-            public int cat3_id { get; set; }
-            public int cat4_id { get; set; }
+            public int? cat1_id { get; set; }
+            public int? cat2_id { get; set; }
+            public int? cat3_id { get; set; }
+            public int? cat4_id { get; set; }
             public int views { get; set; }
             public DateTime? date_publish { get; set; }
             public DateTime? date_start { get; set; }
@@ -373,8 +373,8 @@ namespace qlvb.Controllers
         {
             string fts = "freetexttable";
             string query = "";
-            string rp="";
-            string htmlContent = "";
+            StringBuilder rp=new StringBuilder();
+            StringBuilder htmlContent=new StringBuilder();
             var filename = "";
             string key = k;
             System.Web.HttpContext.Current.Response.ContentType = "application/force-download";            
@@ -423,7 +423,7 @@ namespace qlvb.Controllers
                     if (ft == null) ft = 1;
                     
                  
-                    query = "select top 300 * from (SELECT ";
+                    query = "select * from (SELECT ";
                     query += "FT_TBL.id,FT_TBL.name,FT_TBL.code,FT_TBL.cat1_id,FT_TBL.cat2_id,FT_TBL.cat3_id,FT_TBL.cat4_id,FT_TBL.views,FT_TBL.date_publish, FT_TBL.date_start,RANK=CASE FT_TBL.cat2_id ";
                     query += "WHEN 7 THEN KEY_TBL.RANK*" + Config.heso1 + " ";
                     query += "WHEN 18 THEN KEY_TBL.RANK*" + Config.heso2 + " ";
@@ -462,7 +462,7 @@ namespace qlvb.Controllers
                     query += ") as A ";
                     if (k != null && st == 2)
                     {
-                        query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                        query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                         query += "WHEN 7 THEN " + Config.heso1 + " ";
                         query += "WHEN 18 THEN " + Config.heso2 + " ";
                         query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -497,7 +497,7 @@ namespace qlvb.Controllers
                     {
                         if (k != null && (st == 1))
                         {
-                            query = "select top 300  id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -530,7 +530,7 @@ namespace qlvb.Controllers
                         }
                         if (k != null && (st == 4))
                         {
-                            query = "select top 300 id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
+                            query = "select id,name,code,cat1_id,cat2_id,cat3_id,cat4_id,views,date_publish,date_start,RANK=CASE cat2_id ";
                             query += "WHEN 7 THEN " + Config.heso1 + " ";
                             query += "WHEN 18 THEN " + Config.heso2 + " ";
                             query += "WHEN 15 THEN " + Config.heso3 + " ";
@@ -583,7 +583,7 @@ namespace qlvb.Controllers
                     if (ft == null) ft = 1;
                     ViewBag.keyword = k.Replace("%", " ");
                    
-                    query = "SELECT top 300 ";
+                    query = "SELECT  ";
                     query += " id, name, code, cat1_id, cat2_id, cat3_id, cat4_id, views,date_publish,date_start, 0 as RANK FROM documents ";
                     if (order == null || order == "") order = "RANK";
                     query += " order by  views desc";
@@ -594,16 +594,16 @@ namespace qlvb.Controllers
                 if (key == null || key == "") key = "Xem_nhiều_nhất"; else key = key.Replace(" ", "_");
                 filename = "Tìm_kiếm_từ_khóa_" + key + "_" + DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 var p = db.Database.SqlQuery<searchitem>(query).ToList();
-                rp="<tr><th>Mã văn bản</th><th>Tên văn bản</th><th>Lĩnh vực</th><th>Ban hành</th><th>Hiệu lực</th><tr>";
+                rp.Append("<tr><th>Mã văn bản</th><th>Tên văn bản</th><th>Lĩnh vực</th><th>Ban hành</th><th>Hiệu lực</th><tr>");
                 for (int i = 0; i < p.Count; i++)
                 {
                     var item=p[i];
-                    rp += "<tr><td>" + qlvb.Config.getCatNameById(2, item.cat2_id) + " " + item.code + "</td><td>" + item.name + "</td><td>" + qlvb.Config.getCatNameById(1, item.cat1_id) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_publish) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_start) + "</td><tr>";
+                    rp.Append("<tr><td>" + qlvb.Config.getCatNameById(2, item.cat2_id) + " " + item.code + "</td><td>" + item.name + "</td><td>" + qlvb.Config.getCatNameById(1, item.cat1_id) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_publish) + "</td><td>" + qlvb.Config.formatDDMMYYYY(item.date_start) + "</td><tr>");
                 }
-                htmlContent = "<table>" + rp+ "</table>";
+                htmlContent.Append("<table>" + rp.ToString()+ "</table>");
                 System.Web.HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=" + filename + ".xls");
                 System.Web.HttpContext.Current.Response.Write("<b>" + filename + "</b>");
-                System.Web.HttpContext.Current.Response.Write(htmlContent);
+                System.Web.HttpContext.Current.Response.Write(htmlContent.ToString());
                 System.Web.HttpContext.Current.Response.Flush();
            
             }

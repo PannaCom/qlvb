@@ -10,6 +10,11 @@
     string height = "80px";
     
 }
+<style>
+    p{
+        font-size:12px;
+    }
+</style>
 <script>
     function getShortDesItemSearch(id,keyword,length) {
         
@@ -159,22 +164,23 @@
                     foreach (var item in Model)
                     {
                         <tr>
-                            <td valign="top">
+                            <td valign="top" class="listviewtd">
                                 @*<div class="col-sm-12" style="background:#f1f1f1;width:100%;"><b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b></div>*@
                                 <div class="row">
                                     <div class="col-sm-8 listviewleft" style="min-height:@height;height:auto;float:left;position:relative;display:block;border-right: 1px dotted #ccc;padding-right:1%;text-align:left;padding-top:2px;" id="listviewleft_@item.id" name="listviewleft_@item.id">
                                         @*@if (item.RANK > 0 && count <= 2)
-            {
-                <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
-            }
-            else
-            {*@
+                    {
+                        <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="background-color:yellow;"><b>@item.name</b></a>
+                    }
+                    else
+                    {*@
                                         <b style="float:left;"><a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#6468a1;">@qlvb.Config.getCatNameById(2, @item.cat2_id) @item.code</a></b><br />
                                         <a href="/Document/Details?id=@item.id&keyword=@ViewBag.keyword&f1=@ViewBag.f1&f2=@ViewBag.f2&f3=@ViewBag.f3&f4=@ViewBag.f4&st=@ViewBag.st&status=@ViewBag.status&tps=@ViewBag.tps&ft=@ViewBag.ft&order=@ViewBag.order&to=@ViewBag.to" target="_blank" style="color:#5e5e5e;height:auto;float:left;position:relative;display:block;">@item.name</a>
                                         @*}*@
                                         <p id="items_@item.id" style="height:auto;float:left;position:relative;display:block;">
-                                            @if (ViewBag.keyword!=""){
-                                               @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, @ViewBag.keyword, @ViewBag.ft));
+                                            @if (ViewBag.keyword != "")
+                                            {
+                                                @Html.Raw(qlvb.Config.getShortDesItemSearch(@item.id, @ViewBag.keyword, @ViewBag.ft));
                                             }
                                             <script>autocheckHeight(@item.id);</script>
                                         </p>
