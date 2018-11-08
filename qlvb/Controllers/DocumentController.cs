@@ -48,11 +48,11 @@ namespace qlvb.Controllers
             public int id { get; set; }
             public string code { get; set; }
             public string name { get; set; }
-            public int cat1_id { get; set; }
+            public int? cat1_id { get; set; }
             public string cat1 { get; set; }
-            public int cat2_id { get; set; }
+            public int? cat2_id { get; set; }
             public string cat2 { get; set; }
-            public int cat4_id { get; set; }
+            public int? cat4_id { get; set; }
             public string cat4 { get; set; }
             public int? views { get; set; }
             public DateTime? date_publish { get; set; }
@@ -425,7 +425,7 @@ namespace qlvb.Controllers
                        if (cat11 != null) query += " and cat1_id=" + cat11;
                        if (cat22 != null) query += " and cat2_id=" + cat22;
                        if (cat44 != null) query += " and cat4_id=" + cat44;
-                if (order == null || order == "") order = "no";
+                if (order == null || order == "") order = "id";//no
                 query += " order by " + order;
                 if (to == null || to == "") to = "desc";
                 query += " " + to;
@@ -857,7 +857,7 @@ namespace qlvb.Controllers
                 }
                 catch (Exception exdoc)
                 {
-                    return ""; 
+                    //return ""; 
                         //code + Config.sp + title + Config.sp + p1 + Config.sp + p2 + Config.sp + p3 + Config.sp + p4 + Config.sp + p5 + Config.sp + nameFile + Config.sp + type_document + Config.sp + year + Config.sp + p2 + Config.sp + exdoc.ToString();
                 }
             }
